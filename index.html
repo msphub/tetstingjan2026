@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanha’s Grand | Authentic Telangana Flavors</title>
+
+  <!-- Basic SEO -->
+  <meta name="description" content="Kanha’s Grand in Mancherial serves authentic Telangana biryanis, curries, tandoori starters and Bagara rice combos. Order on WhatsApp for home delivery.">
+  <meta property="og:title" content="Kanha’s Grand | Authentic Telangana Flavors">
+  <meta property="og:description" content="Signature Nalli Gosht Biryani, Telangana-style curries, tandoori starters and more. Order now on WhatsApp.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kanhasgrand.com/">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family:Poppins, sans-serif;
+      background:#0a0e2a;
+      color:#f5f5f5;
+      scroll-behavior:smooth;
+      padding-top: 70px;
+    }
+    
+    header {
+      position:fixed; top:0; left:0; width:100%;
+      background:#111;
+      padding:12px 25px;
+      display:flex; justify-content:space-between; align-items:center;
+      z-index:1000;
+      box-shadow:0 4px 12px rgba(0,0,0,0.6);
+    }
+    header img {height:48px;}
+    nav {display:flex; gap:20px;}
+    nav a {
+      text-decoration:none;
+      color:#f1c76d;
+      font-weight:600;
+      transition:color 0.3s;
+    }
+    nav a:hover { color:#ffffff; }
+
+    .menu-toggle {display:none; font-size:28px; color:#f1c76d; cursor:pointer;}
+    @media (max-width:768px) {
+      nav {
+        display:none;
+        flex-direction:column;
+        background:#111;
+        position:absolute;
+        top:70px; right:0; width:200px; padding:20px;
+        box-shadow:-4px 4px 12px rgba(0,0,0,0.6);
+      }
+      nav.show {display:flex;}
+      .menu-toggle {display:block;}
+    }
+
+    section {
+      min-height:100vh;
+      padding:100px 20px 60px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    h1,h2 {color:#f1c76d; margin-bottom:15px;}
+    h3 {color:#fff; margin:30px 0 15px;}
+    p {max-width:700px; margin:10px auto; line-height:1.6;}
+
+    #home {
+      min-height:100vh;
+      padding:100px 20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      text-align:center;
+      background:url("spices-bg.png") center/cover no-repeat;
+      position:relative;
+    }
+    #home::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+    }
+    #home > * {position:relative; z-index:1;}
+    #home h1 {
+      font-size:3rem;
+      overflow:hidden;
+      white-space:nowrap;
+      border-right:3px solid #f1c76d;
+      width:0;
+      animation:typing 3s steps(30,end) forwards;
+    }
+    @keyframes typing {
+      from { width:0; border-right-color:#f1c76d; }
+      to { width:100%; border-right-color:transparent; }
+    }
+    #home p {
+      opacity:0;
+      transform:translateY(20px);
+      animation:fadeUp 1.5s ease forwards;
+      animation-delay:3.2s;
+    }
+    @keyframes fadeUp {
+      from {opacity:0; transform:translateY(20px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+
+    /* Veg / Non-veg symbols */
+    .veg-symbol {
+      display:inline-block;
+      width:0;
+      height:0;
+      border-left:6px solid transparent;
+      border-right:6px solid transparent;
+      border-bottom:12px solid #4CAF50; /* green */
+      vertical-align:middle;
+      margin-right:4px;
+    }
+    .nonveg-symbol {
+      display:inline-block;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#e60000; /* red */
+      vertical-align:middle;
+      margin-right:4px;
+    }
+
+    /* ORDER SYSTEM STYLES */
+    .order-group {
+      width:100%;
+      max-width:1100px;
+      margin-top:10px;
+    }
+    .order-subheading {
+      text-align:center;
+      font-size:1.1rem;
+      color:#f1c76d;
+      margin:25px auto 8px;
+      border-bottom:1px solid #333;
+      padding-bottom:4px;
+      max-width:260px;
+    }
+    .order-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      width:100%;
+    }
+    .order-card {
+      background:#141625;
+      padding:18px;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+      text-align:left;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      border:1px solid rgba(241,199,109,0.1);
+      transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .order-card:hover {
+      transform:translateY(-3px);
+      box-shadow:0 10px 24px rgba(0,0,0,0.6);
+      border-color:rgba(241,199,109,0.6);
+    }
+    .order-card p {margin:0;}
+    .price {font-weight:700; color:#f1c76d;}
+    .badge {
+      display:inline-block;
+      background:#f1c76d;
+      color:#111;
+      font-size:0.75rem;
+      padding:2px 6px;
+      border-radius:999px;
+      margin-left:6px;
+      font-weight:700;
+    }
+    .order-card.signature {
+      border:2px solid gold;
+      box-shadow:0 0 15px rgba(255,215,0,0.7);
+      position:relative;
+    }
+
+    .order-controls {
+      margin-top:6px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .qty-btn {
+      background:#333;
+      color:#fff;
+      border:none;
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:0.9rem;
+    }
+    .qty-btn:hover { background:#444; }
+    .qty-display {
+      min-width:24px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    /* Customer info box */
+    .customer-info {
+      max-width:700px;
+      width:100%;
+      background:#141625;
+      padding:16px 18px;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+      text-align:left;
+      margin-top:20px;
+      border:1px solid rgba(241,199,109,0.2);
+    }
+    .customer-info h3 {
+      margin:0 0 10px;
+      color:#f1c76d;
+      text-align:left;
+    }
+    .customer-info label {
+      font-size:0.9rem;
+      color:#ddd;
+      display:block;
+      margin-top:8px;
+      margin-bottom:4px;
+    }
+    .customer-info input,
+    .customer-info textarea {
+      width:100%;
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid #333;
+      background:#0f1220;
+      color:#fff;
+      font-family:inherit;
+      font-size:0.9rem;
+      transition:border-color 0.2s, box-shadow 0.2s;
+    }
+    .customer-info textarea {
+      resize:vertical;
+      min-height:60px;
+    }
+    .customer-info input:focus,
+    .customer-info textarea:focus {
+      outline:none;
+      border-color:#f1c76d;
+      box-shadow:0 0 0 1px rgba(241,199,109,0.5);
+    }
+
+    /* error highlight on required fields */
+    .field-error {
+      border-color:#ff4d4d !important;
+      box-shadow:0 0 0 1px rgba(255,77,77,0.7) !important;
+    }
+
+    #mainSubtotal {
+      margin-top:10px;
+      font-weight:700;
+      color:#f1c76d;
+    }
+    .customer-info .btn-checkout-main {
+      margin-top:10px;
+      width:100%;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      transition:opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow:0 8px 20px rgba(37,211,102,0.35);
+    }
+    .customer-info .btn-checkout-main[disabled] {
+      opacity:0.5;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+    .customer-info .btn-checkout-main:not([disabled]):hover {
+      box-shadow:0 10px 26px rgba(37,211,102,0.45);
+    }
+    .customer-info .btn-checkout-main:not([disabled]):active {
+      transform:scale(0.98);
+    }
+
+    /* Toast message */
+    #toast {
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:#25D366;
+      color:#fff;
+      padding:12px 20px;
+      border-radius:8px;
+      font-weight:bold;
+      display:none;
+      z-index:3000;
+      box-shadow:0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    /* Floating cart */
+    .floating-cart {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:#f1c76d;
+      color:#111;
+      padding:12px 18px;
+      border-radius:50px;
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      z-index:2000;
+      box-shadow:0 8px 22px rgba(0,0,0,0.7);
+    }
+    .cart-count {
+      background:#111;
+      color:#f1c76d;
+      padding:5px 10px;
+      border-radius:20px;
+      font-weight:800;
+    }
+    @keyframes cartShake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      50% { transform:translateX(3px); }
+      75% { transform:translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+    .cart-shake { animation: cartShake 0.4s; }
+
+    /* Cart drawer */
+    .cart-drawer {
+      position:fixed;
+      top:0;
+      right:0;
+      width:360px;
+      max-width:100%;
+      height:100vh;
+      background:#0f1220;
+      padding:20px;
+      transform:translateX(110%);
+      transition:transform 0.35s ease;
+      z-index:3000;
+      overflow-y:auto;
+      box-shadow:-10px 0 30px rgba(0,0,0,0.8);
+      border-left:1px solid #222;
+    }
+    .cart-drawer.open {transform:translateX(0);}
+    .cart-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .cart-item {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 0;
+      border-bottom:1px solid #242942;
+      gap:10px;
+    }
+    .cart-item .meta {text-align:left; flex:1;}
+    .cart-item .meta p {margin:0;}
+    .actions {display:flex; align-items:center; gap:6px;}
+    .btn-clear {
+      background:#333;
+      color:#f1c76d;
+      border:none;
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:0.85rem;
+      margin-right:6px;
+    }
+    .btn-close {
+      background:transparent;
+      color:#fff;
+      border:none;
+      font-size:1.1rem;
+      cursor:pointer;
+    }
+    .cart-total {
+      margin-top:10px;
+      font-weight:800;
+      color:#f1c76d;
+      font-size:1.1rem;
+      text-align:left;
+    }
+    .btn-checkout {
+      background:#25D366;
+      color:#fff;
+      border:none;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      width:100%;
+      margin-top:12px;
+      box-shadow:0 8px 20px rgba(37,211,102,0.35);
+    }
+    .btn-checkout:hover{
+      box-shadow:0 10px 26px rgba(37,211,102,0.45);
+    }
+    .cart-empty {
+      text-align:center;
+      color:#bbb;
+      padding:30px 0;
+    }
+
+    .btn-map {
+      border-radius:50px;
+      text-decoration:none;
+      font-weight:bold;
+      display:inline-block;
+      transition:all 0.3s;
+      background:#f1c76d;
+      color:#111;
+      padding:12px 20px;
+      margin-top:15px;
+      box-shadow:0 6px 16px rgba(0,0,0,0.6);
+    }
+    .btn-map:hover {
+      background:#ffffff;
+      color:#111;
+    }
+
+    footer {
+      background:#111;
+      text-align:center;
+      padding:25px 20px;
+      font-size:0.9rem;
+      color:#aaa;
+      margin-top:40px;
+      border-top:1px solid #222;
+    }
+    footer .socials {margin-bottom:12px;}
+    footer .socials a {
+      color:#f1c76d;
+      margin:0 15px;
+      font-size:1.6rem;
+      transition:color 0.2s, transform 0.2s;
+    }
+    footer .socials a:hover {
+      color:#ffffff;
+      transform:translateY(-2px);
+    }
+
+    @media (max-width:600px){
+      section {padding:90px 14px 50px;}
+      .order-card {padding:14px;}
+      .order-subheading {margin-top:18px;}
+    }
+
+    .site-footer .socials i{
+  font-size:1.6rem;
+  color:#f1c76d;
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.jpg" alt="Kanha’s Grand Restaurant Logo">
+  <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="order.html">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="order.html">Order</a>
+  </nav>
+</header>
+
+<section id="home">
+  <h1>Welcome to Kanha’s Grand</h1>
+  <p>Authentic Telangana flavors served with love. Experience rich traditions and bold tastes in every bite.</p>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>Kanha’s Grand is built on a passion for authentic Telangana flavors. We bring you a dining experience that blends traditional recipes with a modern touch, ensuring every visit is memorable.</p>
+  <p style="margin-top:5px; font-size:0.95rem; color:#ccc;">
+    Pay on delivery. No online payment required.
+  </p>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Email: kanhasgrand@gmail.com</p>
+  <p>Phone: +91 7730989898</p>
+  <p>Address: Kanha’s Grand, Mancherial, Telangana</p>
+  <div style="margin-top:20px; width:100%; max-width:700px;">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3775.2283202356684!2d79.44262417497217!3d18.876949582287068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a32cb0011e98787%3A0x6f24cff241255d8b!2sKanha&#39;s%20Grand!5e0!3m2!1sen!2sin!4v1764952966407!5m2!1sen!2sin"
+      width="100%"
+      height="300"
+      style="border:0; border-radius:12px;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  <a href="https://maps.google.com/maps/dir//Kanha's+Grand+Market+Rd+old,+current+office+road,+nearby+kotak+manindra+bank,+Iqbal+Ahmed+Nagar+Mancherial,+Telangana+504208/@18.8769496,79.4451991,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x3a32cb0011e98787:0x6f24cff241255d8b" target="_blank" class="btn-map">Open in Google Maps</a>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="https://www.instagram.com/kanhasgrand.official/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61580026734705" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://wa.me/917730989898" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  </div>
+  <p>© <script>document.write(new Date().getFullYear())</script> Kanha’s Grand | Authentic Telangana Flavors</p>
+</footer>
+
+<!-- Toast -->
+<div id="toast">Item added to cart</div>
+
+<!-- Floating Cart Button -->
+<div class="floating-cart" id="floatingCart" onclick="toggleCart()">
+  <i class="fa-solid fa-bag-shopping"></i>
+  <span>Cart</span>
+  <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-header">
+    <strong>Your Order</strong>
+    <div>
+      <button class="btn-clear" onclick="clearCart()">Clear</button>
+      <button class="btn-close" onclick="toggleCart()" aria-label="Close cart">✕</button>
+    </div>
+  </div>
+  <div id="cartItemsWrap"></div>
+  <div class="cart-total" id="cartTotal">Subtotal: ₹0</div>
+  <button class="btn-checkout" onclick="checkout()" id="drawerCheckoutBtn">Checkout on WhatsApp</button>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById('nav').classList.toggle('show');
+}
+
+/* CART LOGIC */
+const WHATSAPP_NUMBER = '917730989898';
+let cart = JSON.parse(localStorage.getItem('kg_cart') || '[]');
+
+function saveCart(){
+  localStorage.setItem('kg_cart', JSON.stringify(cart));
+  renderCartCount();
+  renderCartDrawer();
+  refreshCardQuantities();
+  updateSubtotalUI();
+  toggleCheckoutUI();
+}
+
+function changeQtyFromCard(name, price, delta){
+  price = Number(price);
+  let item = cart.find(i => i.name === name);
+  let newQty = item ? item.qty + delta : (delta > 0 ? 1 : 0);
+
+  if(newQty <= 0){
+    cart = cart.filter(i => i.name !== name);
+  } else {
+    if(item){ item.qty = newQty; }
+    else { cart.push({ name, price, qty:newQty }); }
+  }
+
+  saveCart();
+
+  if(delta > 0){
+    showToast(name + ' added');
+    shakeCartIcon();
+  }
+}
+
+function showToast(message){
+  const t = document.getElementById('toast');
+  t.innerText = message;
+  t.style.display = 'block';
+  setTimeout(()=>{ t.style.display = 'none'; }, 1200);
+}
+
+function shakeCartIcon(){
+  const cartBtn = document.getElementById('floatingCart');
+  cartBtn.classList.add('cart-shake');
+  setTimeout(()=> cartBtn.classList.remove('cart-shake'), 400);
+}
+
+function renderCartCount(){
+  const totalQty = cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent = totalQty;
+}
+
+function renderCartDrawer(){
+  const wrap = document.getElementById('cartItemsWrap');
+  wrap.innerHTML = '';
+  if(cart.length === 0){
+    wrap.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+    document.getElementById('cartTotal').textContent = 'Subtotal: ₹0';
+    return;
+  }
+  let subtotal = 0;
+  cart.forEach((it,index)=>{
+    subtotal += it.price * it.qty;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="meta">
+        <p><strong>${escapeHtml(it.name)}</strong></p>
+        <p class="small">₹${it.price} x ${it.qty} = ₹${it.price * it.qty}</p>
+      </div>
+      <div class="actions">
+        <button class="qty-btn" onclick="decreaseQty(${index})">−</button>
+        <span style="min-width:24px; text-align:center">${it.qty}</span>
+        <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+        <button class="qty-btn" onclick="removeItem(${index})">🗑</button>
+      </div>
+    `;
+    wrap.appendChild(div);
+  });
+  document.getElementById('cartTotal').textContent = 'Subtotal: ₹' + subtotal;
+}
+
+function refreshCardQuantities(){
+  const cards = document.querySelectorAll('.order-card');
+  cards.forEach(card=>{
+    const name = card.dataset.name;
+    const span = card.querySelector('.qty-display');
+    if(!span) return;
+    const item = cart.find(i => i.name === name);
+    span.textContent = item ? item.qty : 0;
+  });
+}
+
+function getSubtotal(){
+  return cart.reduce((sum, it) => sum + it.price * it.qty, 0);
+}
+
+function updateSubtotalUI(){
+  const subtotalEl = document.getElementById('mainSubtotal');
+  if(!subtotalEl) return;
+  subtotalEl.textContent = 'Subtotal: ₹' + getSubtotal();
+}
+
+/* Show/hide customer info and enable/disable main checkout */
+function toggleCheckoutUI(){
+  const infoBox = document.getElementById('customerInfoBox');
+  const btn = document.getElementById('mainCheckoutBtn');
+  if (!infoBox || !btn) return;
+
+  const hasItems = cart.length > 0;
+  infoBox.style.display = hasItems ? 'block' : 'none';
+
+  updateCheckoutButtonState();
+}
+
+function updateCheckoutButtonState(){
+  const btn = document.getElementById('mainCheckoutBtn');
+  if(!btn) return;
+  if(cart.length === 0){
+    btn.disabled = true;
+    return;
+  }
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  const phoneDigits = phone.replace(/\D/g, '');
+
+  btn.disabled = !(name && address && phoneDigits.length === 10);
+}
+
+function increaseQty(i){
+  cart[i].qty++;
+  saveCart();
+}
+function decreaseQty(i){
+  if(cart[i].qty > 1) cart[i].qty--;
+  else cart.splice(i,1);
+  saveCart();
+}
+function removeItem(i){
+  cart.splice(i,1);
+  saveCart();
+}
+function clearCart(){
+  if(!confirm('Clear cart?')) return;
+  cart = [];
+  saveCart();
+}
+
+function toggleCart(){
+  const drawer = document.getElementById('cartDrawer');
+  drawer.classList.toggle('open');
+  drawer.setAttribute('aria-hidden', !drawer.classList.contains('open'));
+  renderCartDrawer();
+}
+
+/* Improved checkout with field focus + phone validation + highlights */
+function checkout(){
+  if(cart.length === 0){
+    alert('Your cart is empty!');
+    return;
+  }
+
+  const nameEl = document.getElementById('customerName');
+  const phoneEl = document.getElementById('customerPhone');
+  const addressEl = document.getElementById('customerAddress');
+  const notesEl = document.getElementById('customerNotes');
+
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.trim();
+  const address = addressEl.value.trim();
+  const notes = notesEl.value.trim();
+  const phoneDigits = phone.replace(/\D/g, '');
+
+  // Clear previous error states
+  [nameEl, phoneEl, addressEl].forEach(el => el.classList.remove('field-error'));
+
+  const missing = [];
+  if(!name) missing.push(nameEl);
+  if(!phone) missing.push(phoneEl);
+  if(!address) missing.push(addressEl);
+
+  if(missing.length > 0){
+    missing.forEach(el => el.classList.add('field-error'));
+    missing[0].focus();
+    alert('Please fill your Name, Mobile Number, and Address.');
+    return;
+  }
+
+  // Phone validation: must be 10 digits
+  if(phoneDigits.length !== 10){
+    phoneEl.classList.add('field-error');
+    phoneEl.focus();
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+
+  let message = "Kanha's Grand Order:%0A%0A";
+  let total = 0;
+  cart.forEach(it=>{
+    message += encodeURIComponent(it.name) + " x " + it.qty + " = ₹" + (it.price * it.qty) + "%0A";
+    total += it.price * it.qty;
+  });
+  message += "%0ASubtotal: ₹" + total + "%0A";
+  message += "%0ACustomer Details:%0A";
+  message += "Name: " + encodeURIComponent(name) + "%0A";
+  message += "Mobile: " + encodeURIComponent(phoneDigits) + "%0A";
+  message += "Address: " + encodeURIComponent(address) + "%0A";
+  if(notes){
+    message += "Notes: " + encodeURIComponent(notes) + "%0A";
+  }
+
+  const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + message;
+  window.open(url, "_blank");
+
+  // Clear cart and fields after sending
+  cart = [];
+  saveCart();
+  nameEl.value = '';
+  phoneEl.value = '';
+  addressEl.value = '';
+  notesEl.value = '';
+  [nameEl, phoneEl, addressEl].forEach(el => el.classList.remove('field-error'));
+  updateCheckoutButtonState();
+}
+
+function escapeHtml(text){
+  const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderCartCount();
+  renderCartDrawer();
+  refreshCardQuantities();
+  updateSubtotalUI();
+  toggleCheckoutUI();
+
+  ['customerName','customerPhone','customerAddress'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el){
+      el.addEventListener('input', ()=>{
+        el.classList.remove('field-error');
+        updateCheckoutButtonState();
+      });
+    }
+  });
+});
+
+window.addEventListener('scroll', toggleCheckoutUI);
+</script>
+
+</body>
+</html>
