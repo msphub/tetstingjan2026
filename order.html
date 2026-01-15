@@ -210,6 +210,12 @@ h2{
   z-index:2000;
 }
 
+/* Hide cart when modal is open */
+body.modal-open .cart-bar{
+  display: none;
+}
+
+
 .cart-btn{
   background:#25D366;color:#111;
   border:none;padding:10px 16px;
@@ -371,7 +377,7 @@ footer {
 <!-- CATEGORY MODAL -->
 <div id="categoryModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="categoryModal.style.display='none'">×</span>
+    <span class="close" onclick="closeCategory()">×</span>
     <h3>Select Category</h3>
     <button onclick="filterCategory('veg-starters')">Veg Starters</button>
     <button onclick="filterCategory('nonveg-starters')">Non-Veg Starters</button>
@@ -379,7 +385,7 @@ footer {
     <button onclick="filterCategory('family-packs')">Family Packs</button>
     <button onclick="filterCategory('veg-curries')">Veg Curries</button>
     <button onclick="filterCategory('nonveg-curries')">Non-Veg Curries</button>
-	<button onclick="filterCategory('meals')">Meals</button>
+	  <button onclick="filterCategory('meals')">Meals</button>
     <button onclick="filterCategory('breads')">Breads</button>
     <button onclick="filterCategory('beverages')">Beverages</button>
     <hr>
@@ -440,7 +446,11 @@ const container=document.querySelector(".category-container");
 const categoryModal=document.getElementById("categoryModal");
 const customerModal=document.getElementById("customerModal");
 
-openCategory.onclick=()=>categoryModal.style.display="block";
+openCategory.onclick = () => {
+  categoryModal.style.display = "block";
+  document.body.classList.add("modal-open");
+};
+
 
 function filterCategory(cat){
   categoryModal.style.display="none";
@@ -453,6 +463,11 @@ function filterCategory(cat){
   });
   openCategory.innerText=txt;
   if(target){container.classList.add("single-center");target.scrollIntoView({behavior:"smooth",block:"center"});}
+}
+
+function closeCategory(){
+  categoryModal.style.display = "none";
+  document.body.classList.remove("modal-open");
 }
 
 document.querySelectorAll(".order-card").forEach(c=>{
