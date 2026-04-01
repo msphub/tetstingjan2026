@@ -1,514 +1,742 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kanha’s Grand | Order Online</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanha's Grand | Order Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-..."
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
-
-<style>
-/* ===== HEADER (FINAL FIX) ===== */
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:70px;
-  background:#111;
-  padding:0 25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  z-index:3000;
-  box-shadow:0 4px 12px rgba(0,0,0,0.6);
-}
-
-header img{
-  height:48px;
-  flex-shrink:0;
-}
-
-nav{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-nav a{
-  color:#f1c76d;
-  text-decoration:none;
-  font-weight:600;
-  transition:color .3s;
-}
-
-nav a:hover{
-  color:#ffffff;
-}
-
-nav a.active{
-  color:#ffffff;
-  border-bottom:2px solid #f1c76d;
-}
-
-nav a:visited{
-  color:#f1c76d;
-}
-
-.menu-toggle{
-  display:none;
-  font-size:28px;
-  color:#f1c76d;
-  cursor:pointer;
-}
-
-/* MOBILE HEADER */
-@media (max-width:768px){
-  .menu-toggle{
-    display:block;
-  }
-
-  nav{
-    display:none;
-    flex-direction:column;
-    position:absolute;
-    top:70px;
-    right:0;
-    width:220px;
-    background:#111;
-    padding:20px;
-    box-shadow:-4px 4px 12px rgba(0,0,0,0.6);
-  }
-
-  nav.show{
-    display:flex;
-  }
-}
-
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  font-family:Poppins,sans-serif;
-  background:#0a0e2a;
-  color:#fff;
-  padding:70px 20px 150px; /* space for fixed header */
-}
-
-h2{
-  text-align:center;
-  color:#f1c76d;
-  margin-bottom:14px;
-}
-
-.menu-filter{text-align:center;margin-bottom:18px}
-.menu-filter button{
-  background:#f1c76d;color:#111;border:none;
-  padding:8px 16px;border-radius:8px;
-  font-weight:700;cursor:pointer
-}
-
-.category-container{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  max-width:1200px;
-  margin:0 auto;
-}
-@media(max-width:900px){
-  .category-container{grid-template-columns:1fr}
-}
-.category-container.single-center{
-  grid-template-columns:1fr;
-  justify-items:center;
-}
-.category-container.single-center .order-group{
-  max-width:760px;width:100%;
-}
-
-.order-group{
-  background:#141625;
-  border:1px solid rgba(241,199,109,.3);
-  border-radius:14px;
-  padding:14px 16px;
-}
-.order-subheading{
-  text-align:center;
-  color:#f1c76d;
-  border-bottom:1px solid #333;
-  padding-bottom:6px;
-  margin-bottom:10px;
-}
-
-.order-card{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:14px;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid #242942;
-}
-.order-card:last-child{border-bottom:none}
-
-.price{color:#f1c76d;font-weight:700}
-.order-controls{display:flex;gap:8px}
-.qty-btn{
-  background:#333;color:#fff;
-  border:none;padding:6px 10px;
-  border-radius:6px;cursor:pointer
-}
-.qty-display{min-width:22px;text-align:center;font-weight:700}
-
-.veg-icon,.nonveg-icon{
-  display:inline-block;width:12px;height:12px;
-  border:2px solid;border-radius:2px;margin-right:6px
-}
-.veg-icon{border-color:#0f9d58}
-.veg-icon::after{content:"";width:6px;height:6px;background:#0f9d58;border-radius:50%;display:block;margin:2px auto}
-.nonveg-icon{border-color:#d32f2f}
-.nonveg-icon::after{content:"";width:6px;height:6px;background:#d32f2f;border-radius:50%;display:block;margin:2px auto}
-
-/* MODALS */
-.modal{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);z-index:999
-}
-.modal-content{
-  background:#141625;
-  max-width:360px;margin:80px auto;
-  padding:18px;border-radius:12px;text-align:center
-}
-.modal-content h3{color:#f1c76d;margin-bottom:12px}
-.modal-content button{
-  width:100%;margin:6px 0;padding:10px;
-  background:#222;color:#fff;border:none;
-  border-radius:6px;cursor:pointer
-}
-.modal-content input,
-.modal-content textarea{
-  width:100%;padding:10px;margin:6px 0;
-  border-radius:6px;border:none
-}
-.close{float:right;font-size:22px;cursor:pointer}
-
-/* CART BAR */
-.cart-bar{
-  position:sticky;
-  bottom:0;
-  left:0;
-  right:0;
-  height:64px;
-  background:#141625;
-  border-top:2px solid #f1c76d;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:2000;
-}
-
-.cart-btn{
-  background:#25D366;color:#111;
-  border:none;padding:10px 16px;
-  border-radius:8px;font-weight:800;cursor:pointer;
-}
-/* ===== FOOTER (FINAL FIX) ===== */
-footer {
-      background:#111;
-      text-align:center;
-      padding:25px 20px;
-      font-size:0.9rem;
-      color:#aaa;
-      margin-top:40px;
-      border-top:1px solid #222;
-    }
-    footer .socials {margin-bottom:12px;}
-    footer .socials a {
-      color:#f1c76d;
-      margin:0 15px;
-      font-size:1.6rem;
-      transition:color 0.2s, transform 0.2s;
-    }
-    footer .socials a:hover {
-      color:#ffffff;
-      transform:translateY(-2px);
+  <style>
+    :root {
+      --gold: #f1c76d;
+      --gold-light: #f9e0a0;
+      --gold-dim: rgba(241,199,109,0.12);
+      --navy: #0a0e2a;
+      --navy-mid: #0f1428;
+      --card-bg: #12172e;
+      --card-border: rgba(241,199,109,0.12);
+      --text: #f0ece4;
+      --muted: #9a96b0;
+      --green: #25D366;
+      --header-h: 72px;
     }
 
-    @media (max-width:600px){
-      section {padding:90px 14px 50px;}
-      .order-card {padding:14px;}
-      .order-subheading {margin-top:18px;}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      padding-top: var(--header-h);
+      padding-bottom: 80px;
     }
 
-    .site-footer .socials i{
-  font-size:1.6rem;
-  color:#f1c76d;
-}
+    /* ─── HEADER ─── */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      height: var(--header-h);
+      background: rgba(10, 14, 42, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(241,199,109,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 36px;
+      z-index: 1000;
+    }
+    header img { height: 46px; }
+    nav { display: flex; gap: 8px; align-items: center; }
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 8px;
+      transition: all 0.25s;
+    }
+    nav a:hover { color: var(--gold); background: var(--gold-dim); }
+    nav a.active, nav a.nav-cta {
+      background: var(--gold);
+      color: #0a0e2a;
+      font-weight: 700;
+    }
+    nav a.active:hover, nav a.nav-cta:hover { background: var(--gold-light); }
+    .menu-toggle { display: none; font-size: 26px; color: var(--gold); cursor: pointer; }
 
+    @media (max-width: 768px) {
+      header { padding: 0 20px; }
+      nav {
+        display: none; flex-direction: column; align-items: flex-start;
+        background: rgba(9,13,36,0.98); backdrop-filter: blur(20px);
+        position: absolute; top: var(--header-h); right: 0;
+        width: 220px; padding: 16px;
+        border-left: 1px solid rgba(241,199,109,0.12);
+        border-bottom: 1px solid rgba(241,199,109,0.12);
+        gap: 4px;
+      }
+      nav a { width: 100%; }
+      nav.show { display: flex; }
+      .menu-toggle { display: block; }
+    }
 
+    /* ─── PAGE TITLE ─── */
+    .page-title {
+      text-align: center;
+      padding: 44px 24px 28px;
+      position: relative;
+    }
+    .page-title .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .page-title h1 em { font-style: italic; color: var(--gold); }
 
-</style>
+    /* ─── CATEGORY FILTER ─── */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 20px 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .filter-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover {
+      border-color: rgba(241,199,109,0.4);
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      color: #0a0e2a;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ─── CATEGORY CONTAINER ─── */
+    .category-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    @media (max-width: 900px) { .category-container { grid-template-columns: 1fr; } }
+    .category-container.single-center {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .category-container.single-center .order-group {
+      max-width: 700px; width: 100%;
+    }
+
+    /* ─── ORDER GROUP ─── */
+    .order-group {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: border-color 0.25s;
+    }
+    .order-group:hover { border-color: rgba(241,199,109,0.22); }
+
+    .order-subheading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-bottom: 12px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid rgba(241,199,109,0.1);
+    }
+    .order-subheading::before {
+      content: '';
+      width: 3px; height: 14px;
+      background: var(--gold);
+      border-radius: 99px;
+    }
+
+    /* ─── ORDER CARD ─── */
+    .order-card {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.2s;
+      border-radius: 6px;
+    }
+    .order-card:last-child { border-bottom: none; }
+    .order-card strong { font-size: 0.9rem; font-weight: 500; }
+
+    .price { color: var(--gold); font-weight: 700; font-size: 0.92rem; white-space: nowrap; }
+
+    .order-controls { display: flex; gap: 6px; align-items: center; }
+    .qty-btn {
+      background: rgba(255,255,255,0.07);
+      color: #fff; border: none;
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .qty-btn:hover { background: rgba(241,199,109,0.18); color: var(--gold); }
+    .qty-display {
+      min-width: 22px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+
+    /* Veg / Non-veg indicators */
+    .veg-icon, .nonveg-icon {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid; border-radius: 2px;
+      margin-right: 6px; flex-shrink: 0;
+      position: relative; top: 1px;
+    }
+    .veg-icon { border-color: #0f9d58; }
+    .veg-icon::after { content: ''; width: 6px; height: 6px; background: #0f9d58; border-radius: 50%; display: block; margin: 1px auto; }
+    .nonveg-icon { border-color: #d32f2f; }
+    .nonveg-icon::after { content: ''; width: 6px; height: 6px; background: #d32f2f; border-radius: 50%; display: block; margin: 1px auto; }
+
+    /* ─── CATEGORY MODAL ─── */
+    .modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      align-items: center; justify-content: center;
+    }
+    .modal.show { display: flex; }
+    .modal-content {
+      background: #111832;
+      max-width: 400px; width: 90%;
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid rgba(241,199,109,0.15);
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+    }
+    .modal-content h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold); margin-bottom: 18px;
+      font-size: 1.3rem;
+    }
+    .modal-cat-btn {
+      display: block; width: 100%;
+      margin: 7px 0; padding: 11px 16px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      cursor: pointer; font-family: inherit;
+      font-size: 0.9rem; font-weight: 500;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .modal-cat-btn:hover { background: var(--gold-dim); border-color: rgba(241,199,109,0.3); color: var(--gold); }
+    .modal-cat-btn.highlight { background: var(--gold); color: #0a0e2a; border-color: var(--gold); font-weight: 700; }
+    .modal-cat-btn.highlight:hover { background: var(--gold-light); }
+    .modal-close {
+      float: right; font-size: 1.2rem; cursor: pointer;
+      color: var(--muted); background: none; border: none;
+      transition: color 0.2s; padding: 4px;
+    }
+    .modal-close:hover { color: #fff; }
+
+    /* ─── CUSTOMER MODAL ─── */
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%; padding: 11px 14px;
+      margin: 7px 0; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #fff; font-family: inherit;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .modal-content input:focus,
+    .modal-content textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(241,199,109,0.1);
+    }
+    .modal-content textarea { resize: vertical; min-height: 80px; }
+    .modal-submit-btn {
+      width: 100%; margin-top: 10px; padding: 14px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 12px;
+      font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .modal-submit-btn:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+
+    /* ─── CART BAR (sticky bottom) ─── */
+    .cart-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 68px;
+      background: rgba(12,16,38,0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(241,199,109,0.15);
+      padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 900;
+    }
+    .cart-info {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .cart-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; font-weight: 600;
+    }
+    .cart-badge .count-chip {
+      background: var(--gold); color: #0a0e2a;
+      border-radius: 999px; padding: 3px 10px;
+      font-size: 0.8rem; font-weight: 800;
+    }
+    .cart-total-text {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .cart-btn {
+      background: var(--green); color: #fff;
+      border: none; padding: 11px 22px;
+      border-radius: 12px; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      font-size: 0.9rem;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .cart-btn:hover { box-shadow: 0 8px 24px rgba(37,211,102,0.45); transform: translateY(-1px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080c1f;
+      border-top: 1px solid rgba(241,199,109,0.1);
+      text-align: center;
+      padding: 40px 24px;
+      margin-top: 40px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--gold); margin-bottom: 6px;
+    }
+    .footer-tagline {
+      font-size: 0.78rem; color: var(--muted);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 22px;
+    }
+    .footer-socials {
+      display: flex; justify-content: center; gap: 12px; margin-bottom: 22px;
+    }
+    .footer-socials a {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: rgba(241,199,109,0.07);
+      border: 1px solid rgba(241,199,109,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1rem;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .footer-socials a:hover {
+      background: var(--gold); color: #0a0e2a;
+      border-color: var(--gold); transform: translateY(-2px);
+    }
+    .footer-copy { font-size: 0.78rem; color: rgba(154,150,176,0.55); }
+
+    @media (max-width: 600px) {
+      .category-container { padding: 0 14px; }
+      .cart-bar { padding: 0 16px; }
+      .cart-info { gap: 8px; }
+      .cart-badge .count-chip { display: none; }
+    }
+  </style>
 </head>
-
 <body>
 
+<!-- HEADER -->
 <header>
-  <img src="logo.jpg" alt="Kanha’s Grand Restaurant Logo">
+  <img src="logo.jpg" alt="Kanha's Grand">
   <span class="menu-toggle" onclick="toggleMenu()">☰</span>
   <nav id="nav">
     <a href="index.html#home">Home</a>
-    <a href="order.html">Menu</a>
+    <a href="order.html" class="active">Menu</a>
     <a href="index.html#about">About</a>
     <a href="index.html#contact">Contact</a>
-    <a href="order.html" class="active">Order</a>
+    <a href="order.html" class="nav-cta">Order Now</a>
   </nav>
 </header>
 
-<h2>Kanha’s Grand – Order Now</h2>
-
-<div class="menu-filter">
-  <button id="openCategory">Select Category ▾</button>
+<!-- PAGE TITLE -->
+<div class="page-title">
+  <div class="section-label">Mancherial's Finest</div>
+  <h1>Kanha's Grand — <em>Order Now</em></h1>
 </div>
 
-<div class="category-container">
-
-<!-- VEG STARTERS -->
-<div class="order-group" data-category="veg-starters">
-<div class="order-subheading">Veg Starters</div>
-<div class="order-card" data-name="Chilli Paneer" data-price="189"><strong><span class="veg-icon"></span>Chilli Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Paneer Manchurian" data-price="189"><strong><span class="veg-icon"></span>Paneer Manchurian</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Paneer Tikka (6 pcs)" data-price="199"><strong><span class="veg-icon"></span>Paneer Tikka (6 pcs)</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Mushroom 65" data-price="179"><strong><span class="veg-icon"></span>Mushroom 65</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Chilli Babycorn" data-price="179"><strong><span class="veg-icon"></span>Chilli Babycorn</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+<!-- CATEGORY FILTER -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+  <button class="filter-btn" onclick="filterCategory('veg-starters', this)">Veg Starters</button>
+  <button class="filter-btn" onclick="filterCategory('nonveg-starters', this)">Non-Veg Starters</button>
+  <button class="filter-btn" onclick="filterCategory('biryanis', this)">Biryanis</button>
+  <button class="filter-btn" onclick="filterCategory('family-packs', this)">Family Packs</button>
+  <button class="filter-btn" onclick="filterCategory('veg-curries', this)">Veg Curries</button>
+  <button class="filter-btn" onclick="filterCategory('nonveg-curries', this)">Non-Veg Curries</button>
+  <button class="filter-btn" onclick="filterCategory('meals', this)">Meals</button>
+  <button class="filter-btn" onclick="filterCategory('breads', this)">Breads</button>
+  <button class="filter-btn" onclick="filterCategory('beverages', this)">Beverages</button>
+  <button class="filter-btn" onclick="filterCategory('extras', this)">Extras</button>
 </div>
 
-<!-- NON VEG STARTERS -->
-<div class="order-group" data-category="nonveg-starters">
-<div class="order-subheading">Non-Veg Starters</div>
-<div class="order-card" data-name="Ginger Chicken Dry" data-price="219"><strong><span class="nonveg-icon"></span>Ginger Chicken Dry</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Chicken 65" data-price="209"><strong><span class="nonveg-icon"></span>Chicken 65</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Tandoori Leg Kebab" data-price="149"><strong><span class="nonveg-icon"></span>Tandoori Leg Kebab</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Tandoori Chicken Tikka" data-price="199"><strong><span class="nonveg-icon"></span>Tandoori Chicken Tikka</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
+<!-- MENU GRID -->
+<div class="category-container" id="menuContainer">
 
-<!-- BIRYANIS -->
-<div class="order-group" data-category="biryanis">
-<div class="order-subheading">Biryanis</div>
-<div class="order-card" data-name="Paneer Biryani" data-price="169"><strong><span class="veg-icon"></span>Paneer Biryani</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Chicken Biryani" data-price="189"><strong><span class="nonveg-icon"></span>Chicken Biryani</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Mutton Biryani" data-price="239"><strong><span class="nonveg-icon"></span>Mutton Biryani</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Nalli Gosht Biryani" data-price="289"><strong><span class="nonveg-icon"></span>Nalli Gosht Biryani</strong><div class="price">₹289</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- FAMILY PACKS -->
-<div class="order-group" data-category="family-packs">
-<div class="order-subheading">Family Packs</div>
-<div class="order-card" data-name="Chicken Biryani Family Pack" data-price="589"><strong><span class="nonveg-icon"></span>Chicken Biryani Family Pack</strong><div class="price">₹589</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Mutton Biryani Family Pack" data-price="699"><strong><span class="nonveg-icon"></span>Mutton Biryani Family Pack</strong><div class="price">₹699</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- VEG CURRIES -->
-<div class="order-group" data-category="veg-curries">
-<div class="order-subheading">Veg Curries</div>
-<div class="order-card" data-name="Paneer Butter Masala" data-price="169"><strong><span class="veg-icon"></span>Paneer Butter Masala</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Kadhai Paneer" data-price="169"><strong><span class="veg-icon"></span>Kadhai Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Palak Paneer" data-price="169"><strong><span class="veg-icon"></span>Palak Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Dal Tadka" data-price="129"><strong><span class="veg-icon"></span>Dal Tadka</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- NON VEG CURRIES -->
-<div class="order-group" data-category="nonveg-curries">
-<div class="order-subheading">Non-Veg Curries</div>
-<div class="order-card" data-name="Butter Chicken" data-price="189"><strong><span class="nonveg-icon"></span>Butter Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Telangana Chicken Curry" data-price="189"><strong><span class="nonveg-icon"></span>Telangana Chicken Curry</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Telangana Mutton Curry" data-price="239"><strong><span class="nonveg-icon"></span>Telangana Mutton Curry</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- MEALS -->
-<div class="order-group" data-category="meals">
-<div class="order-subheading">Meals (Bagara Rice)</div>
-<div class="order-card" data-name="Bagara Rice with Paneer" data-price="169"><strong>Bagara Rice with Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Bagara Rice with Chicken" data-price="189"><strong>Bagara Rice with Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Bagara Rice with Mutton" data-price="219"><strong>Bagara Rice with Mutton</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- BREADS -->
-<div class="order-group" data-category="breads">
-<div class="order-subheading">Breads</div>
-<div class="order-card" data-name="Butter Naan" data-price="39"><strong>Butter Naan</strong><div class="price">₹39</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Garlic Naan" data-price="49"><strong>Garlic Naan</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Tandoori Roti" data-price="29"><strong>Tandoori Roti</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-<!-- BEVERAGES -->
-<div class="order-group" data-category="beverages">
-<div class="order-subheading">Beverages</div>
-<div class="order-card" data-name="Mineral Water (1 L)" data-price="20"><strong>Mineral Water (1 L)</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-<div class="order-card" data-name="Soft Drinks" data-price="20"><strong>Soft Drinks</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-</div>
-
-</div>
-
-<!-- CATEGORY MODAL -->
-<div id="categoryModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="categoryModal.style.display='none'">×</span>
-    <h3>Select Category</h3>
-    <button onclick="filterCategory('veg-starters')">Veg Starters</button>
-    <button onclick="filterCategory('nonveg-starters')">Non-Veg Starters</button>
-    <button onclick="filterCategory('biryanis')">Biryanis</button>
-    <button onclick="filterCategory('family-packs')">Family Packs</button>
-    <button onclick="filterCategory('veg-curries')">Veg Curries</button>
-    <button onclick="filterCategory('nonveg-curries')">Non-Veg Curries</button>
-	<button onclick="filterCategory('meals')">Meals</button>
-    <button onclick="filterCategory('breads')">Breads</button>
-    <button onclick="filterCategory('beverages')">Beverages</button>
-    <hr>
-    <button style="background:#f1c76d;color:#111" onclick="filterCategory('all')">Show All</button>
+  <!-- VEG STARTERS -->
+  <div class="order-group" data-category="veg-starters">
+    <div class="order-subheading">Veg Starters</div>
+    <div class="order-card" data-name="Chilli Paneer" data-price="189"><strong><span class="veg-icon"></span>Chilli Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Manchurian" data-price="189"><strong><span class="veg-icon"></span>Paneer Manchurian</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Tikka (6 pcs)" data-price="199"><strong><span class="veg-icon"></span>Paneer Tikka (6 pcs)</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mushroom 65" data-price="179"><strong><span class="veg-icon"></span>Mushroom 65</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chilli Babycorn" data-price="179"><strong><span class="veg-icon"></span>Chilli Babycorn</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
-</div>
+
+  <!-- NON-VEG STARTERS -->
+  <div class="order-group" data-category="nonveg-starters">
+    <div class="order-subheading">Non-Veg Starters</div>
+    <div class="order-card" data-name="Ginger Chicken Dry" data-price="219"><strong><span class="nonveg-icon"></span>Ginger Chicken Dry</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken 65" data-price="209"><strong><span class="nonveg-icon"></span>Chicken 65</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Leg Kebab" data-price="149"><strong><span class="nonveg-icon"></span>Tandoori Leg Kebab</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Chicken Tikka" data-price="199"><strong><span class="nonveg-icon"></span>Tandoori Chicken Tikka</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- BIRYANIS -->
+  <div class="order-group" data-category="biryanis">
+    <div class="order-subheading">Biryanis</div>
+    <div class="order-card" data-name="Paneer Biryani" data-price="169"><strong><span class="veg-icon"></span>Paneer Biryani</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Biryani" data-price="189"><strong><span class="nonveg-icon"></span>Chicken Biryani</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mutton Biryani" data-price="239"><strong><span class="nonveg-icon"></span>Mutton Biryani</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Nalli Gosht Biryani" data-price="289"><strong><span class="nonveg-icon"></span>Nalli Gosht Biryani</strong><div class="price">₹289</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- FAMILY PACKS -->
+  <div class="order-group" data-category="family-packs">
+    <div class="order-subheading">Family Packs</div>
+    <div class="order-card" data-name="Chicken Biryani Family Pack" data-price="589"><strong><span class="nonveg-icon"></span>Chicken Biryani Family Pack</strong><div class="price">₹589</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mutton Biryani Family Pack" data-price="699"><strong><span class="nonveg-icon"></span>Mutton Biryani Family Pack</strong><div class="price">₹699</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- VEG CURRIES -->
+  <div class="order-group" data-category="veg-curries">
+    <div class="order-subheading">Veg Curries</div>
+    <div class="order-card" data-name="Paneer Butter Masala" data-price="169"><strong><span class="veg-icon"></span>Paneer Butter Masala</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Kadhai Paneer" data-price="169"><strong><span class="veg-icon"></span>Kadhai Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Palak Paneer" data-price="169"><strong><span class="veg-icon"></span>Palak Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Dal Tadka" data-price="129"><strong><span class="veg-icon"></span>Dal Tadka</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- NON-VEG CURRIES -->
+  <div class="order-group" data-category="nonveg-curries">
+    <div class="order-subheading">Non-Veg Curries</div>
+    <div class="order-card" data-name="Butter Chicken" data-price="189"><strong><span class="nonveg-icon"></span>Butter Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Telangana Chicken Curry" data-price="189"><strong><span class="nonveg-icon"></span>Telangana Chicken Curry</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Telangana Mutton Curry" data-price="239"><strong><span class="nonveg-icon"></span>Telangana Mutton Curry</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- MEALS -->
+  <div class="order-group" data-category="meals">
+    <div class="order-subheading">Meals (Bagara Rice)</div>
+    <div class="order-card" data-name="Bagara Rice with Paneer" data-price="169"><strong>Bagara Rice with Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Bagara Rice with Chicken" data-price="189"><strong>Bagara Rice with Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Bagara Rice with Mutton" data-price="219"><strong>Bagara Rice with Mutton</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- BREADS -->
+  <div class="order-group" data-category="breads">
+    <div class="order-subheading">Breads</div>
+    <div class="order-card" data-name="Butter Naan" data-price="39"><strong>Butter Naan</strong><div class="price">₹39</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Garlic Naan" data-price="49"><strong>Garlic Naan</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Roti" data-price="29"><strong>Tandoori Roti</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- BEVERAGES -->
+  <div class="order-group" data-category="beverages">
+    <div class="order-subheading">Beverages</div>
+    <div class="order-card" data-name="Mineral Water (1 L)" data-price="20"><strong>Mineral Water (1 L)</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Soft Drinks" data-price="20"><strong>Soft Drinks</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- EXTRA ITEMS -->
+  <div class="order-group" data-category="extras">
+    <div class="order-subheading">Extra Items</div>
+    <div class="order-card" data-name="Veg Fried Rice" data-price="149"><strong><span class="veg-icon"></span>Veg Fried Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Fried Rice" data-price="169"><strong><span class="nonveg-icon"></span>Chicken Fried Rice</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Veg Noodles" data-price="139"><strong><span class="veg-icon"></span>Veg Noodles</strong><div class="price">₹139</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Noodles" data-price="159"><strong><span class="nonveg-icon"></span>Chicken Noodles</strong><div class="price">₹159</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Gobi Manchurian" data-price="159"><strong><span class="veg-icon"></span>Gobi Manchurian</strong><div class="price">₹159</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Egg Biryani" data-price="149"><strong><span class="nonveg-icon"></span>Egg Biryani</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Double Ka Meetha" data-price="99"><strong><span class="veg-icon"></span>Double Ka Meetha</strong><div class="price">₹99</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Apricot Delight" data-price="129"><strong><span class="veg-icon"></span>Apricot Delight</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+</div><!-- /category-container -->
 
 <!-- CUSTOMER MODAL -->
 <div id="customerModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="customerModal.style.display='none'">×</span>
-    <h3>Customer Details</h3>
-    <input id="custName" placeholder="Full Name">
-    <input id="custPhone" placeholder="Phone Number">
-    <textarea id="custAddress" placeholder="Delivery Address"></textarea>
-    <button style="background:#25D366;color:#111;font-weight:800" onclick="confirmOrder()">Send on WhatsApp</button>
+    <button class="modal-close" onclick="document.getElementById('customerModal').classList.remove('show')">✕</button>
+    <h3>Your Details</h3>
+    <input id="custName" placeholder="Full Name *" type="text">
+    <input id="custPhone" placeholder="Phone Number *" type="tel">
+    <textarea id="custAddress" placeholder="Delivery Address *"></textarea>
+    <input id="custNotes" placeholder="Special instructions (optional)" type="text">
+    <button class="modal-submit-btn" onclick="confirmOrder()">
+      <i class="fab fa-whatsapp"></i> Send Order on WhatsApp
+    </button>
   </div>
 </div>
 
-
-<!-- CART BAR -->
-<div class="cart-bar">
-  <div>
-    Items: <span id="cartCount">0</span> |
-    Total: ₹<span id="cartTotal">0</span>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Kanha's Grand</div>
+  <div class="footer-tagline">Authentic Telangana Flavors</div>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/kanhasgrand.official/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61580026734705" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="https://wa.me/917730989898" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
   </div>
-  <button class="cart-btn" onclick="openCustomer()">Order on WhatsApp</button>
-</div>
-
-<!-- FOOTER (ALWAYS LAST) -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="socials">
-      <a href="https://www.instagram.com/kanhasgrand.official/" target="_blank" aria-label="Instagram">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
-
-      <a href="https://www.facebook.com/profile.php?id=61580026734705" target="_blank" aria-label="Facebook">
-        <i class="fa-brands fa-facebook"></i>
-      </a>
-
-      <a href="https://wa.me/917730989898" target="_blank" aria-label="WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-      </a>
-    </div>
-
-    <p>
-      © <script>document.write(new Date().getFullYear())</script>
-      Kanha’s Grand | Authentic Telangana Flavors
-    </p>
+  <div class="footer-copy">© <script>document.write(new Date().getFullYear())</script> Kanha's Grand. All rights reserved.</div>
+  <div style="margin-top:12px;font-size:0.78rem;color:rgba(154,150,176,0.55);">
+    <a href="#privacy-policy" onclick="document.getElementById('privacyModalO').classList.add('show');return false;" style="color:rgba(241,199,109,0.55);text-decoration:none;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.55)'">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <span>By ordering, you agree to our <a href="#privacy-policy" onclick="document.getElementById('privacyModalO').classList.add('show');return false;" style="color:rgba(241,199,109,0.55);text-decoration:underline;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.55)'">terms</a></span>
   </div>
 </footer>
 
-
+<!-- PRIVACY POLICY MODAL -->
+<div id="privacyModalO" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.classList.remove('show')">
+  <div style="background:#111832;max-width:560px;width:100%;border-radius:20px;padding:32px;border:1px solid rgba(241,199,109,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.8);max-height:85vh;overflow-y:auto;position:relative;">
+    <button onclick="document.getElementById('privacyModalO').classList.remove('show')" style="position:absolute;top:16px;right:18px;background:none;border:none;color:#9a96b0;font-size:1.2rem;cursor:pointer;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9a96b0'">✕</button>
+    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#f1c76d;margin-bottom:10px;">Legal</div>
+    <h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.5rem;margin-bottom:20px;">Privacy Policy</h2>
+    <div style="color:rgba(240,236,228,0.75);font-size:0.88rem;line-height:1.8;">
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">1. Information We Collect</strong><br>
+      When you place an order via WhatsApp, we collect your name, phone number, and delivery address solely to process and deliver your order.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">2. How We Use Your Information</strong><br>
+      Your details are used exclusively to fulfill your order, confirm delivery, and contact you if needed regarding your order. We do not use your information for marketing without your consent.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">3. Data Sharing</strong><br>
+      We do not sell, trade, or share your personal information with any third party. Your data remains strictly between you and Kanha's Grand.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">4. WhatsApp Orders</strong><br>
+      Orders are processed through WhatsApp. By sending your order, you agree to WhatsApp's own privacy policy and terms of service. We only retain your order details for delivery and record purposes.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">5. Payment</strong><br>
+      We operate on a pay-on-delivery basis. No payment information is collected or stored on this website.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">6. Cookies &amp; Local Storage</strong><br>
+      This website uses browser local storage to remember your cart items during your visit. No tracking cookies are used.</p>
+      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">7. Contact</strong><br>
+      For any privacy concerns, please reach us at <a href="https://wa.me/917730989898" style="color:#f1c76d;">+91 77309 89898</a> or via our contact section.</p>
+      <p style="color:rgba(154,150,176,0.6);font-size:0.8rem;margin-top:20px;">Last updated: 2025 · Kanha's Grand, Mancherial, Telangana</p>
+    </div>
+  </div>
+</div>
 <script>
-const cart={},groups=document.querySelectorAll(".order-group");
-const container=document.querySelector(".category-container");
-const categoryModal=document.getElementById("categoryModal");
-const customerModal=document.getElementById("customerModal");
-
-openCategory.onclick=()=>categoryModal.style.display="block";
-
-function filterCategory(cat){
-  categoryModal.style.display="none";
-  container.classList.remove("single-center");
-  let target=null,txt="Select Category ▾";
-  groups.forEach(g=>{
-    if(cat==="all"){g.style.display="block";}
-    else if(g.dataset.category===cat){g.style.display="block";target=g;txt=g.querySelector(".order-subheading").innerText+" ▾";}
-    else g.style.display="none";
-  });
-  openCategory.innerText=txt;
-  if(target){container.classList.add("single-center");target.scrollIntoView({behavior:"smooth",block:"center"});}
-}
-
-document.querySelectorAll(".order-card").forEach(c=>{
-  let q=0;
-  const n=c.dataset.name,p=+c.dataset.price,d=c.querySelector(".qty-display");
-  c.querySelectorAll(".qty-btn")[1].onclick=()=>{q++;d.textContent=q;cart[n]={price:p,qty:q};update();}
-  c.querySelectorAll(".qty-btn")[0].onclick=()=>{if(q>0){q--;d.textContent=q;q?cart[n].qty=q:delete cart[n];update();}}
-});
-
-function update(){
-  let t=0,c=0;
-  Object.values(cart).forEach(i=>{t+=i.price*i.qty;c+=i.qty});
-  cartTotal.innerText=t;cartCount.innerText=c;
-}
-
-function openCustomer(){
-  if(!Object.keys(cart).length){alert("Add items");return;}
-  customerModal.style.display="block";
-}
-
-function orderNo(){
-  const now = new Date();
-
-  const yy = String(now.getFullYear()).slice(2);
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-
-  const todayKey = `${yy}${mm}${dd}`;
-
-  let savedDate = localStorage.getItem("kgf_order_date");
-  let counter = parseInt(localStorage.getItem("kgf_order_count") || "0");
-
-  // 🔁 Reset counter if date changed
-  if (savedDate !== todayKey) {
-    counter = 0;
-    localStorage.setItem("kgf_order_date", todayKey);
-  }
-
-  counter++;
-  localStorage.setItem("kgf_order_count", counter);
-
-  const seq = String(counter).padStart(3, "0");
-  return `KGF-${todayKey}-${seq}`;
-}
-
-
-function confirmOrder(){
-  if(!custName.value||!custPhone.value||!custAddress.value){alert("Fill all details");return;}
-  let msg=`🧾 *Order No:* ${orderNo()}%0A%0A👤 ${custName.value}%0A📞 ${custPhone.value}%0A📍 ${custAddress.value}%0A%0A`;
-  let t=0;
-  for(const i in cart){msg+=`${i} x ${cart[i].qty} = ₹${cart[i].price*cart[i].qty}%0A`;t+=cart[i].price*cart[i].qty;}
-  msg+=`%0A*Total: ₹${t}*`;
-  window.open(`https://wa.me/917730989898?text=${msg}`,"_blank");
-}
+const _pmo = document.getElementById('privacyModalO');
+const _pmoObs = new MutationObserver(()=>{ _pmo.style.display = _pmo.classList.contains('show') ? 'flex' : 'none'; });
+_pmoObs.observe(_pmo,{attributes:true,attributeFilter:['class']});
 </script>
 
+<!-- CART BAR -->
+<div class="cart-bar">
+  <div class="cart-info">
+    <div class="cart-badge">
+      <i class="fa-solid fa-bag-shopping" style="color:var(--gold)"></i>
+      <span id="cartCount">0</span> items
+      <span class="count-chip" id="cartCountChip">0</span>
+    </div>
+    <div class="cart-total-text">₹<span id="cartTotal">0</span></div>
+  </div>
+  <button class="cart-btn" onclick="openCustomer()">
+    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+  </button>
+</div>
+
 <script>
-fetch("header.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("site-header").innerHTML = html;
-  });
-
-fetch("footer.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("site-footer").innerHTML = html;
-  });
-
 function toggleMenu(){
-  const nav = document.getElementById("nav");
-  if(nav) nav.classList.toggle("show");
+  document.getElementById('nav').classList.toggle('show');
+}
+
+const CART_KEY = 'kg_cart';
+const cartData = {};
+
+// Load existing cart from localStorage
+(function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    saved.forEach(it => { cartData[it.name] = { price: it.price, qty: it.qty }; });
+  } catch(e) {}
+})();
+
+function persistCart() {
+  const arr = Object.entries(cartData).map(([name, v]) => ({ name, price: v.price, qty: v.qty }));
+  localStorage.setItem(CART_KEY, JSON.stringify(arr));
+}
+
+const groups = document.querySelectorAll('.order-group');
+const container = document.getElementById('menuContainer');
+
+// Initialize cart bar from saved cart
+update();
+
+// Category filter
+function filterCategory(cat, btnEl) {
+  // Update filter button states
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if(btnEl) btnEl.classList.add('active');
+
+  container.classList.remove('single-center');
+  let target = null;
+  groups.forEach(g => {
+    if(cat === 'all') {
+      g.style.display = 'block';
+    } else if(g.dataset.category === cat) {
+      g.style.display = 'block';
+      target = g;
+    } else {
+      g.style.display = 'none';
+    }
+  });
+  if(target) {
+    container.classList.add('single-center');
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// Qty buttons
+document.querySelectorAll('.order-card').forEach(card => {
+  const n = card.dataset.name;
+  const p = +card.dataset.price;
+  const display = card.querySelector('.qty-display');
+  const [minusBtn, plusBtn] = card.querySelectorAll('.qty-btn');
+
+  // Init qty from saved cart
+  let q = cartData[n] ? cartData[n].qty : 0;
+  display.textContent = q;
+
+  plusBtn.onclick = () => {
+    q++;
+    display.textContent = q;
+    cartData[n] = { price: p, qty: q };
+    update();
+    persistCart();
+  };
+  minusBtn.onclick = () => {
+    if(q > 0) {
+      q--;
+      display.textContent = q;
+      if(q === 0) delete cartData[n];
+      else cartData[n].qty = q;
+      update();
+      persistCart();
+    }
+  };
+});
+
+function update() {
+  let total = 0, count = 0;
+  Object.values(cartData).forEach(i => { total += i.price * i.qty; count += i.qty; });
+  document.getElementById('cartTotal').textContent = total;
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartCountChip').textContent = count;
+  persistCart();
+}
+
+function openCustomer() {
+  if(!Object.keys(cartData).length) { alert('Add items to your cart first!'); return; }
+  document.getElementById('customerModal').classList.add('show');
+}
+
+// Close modal on backdrop click
+document.getElementById('customerModal').addEventListener('click', function(e) {
+  if(e.target === this) this.classList.remove('show');
+});
+
+function orderNo() {
+  const now = new Date();
+  const yy = String(now.getFullYear()).slice(2);
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  const todayKey = `${yy}${mm}${dd}`;
+  let savedDate = localStorage.getItem('kgf_order_date');
+  let counter = parseInt(localStorage.getItem('kgf_order_count') || '0');
+  if(savedDate !== todayKey) { counter = 0; localStorage.setItem('kgf_order_date', todayKey); }
+  counter++;
+  localStorage.setItem('kgf_order_count', counter);
+  return `KGF-${todayKey}-${String(counter).padStart(3,'0')}`;
+}
+
+function confirmOrder() {
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const notes = document.getElementById('custNotes').value.trim();
+  if(!name || !phone || !address) { alert('Please fill in your Name, Phone, and Address.'); return; }
+  let msg = `🧾 *Order No:* ${orderNo()}%0A%0A👤 ${name}%0A📞 ${phone}%0A📍 ${address}%0A`;
+  if(notes) msg += `📝 ${notes}%0A`;
+  msg += `%0A`;
+  let t = 0;
+  for(const item in cartData) {
+    msg += `${item} × ${cartData[item].qty} = ₹${cartData[item].price * cartData[item].qty}%0A`;
+    t += cartData[item].price * cartData[item].qty;
+  }
+  msg += `%0A*Total: ₹${t}*`;
+  window.open(`https://wa.me/917730989898?text=${msg}`, '_blank');
+  // Clear cart
+  for(const key in cartData) delete cartData[key];
+  persistCart();
+  document.querySelectorAll('.qty-display').forEach(el => el.textContent = '0');
+  update();
+  document.getElementById('customerModal').classList.remove('show');
 }
 </script>
 
