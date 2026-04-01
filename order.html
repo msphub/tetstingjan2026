@@ -316,12 +316,13 @@
     .cart-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: 68px;
-      background: rgba(12,16,38,0.96);
+      background: rgba(12,16,38,0.97);
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(241,199,109,0.15);
       padding: 0 24px;
       display: flex; justify-content: space-between; align-items: center;
-      z-index: 900;
+      z-index: 1500;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
     }
     .cart-info {
       display: flex; align-items: center; gap: 14px;
@@ -426,8 +427,8 @@
   <button class="filter-btn" onclick="filterCategory('nonveg-curries', this)">Non-Veg Curries</button>
   <button class="filter-btn" onclick="filterCategory('meals', this)">Meals</button>
   <button class="filter-btn" onclick="filterCategory('breads', this)">Breads</button>
+  <button class="filter-btn" onclick="filterCategory('rice', this)">Rice</button>
   <button class="filter-btn" onclick="filterCategory('beverages', this)">Beverages</button>
-  <button class="filter-btn" onclick="filterCategory('extras', this)">Extras</button>
 </div>
 
 <!-- MENU GRID -->
@@ -436,89 +437,100 @@
   <!-- VEG STARTERS -->
   <div class="order-group" data-category="veg-starters">
     <div class="order-subheading">Veg Starters</div>
-    <div class="order-card" data-name="Chilli Paneer" data-price="189"><strong><span class="veg-icon"></span>Chilli Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Paneer Manchurian" data-price="189"><strong><span class="veg-icon"></span>Paneer Manchurian</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Paneer Tikka (6 pcs)" data-price="199"><strong><span class="veg-icon"></span>Paneer Tikka (6 pcs)</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mushroom 65" data-price="179"><strong><span class="veg-icon"></span>Mushroom 65</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chilli Babycorn" data-price="179"><strong><span class="veg-icon"></span>Chilli Babycorn</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chilli Paneer" data-price="239"><strong><span class="veg-icon"></span>Chilli Paneer</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Manchurian" data-price="239"><strong><span class="veg-icon"></span>Paneer Manchurian</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Tikka (8 pcs)" data-price="249"><strong><span class="veg-icon"></span>Paneer Tikka (8 pcs)</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mushroom 65" data-price="219"><strong><span class="veg-icon"></span>Mushroom 65</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chilli Babycorn" data-price="219"><strong><span class="veg-icon"></span>Chilli Babycorn</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- NON-VEG STARTERS -->
   <div class="order-group" data-category="nonveg-starters">
     <div class="order-subheading">Non-Veg Starters</div>
-    <div class="order-card" data-name="Ginger Chicken Dry" data-price="219"><strong><span class="nonveg-icon"></span>Ginger Chicken Dry</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken 65" data-price="209"><strong><span class="nonveg-icon"></span>Chicken 65</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Leg Kebab" data-price="149"><strong><span class="nonveg-icon"></span>Tandoori Leg Kebab</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Chicken Tikka" data-price="199"><strong><span class="nonveg-icon"></span>Tandoori Chicken Tikka</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Egg Ginger Dry" data-price="209"><strong><span class="nonveg-icon"></span>Egg Ginger Dry</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Ginger Chicken Dry" data-price="249"><strong><span class="nonveg-icon"></span>Ginger Chicken Dry</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken 65" data-price="249"><strong><span class="nonveg-icon"></span>Chicken 65</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Chicken Tikka" data-price="239"><strong><span class="nonveg-icon"></span>Tandoori Chicken Tikka</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Majestic" data-price="259"><strong><span class="nonveg-icon"></span>Chicken Majestic</strong><div class="price">₹259</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken 555" data-price="259"><strong><span class="nonveg-icon"></span>Chicken 555</strong><div class="price">₹259</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Kaju Chicken Dry" data-price="289"><strong><span class="nonveg-icon"></span>Kaju Chicken Dry</strong><div class="price">₹289</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- BIRYANIS -->
   <div class="order-group" data-category="biryanis">
-    <div class="order-subheading">Biryanis</div>
-    <div class="order-card" data-name="Paneer Biryani" data-price="169"><strong><span class="veg-icon"></span>Paneer Biryani</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Biryani" data-price="189"><strong><span class="nonveg-icon"></span>Chicken Biryani</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mutton Biryani" data-price="239"><strong><span class="nonveg-icon"></span>Mutton Biryani</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Nalli Gosht Biryani" data-price="289"><strong><span class="nonveg-icon"></span>Nalli Gosht Biryani</strong><div class="price">₹289</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-subheading">Biryani</div>
+    <div class="order-card" data-name="Paneer Biryani" data-price="219"><strong><span class="veg-icon"></span>Paneer Biryani</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Veg Biryani" data-price="209"><strong><span class="veg-icon"></span>Veg Biryani</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Biryani (1 pc)" data-price="169"><strong><span class="nonveg-icon"></span>Chicken Biryani (1 pc)</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Biryani" data-price="239"><strong><span class="nonveg-icon"></span>Chicken Biryani</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mutton Biryani" data-price="299"><strong><span class="nonveg-icon"></span>Mutton Biryani</strong><div class="price">₹299</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Nalli Gosht Biryani" data-price="369"><strong><span class="nonveg-icon"></span>Nalli Gosht Biryani</strong><div class="price">₹369</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- FAMILY PACKS -->
   <div class="order-group" data-category="family-packs">
     <div class="order-subheading">Family Packs</div>
-    <div class="order-card" data-name="Chicken Biryani Family Pack" data-price="589"><strong><span class="nonveg-icon"></span>Chicken Biryani Family Pack</strong><div class="price">₹589</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mutton Biryani Family Pack" data-price="699"><strong><span class="nonveg-icon"></span>Mutton Biryani Family Pack</strong><div class="price">₹699</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Chicken Biryani Family Pack" data-price="649"><strong><span class="nonveg-icon"></span>Chicken Biryani Family Pack</strong><div class="price">₹649</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mutton Biryani Family Pack" data-price="779"><strong><span class="nonveg-icon"></span>Mutton Biryani Family Pack</strong><div class="price">₹779</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- VEG CURRIES -->
   <div class="order-group" data-category="veg-curries">
     <div class="order-subheading">Veg Curries</div>
-    <div class="order-card" data-name="Paneer Butter Masala" data-price="169"><strong><span class="veg-icon"></span>Paneer Butter Masala</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Kadhai Paneer" data-price="169"><strong><span class="veg-icon"></span>Kadhai Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Palak Paneer" data-price="169"><strong><span class="veg-icon"></span>Palak Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Dal Tadka" data-price="129"><strong><span class="veg-icon"></span>Dal Tadka</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Butter Masala" data-price="189"><strong><span class="veg-icon"></span>Paneer Butter Masala</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Paneer Shahi Korma" data-price="199"><strong><span class="veg-icon"></span>Paneer Shahi Korma</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Kadhai Paneer" data-price="189"><strong><span class="veg-icon"></span>Kadhai Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Kadhai Mushroom" data-price="179"><strong><span class="veg-icon"></span>Kadhai Mushroom</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Palak Paneer" data-price="179"><strong><span class="veg-icon"></span>Palak Paneer</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Dal Tadka" data-price="149"><strong><span class="veg-icon"></span>Dal Tadka</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Plain Palak" data-price="129"><strong><span class="veg-icon"></span>Plain Palak</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Veg Kolhapuri" data-price="169"><strong><span class="veg-icon"></span>Veg Kolhapuri</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- NON-VEG CURRIES -->
   <div class="order-group" data-category="nonveg-curries">
     <div class="order-subheading">Non-Veg Curries</div>
-    <div class="order-card" data-name="Butter Chicken" data-price="189"><strong><span class="nonveg-icon"></span>Butter Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Telangana Chicken Curry" data-price="189"><strong><span class="nonveg-icon"></span>Telangana Chicken Curry</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Telangana Mutton Curry" data-price="239"><strong><span class="nonveg-icon"></span>Telangana Mutton Curry</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Butter Chicken" data-price="219"><strong><span class="nonveg-icon"></span>Butter Chicken</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Telangana Chicken Curry" data-price="219"><strong><span class="nonveg-icon"></span>Telangana Chicken Curry</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Kadhai Chicken" data-price="229"><strong><span class="nonveg-icon"></span>Kadhai Chicken</strong><div class="price">₹229</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Telangana Mutton Curry" data-price="269"><strong><span class="nonveg-icon"></span>Telangana Mutton Curry</strong><div class="price">₹269</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- MEALS -->
   <div class="order-group" data-category="meals">
-    <div class="order-subheading">Meals (Bagara Rice)</div>
-    <div class="order-card" data-name="Bagara Rice with Paneer" data-price="169"><strong>Bagara Rice with Paneer</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Bagara Rice with Chicken" data-price="189"><strong>Bagara Rice with Chicken</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Bagara Rice with Mutton" data-price="219"><strong>Bagara Rice with Mutton</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-subheading">Meals (Bagara Rice Combos)</div>
+    <div class="order-card" data-name="Bagara Rice with Paneer" data-price="189"><strong><span class="veg-icon"></span>Bagara Rice with Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Bagara Rice with Chicken" data-price="219"><strong><span class="nonveg-icon"></span>Bagara Rice with Chicken</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Bagara Rice with Mutton" data-price="249"><strong><span class="nonveg-icon"></span>Bagara Rice with Mutton</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- BREADS -->
   <div class="order-group" data-category="breads">
     <div class="order-subheading">Breads</div>
-    <div class="order-card" data-name="Butter Naan" data-price="39"><strong>Butter Naan</strong><div class="price">₹39</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Garlic Naan" data-price="49"><strong>Garlic Naan</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Roti" data-price="29"><strong>Tandoori Roti</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Butter Naan" data-price="39"><strong><span class="veg-icon"></span>Butter Naan</strong><div class="price">₹39</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Plain Naan" data-price="29"><strong><span class="veg-icon"></span>Plain Naan</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Garlic Naan" data-price="49"><strong><span class="veg-icon"></span>Garlic Naan</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Roti" data-price="29"><strong><span class="veg-icon"></span>Tandoori Roti</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Tandoori Butter Roti" data-price="34"><strong><span class="veg-icon"></span>Tandoori Butter Roti</strong><div class="price">₹34</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Butter Kulcha" data-price="49"><strong><span class="veg-icon"></span>Butter Kulcha</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+  </div>
+
+  <!-- RICE -->
+  <div class="order-group" data-category="rice">
+    <div class="order-subheading">Rice</div>
+    <div class="order-card" data-name="Jeera Fried Rice" data-price="149"><strong><span class="veg-icon"></span>Jeera Fried Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Veg Fried Rice" data-price="169"><strong><span class="veg-icon"></span>Veg Fried Rice</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Curd Rice" data-price="119"><strong><span class="veg-icon"></span>Curd Rice</strong><div class="price">₹119</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Special Curd Rice" data-price="149"><strong><span class="veg-icon"></span>Special Curd Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
   <!-- BEVERAGES -->
   <div class="order-group" data-category="beverages">
     <div class="order-subheading">Beverages</div>
-    <div class="order-card" data-name="Mineral Water (1 L)" data-price="20"><strong>Mineral Water (1 L)</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mineral Water (1 Ltr)" data-price="20"><strong>Mineral Water (1 Ltr)</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Mineral Water (500 ml)" data-price="10"><strong>Mineral Water (500 ml)</strong><div class="price">₹10</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
     <div class="order-card" data-name="Soft Drinks" data-price="20"><strong>Soft Drinks</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- EXTRA ITEMS -->
-  <div class="order-group" data-category="extras">
-    <div class="order-subheading">Extra Items</div>
-    <div class="order-card" data-name="Veg Fried Rice" data-price="149"><strong><span class="veg-icon"></span>Veg Fried Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Fried Rice" data-price="169"><strong><span class="nonveg-icon"></span>Chicken Fried Rice</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Veg Noodles" data-price="139"><strong><span class="veg-icon"></span>Veg Noodles</strong><div class="price">₹139</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Noodles" data-price="159"><strong><span class="nonveg-icon"></span>Chicken Noodles</strong><div class="price">₹159</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Gobi Manchurian" data-price="159"><strong><span class="veg-icon"></span>Gobi Manchurian</strong><div class="price">₹159</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Egg Biryani" data-price="149"><strong><span class="nonveg-icon"></span>Egg Biryani</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Double Ka Meetha" data-price="99"><strong><span class="veg-icon"></span>Double Ka Meetha</strong><div class="price">₹99</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Apricot Delight" data-price="129"><strong><span class="veg-icon"></span>Apricot Delight</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
+    <div class="order-card" data-name="Ginger Beer" data-price="109"><strong>Ginger Beer</strong><div class="price">₹109</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
   </div>
 
 </div><!-- /category-container -->
@@ -549,42 +561,29 @@
   </div>
   <div class="footer-copy">© <script>document.write(new Date().getFullYear())</script> Kanha's Grand. All rights reserved.</div>
   <div style="margin-top:12px;font-size:0.78rem;color:rgba(154,150,176,0.55);">
-    <a href="#privacy-policy" onclick="document.getElementById('privacyModalO').classList.add('show');return false;" style="color:rgba(241,199,109,0.55);text-decoration:none;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.55)'">Privacy Policy</a>
-    &nbsp;·&nbsp;
-    <span>By ordering, you agree to our <a href="#privacy-policy" onclick="document.getElementById('privacyModalO').classList.add('show');return false;" style="color:rgba(241,199,109,0.55);text-decoration:underline;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.55)'">terms</a></span>
+    <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:none;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">Privacy Policy</a>
+    &nbsp;·&nbsp; By ordering, you agree to our <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:underline;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">terms</a>
   </div>
 </footer>
 
 <!-- PRIVACY POLICY MODAL -->
-<div id="privacyModalO" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.classList.remove('show')">
-  <div style="background:#111832;max-width:560px;width:100%;border-radius:20px;padding:32px;border:1px solid rgba(241,199,109,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.8);max-height:85vh;overflow-y:auto;position:relative;">
-    <button onclick="document.getElementById('privacyModalO').classList.remove('show')" style="position:absolute;top:16px;right:18px;background:none;border:none;color:#9a96b0;font-size:1.2rem;cursor:pointer;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9a96b0'">✕</button>
-    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#f1c76d;margin-bottom:10px;">Legal</div>
-    <h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.5rem;margin-bottom:20px;">Privacy Policy</h2>
+<div id="privacyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#111832;max-width:540px;width:100%;border-radius:20px;padding:32px;border:1px solid rgba(241,199,109,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.8);max-height:85vh;overflow-y:auto;position:relative;">
+    <button onclick="document.getElementById('privacyModal').style.display='none'" style="position:absolute;top:16px;right:18px;background:none;border:none;color:#9a96b0;font-size:1.3rem;cursor:pointer;line-height:1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9a96b0'">✕</button>
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#f1c76d;margin-bottom:8px;">Legal</div>
+    <h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.4rem;margin-bottom:18px;">Privacy Policy</h2>
     <div style="color:rgba(240,236,228,0.75);font-size:0.88rem;line-height:1.8;">
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">1. Information We Collect</strong><br>
-      When you place an order via WhatsApp, we collect your name, phone number, and delivery address solely to process and deliver your order.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">2. How We Use Your Information</strong><br>
-      Your details are used exclusively to fulfill your order, confirm delivery, and contact you if needed regarding your order. We do not use your information for marketing without your consent.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">3. Data Sharing</strong><br>
-      We do not sell, trade, or share your personal information with any third party. Your data remains strictly between you and Kanha's Grand.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">4. WhatsApp Orders</strong><br>
-      Orders are processed through WhatsApp. By sending your order, you agree to WhatsApp's own privacy policy and terms of service. We only retain your order details for delivery and record purposes.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">5. Payment</strong><br>
-      We operate on a pay-on-delivery basis. No payment information is collected or stored on this website.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">6. Cookies &amp; Local Storage</strong><br>
-      This website uses browser local storage to remember your cart items during your visit. No tracking cookies are used.</p>
-      <p style="margin-bottom:14px;"><strong style="color:#f1c76d;">7. Contact</strong><br>
-      For any privacy concerns, please reach us at <a href="https://wa.me/917730989898" style="color:#f1c76d;">+91 77309 89898</a> or via our contact section.</p>
-      <p style="color:rgba(154,150,176,0.6);font-size:0.8rem;margin-top:20px;">Last updated: 2025 · Kanha's Grand, Mancherial, Telangana</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">1. Information We Collect</strong><br>When you place an order via WhatsApp, we collect your name, phone number, and delivery address solely to process and deliver your order.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">2. How We Use Your Information</strong><br>Your details are used exclusively to fulfill your order and contact you if needed. We do not use your information for marketing without your consent.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">3. Data Sharing</strong><br>We do not sell, trade, or share your personal information with any third party.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">4. WhatsApp Orders</strong><br>Orders are processed through WhatsApp. By sending your order, you also agree to WhatsApp's own privacy policy. We retain order details only for delivery purposes.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">5. Payment</strong><br>We operate on a pay-on-delivery basis. No payment information is collected or stored on this website.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">6. Local Storage</strong><br>This website uses browser local storage to remember your cart items during your visit. No tracking cookies are used.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">7. Contact</strong><br>For privacy concerns, contact us at <a href="https://wa.me/917730989898" style="color:#f1c76d;">+91 77309 89898</a>.</p>
+      <p style="color:rgba(154,150,176,0.55);font-size:0.78rem;margin-top:18px;">Last updated: 2025 · Kanha's Grand, Mancherial, Telangana</p>
     </div>
   </div>
 </div>
-<script>
-const _pmo = document.getElementById('privacyModalO');
-const _pmoObs = new MutationObserver(()=>{ _pmo.style.display = _pmo.classList.contains('show') ? 'flex' : 'none'; });
-_pmoObs.observe(_pmo,{attributes:true,attributeFilter:['class']});
-</script>
 
 <!-- CART BAR -->
 <div class="cart-bar">
@@ -596,146 +595,132 @@ _pmoObs.observe(_pmo,{attributes:true,attributeFilter:['class']});
     </div>
     <div class="cart-total-text">₹<span id="cartTotal">0</span></div>
   </div>
-  <button class="cart-btn" onclick="openCustomer()">
+  <button class="cart-btn" id="cartOrderBtn" onclick="openCustomer()">
     <i class="fab fa-whatsapp"></i> Order on WhatsApp
   </button>
 </div>
 
 <script>
+// ── Menu toggle ──
 function toggleMenu(){
   document.getElementById('nav').classList.toggle('show');
 }
 
+// ── Cart state ──
 const CART_KEY = 'kg_cart';
-const cartData = {};
+let cart = {};
 
-// Load existing cart from localStorage
-(function loadCart() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    saved.forEach(it => { cartData[it.name] = { price: it.price, qty: it.qty }; });
-  } catch(e) {}
-})();
+try {
+  const saved = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  saved.forEach(it => { cart[it.name] = { price: it.price, qty: it.qty }; });
+} catch(e) {}
 
-function persistCart() {
-  const arr = Object.entries(cartData).map(([name, v]) => ({ name, price: v.price, qty: v.qty }));
-  localStorage.setItem(CART_KEY, JSON.stringify(arr));
+function saveCart() {
+  localStorage.setItem(CART_KEY, JSON.stringify(
+    Object.entries(cart).map(([name, v]) => ({ name, price: v.price, qty: v.qty }))
+  ));
+  refreshBar();
 }
 
-const groups = document.querySelectorAll('.order-group');
-const container = document.getElementById('menuContainer');
-
-// Initialize cart bar from saved cart
-update();
-
-// Category filter
-function filterCategory(cat, btnEl) {
-  // Update filter button states
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  if(btnEl) btnEl.classList.add('active');
-
-  container.classList.remove('single-center');
-  let target = null;
-  groups.forEach(g => {
-    if(cat === 'all') {
-      g.style.display = 'block';
-    } else if(g.dataset.category === cat) {
-      g.style.display = 'block';
-      target = g;
-    } else {
-      g.style.display = 'none';
-    }
-  });
-  if(target) {
-    container.classList.add('single-center');
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-// Qty buttons
-document.querySelectorAll('.order-card').forEach(card => {
-  const n = card.dataset.name;
-  const p = +card.dataset.price;
-  const display = card.querySelector('.qty-display');
-  const [minusBtn, plusBtn] = card.querySelectorAll('.qty-btn');
-
-  // Init qty from saved cart
-  let q = cartData[n] ? cartData[n].qty : 0;
-  display.textContent = q;
-
-  plusBtn.onclick = () => {
-    q++;
-    display.textContent = q;
-    cartData[n] = { price: p, qty: q };
-    update();
-    persistCart();
-  };
-  minusBtn.onclick = () => {
-    if(q > 0) {
-      q--;
-      display.textContent = q;
-      if(q === 0) delete cartData[n];
-      else cartData[n].qty = q;
-      update();
-      persistCart();
-    }
-  };
-});
-
-function update() {
+function refreshBar() {
   let total = 0, count = 0;
-  Object.values(cartData).forEach(i => { total += i.price * i.qty; count += i.qty; });
+  Object.values(cart).forEach(i => { total += i.price * i.qty; count += i.qty; });
   document.getElementById('cartTotal').textContent = total;
   document.getElementById('cartCount').textContent = count;
   document.getElementById('cartCountChip').textContent = count;
-  persistCart();
+  const btn = document.getElementById('cartOrderBtn');
+  btn.disabled = count === 0;
+  btn.style.opacity = count === 0 ? '0.5' : '1';
 }
 
+// ── Category filter ──
+const groups = document.querySelectorAll('.order-group');
+const container = document.getElementById('menuContainer');
+
+function filterCategory(cat, btnEl) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if(btnEl) btnEl.classList.add('active');
+  container.classList.remove('single-center');
+  let target = null;
+  groups.forEach(g => {
+    if(cat === 'all') { g.style.display = 'block'; }
+    else if(g.dataset.category === cat) { g.style.display = 'block'; target = g; }
+    else { g.style.display = 'none'; }
+  });
+  if(target) {
+    container.classList.add('single-center');
+    target.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+
+// ── Qty buttons ──
+document.querySelectorAll('.order-card').forEach(card => {
+  const name = card.dataset.name;
+  const price = +card.dataset.price;
+  const display = card.querySelector('.qty-display');
+  const [minus, plus] = card.querySelectorAll('.qty-btn');
+
+  display.textContent = cart[name] ? cart[name].qty : 0;
+
+  plus.onclick = () => {
+    if(!cart[name]) cart[name] = { price, qty: 0 };
+    cart[name].qty++;
+    display.textContent = cart[name].qty;
+    saveCart();
+  };
+  minus.onclick = () => {
+    if(!cart[name] || cart[name].qty === 0) return;
+    cart[name].qty--;
+    if(cart[name].qty === 0) delete cart[name];
+    display.textContent = cart[name] ? cart[name].qty : 0;
+    saveCart();
+  };
+});
+
+// ── Init ──
+refreshBar();
+
+// ── Customer modal ──
 function openCustomer() {
-  if(!Object.keys(cartData).length) { alert('Add items to your cart first!'); return; }
+  if(!Object.keys(cart).length) { alert('Add items to your cart first!'); return; }
   document.getElementById('customerModal').classList.add('show');
 }
-
-// Close modal on backdrop click
 document.getElementById('customerModal').addEventListener('click', function(e) {
   if(e.target === this) this.classList.remove('show');
 });
 
+// ── Order number ──
 function orderNo() {
   const now = new Date();
-  const yy = String(now.getFullYear()).slice(2);
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
-  const dd = String(now.getDate()).padStart(2, '0');
-  const todayKey = `${yy}${mm}${dd}`;
+  const key = `${String(now.getFullYear()).slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
   let savedDate = localStorage.getItem('kgf_order_date');
   let counter = parseInt(localStorage.getItem('kgf_order_count') || '0');
-  if(savedDate !== todayKey) { counter = 0; localStorage.setItem('kgf_order_date', todayKey); }
+  if(savedDate !== key) { counter = 0; localStorage.setItem('kgf_order_date', key); }
   counter++;
   localStorage.setItem('kgf_order_count', counter);
-  return `KGF-${todayKey}-${String(counter).padStart(3,'0')}`;
+  return `KGF-${key}-${String(counter).padStart(3,'0')}`;
 }
 
+// ── Confirm order ──
 function confirmOrder() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
   const address = document.getElementById('custAddress').value.trim();
   const notes = document.getElementById('custNotes').value.trim();
-  if(!name || !phone || !address) { alert('Please fill in your Name, Phone, and Address.'); return; }
+  if(!name || !phone || !address) { alert('Please fill in Name, Phone and Address.'); return; }
   let msg = `🧾 *Order No:* ${orderNo()}%0A%0A👤 ${name}%0A📞 ${phone}%0A📍 ${address}%0A`;
   if(notes) msg += `📝 ${notes}%0A`;
   msg += `%0A`;
-  let t = 0;
-  for(const item in cartData) {
-    msg += `${item} × ${cartData[item].qty} = ₹${cartData[item].price * cartData[item].qty}%0A`;
-    t += cartData[item].price * cartData[item].qty;
+  let total = 0;
+  for(const item in cart) {
+    msg += `${item} × ${cart[item].qty} = ₹${cart[item].price * cart[item].qty}%0A`;
+    total += cart[item].price * cart[item].qty;
   }
-  msg += `%0A*Total: ₹${t}*`;
+  msg += `%0A*Total: ₹${total}*`;
   window.open(`https://wa.me/917730989898?text=${msg}`, '_blank');
-  // Clear cart
-  for(const key in cartData) delete cartData[key];
-  persistCart();
+  cart = {};
+  saveCart();
   document.querySelectorAll('.qty-display').forEach(el => el.textContent = '0');
-  update();
   document.getElementById('customerModal').classList.remove('show');
 }
 </script>
