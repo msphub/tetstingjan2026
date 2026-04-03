@@ -11,8 +11,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://kanhasgrand.com/">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600&family=Ruthie&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/rushk" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600&family=Italianno&family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -233,13 +232,13 @@
 
     /* ── Main heading ── */
     #home h1 {
-      font-family: 'Rushk', 'Ruthie', 'Playfair Display', serif;
-      font-size: clamp(3rem, 9vw, 7rem);
+      font-family: 'Italianno', 'Pinyon Script', cursive;
+      font-size: clamp(4rem, 12vw, 9rem);
       font-weight: 400;
-      line-height: 1.05;
+      line-height: 1.1;
       color: #fff;
       margin-bottom: 6px;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
     }
     .h1-line1 {
       display: block; opacity: 0;
@@ -250,24 +249,23 @@
       animation: slideInRight 1s cubic-bezier(0.22,1,0.36,1) forwards 0.75s;
     }
     .h1-gold {
-      color: #fff;
+      color: var(--gold);
       position: relative; display: inline-block; overflow: hidden;
-      text-shadow: 0 0 60px rgba(255,255,255,0.15);
+      text-shadow: 0 0 40px rgba(241,199,109,0.45);
     }
     .h1-gold::after {
       content: '';
       position: absolute; top:0; left:-100%; width:55%; height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
       animation: shimmer 1.8s ease forwards 1.6s;
     }
     @keyframes shimmer {
       0%   { left:-100%; opacity:1; }
       100% { left:160%;  opacity:0; }
     }
-    /* typewriter cursor after Grand */
     .h1-cursor {
       display: inline-block;
-      width: 3px; height: 0.75em;
+      width: 3px; height: 0.6em;
       background: var(--gold);
       margin-left: 4px;
       vertical-align: middle;
@@ -784,7 +782,61 @@
     .btn-checkout:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
     .cart-empty { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
 
-    /* ─── CUSTOMER INFO FORM ─── */
+    /* ─── CUSTOMER MODAL ─── */
+    .cust-modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 4500;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .cust-modal-overlay.show { display: flex; }
+    .cust-modal-box {
+      background: #111832;
+      max-width: 420px; width: 100%;
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid rgba(241,199,109,0.18);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .cust-modal-box h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold); font-size: 1.25rem;
+      margin-bottom: 18px; text-align: center;
+    }
+    .cust-modal-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
+    }
+    .cust-modal-close:hover { color: #fff; }
+    .cust-modal-box input,
+    .cust-modal-box textarea {
+      width: 100%; padding: 11px 14px; margin: 6px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #fff; font-family: inherit; font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .cust-modal-box input:focus,
+    .cust-modal-box textarea:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(241,199,109,0.1);
+    }
+    .cust-modal-box textarea { resize: vertical; min-height: 72px; }
+    .cust-modal-submit {
+      width: 100%; margin-top: 12px; padding: 14px;
+      background: var(--green); color: #fff; border: none;
+      border-radius: 12px; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .cust-modal-submit:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+    .cust-field-error { border-color: #ff4d4d !important; }
     .customer-info {
       max-width: 700px; width: 100%;
       background: var(--card-bg);
@@ -1213,6 +1265,21 @@
   </button>
 </div>
 
+<!-- CUSTOMER DETAILS MODAL -->
+<div class="cust-modal-overlay" id="custModal" onclick="if(event.target===this)closeCustModal()">
+  <div class="cust-modal-box">
+    <button class="cust-modal-close" onclick="closeCustModal()">✕</button>
+    <h3><i class="fab fa-whatsapp" style="margin-right:8px"></i>Your Details</h3>
+    <input id="custName"    type="text" placeholder="Full Name *">
+    <input id="custPhone"   type="tel"  placeholder="Phone Number *">
+    <textarea id="custAddress" placeholder="Delivery Address *"></textarea>
+    <input id="custNotes"   type="text" placeholder="Special instructions (optional)">
+    <button class="cust-modal-submit" onclick="confirmCheckout()">
+      <i class="fab fa-whatsapp"></i> Send Order on WhatsApp
+    </button>
+  </div>
+</div>
+
 <script>
 function toggleMenu(){
   document.getElementById('nav').classList.toggle('show');
@@ -1226,9 +1293,159 @@ function saveCart(){
   renderCartCount();
   renderCartDrawer();
   refreshCardQuantities();
-  updateSubtotalUI();
-  toggleCheckoutUI();
 }
+
+function changeQtyFromCard(name, price, delta){
+  price = Number(price);
+  let item = cart.find(i => i.name === name);
+  let newQty = item ? item.qty + delta : (delta > 0 ? 1 : 0);
+  if(newQty <= 0){ cart = cart.filter(i => i.name !== name); }
+  else { if(item){ item.qty = newQty; } else { cart.push({ name, price, qty: newQty }); } }
+  saveCart();
+  if(delta > 0){ showToast(name + ' added'); shakeCartIcon(); }
+}
+
+function showToast(message){
+  const t = document.getElementById('toast');
+  t.innerText = message;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 1400);
+}
+
+function shakeCartIcon(){
+  const btn = document.getElementById('floatingCart');
+  if(btn){ btn.classList.add('cart-shake'); setTimeout(() => btn.classList.remove('cart-shake'), 400); }
+}
+
+function renderCartCount(){
+  const total = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+}
+
+function renderCartDrawer(){
+  const wrap = document.getElementById('cartItemsWrap');
+  wrap.innerHTML = '';
+  if(cart.length === 0){
+    wrap.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+    document.getElementById('cartTotal').textContent = 'Subtotal: ₹0';
+    return;
+  }
+  let subtotal = 0;
+  cart.forEach((it, index) => {
+    subtotal += it.price * it.qty;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="meta">
+        <p><strong>${escapeHtml(it.name)}</strong></p>
+        <p class="small">₹${it.price} × ${it.qty} = ₹${it.price * it.qty}</p>
+      </div>
+      <div class="actions">
+        <button class="qty-btn" onclick="decreaseQty(${index})">−</button>
+        <span style="min-width:24px;text-align:center">${it.qty}</span>
+        <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+        <button class="qty-btn" onclick="removeItem(${index})" style="color:#ff6b6b">🗑</button>
+      </div>`;
+    wrap.appendChild(div);
+  });
+  document.getElementById('cartTotal').textContent = 'Subtotal: ₹' + subtotal;
+}
+
+function refreshCardQuantities(){
+  document.querySelectorAll('.order-card').forEach(card => {
+    const name = card.dataset.name;
+    const span = card.querySelector('.qty-display');
+    if(!span) return;
+    const item = cart.find(i => i.name === name);
+    span.textContent = item ? item.qty : 0;
+  });
+}
+
+function increaseQty(i){ cart[i].qty++; saveCart(); }
+function decreaseQty(i){ if(cart[i].qty > 1) cart[i].qty--; else cart.splice(i,1); saveCart(); }
+function removeItem(i){ cart.splice(i,1); saveCart(); }
+function clearCart(){ if(!confirm('Clear cart?')) return; cart = []; saveCart(); }
+
+function toggleCart(){
+  const drawer = document.getElementById('cartDrawer');
+  drawer.classList.toggle('open');
+  drawer.setAttribute('aria-hidden', !drawer.classList.contains('open'));
+  renderCartDrawer();
+}
+
+// ── Open customer modal from cart drawer ──
+function checkout(){
+  if(cart.length === 0){ alert('Your cart is empty!'); return; }
+  // close drawer first, then open modal
+  document.getElementById('cartDrawer').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('custModal').classList.add('show');
+  }, 200);
+}
+
+function closeCustModal(){
+  document.getElementById('custModal').classList.remove('show');
+}
+
+function confirmCheckout(){
+  const name    = document.getElementById('custName').value.trim();
+  const phone   = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const notes   = document.getElementById('custNotes').value.trim();
+  const phoneDigits = phone.replace(/\D/g,'');
+
+  // clear errors
+  ['custName','custPhone','custAddress'].forEach(id =>
+    document.getElementById(id).classList.remove('cust-field-error'));
+
+  if(!name || !phone || !address){
+    if(!name)    document.getElementById('custName').classList.add('cust-field-error');
+    if(!phone)   document.getElementById('custPhone').classList.add('cust-field-error');
+    if(!address) document.getElementById('custAddress').classList.add('cust-field-error');
+    alert('Please fill your Name, Phone Number and Address.');
+    return;
+  }
+  if(phoneDigits.length !== 10){
+    document.getElementById('custPhone').classList.add('cust-field-error');
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+
+  let msg = `🧾 *Kanha's Grand Order*%0A%0A`;
+  let total = 0;
+  cart.forEach(it => {
+    msg += `${encodeURIComponent(it.name)} × ${it.qty} = ₹${it.price * it.qty}%0A`;
+    total += it.price * it.qty;
+  });
+  msg += `%0A*Subtotal: ₹${total}*%0A%0A`;
+  msg += `👤 ${encodeURIComponent(name)}%0A`;
+  msg += `📞 ${encodeURIComponent(phoneDigits)}%0A`;
+  msg += `📍 ${encodeURIComponent(address)}%0A`;
+  if(notes) msg += `📝 ${encodeURIComponent(notes)}%0A`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+
+  cart = [];
+  saveCart();
+  closeCustModal();
+  ['custName','custPhone','custAddress','custNotes'].forEach(id =>
+    document.getElementById(id).value = '');
+}
+
+function escapeHtml(text){
+  const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCartCount();
+  renderCartDrawer();
+  refreshCardQuantities();
+});
+</script>
+
+</body>
+</html>
 
 function changeQtyFromCard(name, price, delta){
   price = Number(price);
@@ -1296,92 +1513,3 @@ function refreshCardQuantities(){
   });
 }
 
-function getSubtotal(){ return cart.reduce((sum, it) => sum + it.price * it.qty, 0); }
-
-function updateSubtotalUI(){
-  const el = document.getElementById('mainSubtotal');
-  if(el) el.textContent = 'Subtotal: ₹' + getSubtotal();
-}
-
-function toggleCheckoutUI(){
-  const infoBox = document.getElementById('customerInfoBox');
-  const btn = document.getElementById('mainCheckoutBtn');
-  if(!infoBox || !btn) return;
-  infoBox.style.display = cart.length > 0 ? 'block' : 'none';
-  updateCheckoutButtonState();
-}
-
-function updateCheckoutButtonState(){
-  const btn = document.getElementById('mainCheckoutBtn');
-  if(!btn) return;
-  if(cart.length === 0){ btn.disabled = true; return; }
-  const name = document.getElementById('customerName')?.value.trim();
-  const phone = document.getElementById('customerPhone')?.value.trim();
-  const address = document.getElementById('customerAddress')?.value.trim();
-  const phoneDigits = phone ? phone.replace(/\D/g, '') : '';
-  btn.disabled = !(name && address && phoneDigits.length === 10);
-}
-
-function increaseQty(i){ cart[i].qty++; saveCart(); }
-function decreaseQty(i){ if(cart[i].qty > 1) cart[i].qty--; else cart.splice(i,1); saveCart(); }
-function removeItem(i){ cart.splice(i,1); saveCart(); }
-function clearCart(){ if(!confirm('Clear cart?')) return; cart = []; saveCart(); }
-
-function toggleCart(){
-  const drawer = document.getElementById('cartDrawer');
-  drawer.classList.toggle('open');
-  drawer.setAttribute('aria-hidden', !drawer.classList.contains('open'));
-  renderCartDrawer();
-}
-
-function checkout(){
-  if(cart.length === 0){ alert('Your cart is empty!'); return; }
-  const nameEl = document.getElementById('customerName');
-  const phoneEl = document.getElementById('customerPhone');
-  const addressEl = document.getElementById('customerAddress');
-  const notesEl = document.getElementById('customerNotes');
-  if(!nameEl){ alert('Please scroll to the order form and fill in your details.'); return; }
-  const name = nameEl.value.trim();
-  const phone = phoneEl.value.trim();
-  const address = addressEl.value.trim();
-  const notes = notesEl.value.trim();
-  const phoneDigits = phone.replace(/\D/g, '');
-  [nameEl, phoneEl, addressEl].forEach(el => el.classList.remove('field-error'));
-  const missing = [];
-  if(!name) missing.push(nameEl);
-  if(!phone) missing.push(phoneEl);
-  if(!address) missing.push(addressEl);
-  if(missing.length > 0){ missing.forEach(el => el.classList.add('field-error')); missing[0].focus(); alert('Please fill your Name, Mobile Number, and Address.'); return; }
-  if(phoneDigits.length !== 10){ phoneEl.classList.add('field-error'); phoneEl.focus(); alert('Please enter a valid 10-digit mobile number.'); return; }
-  let message = "Kanha's Grand Order:%0A%0A";
-  let total = 0;
-  cart.forEach(it => { message += encodeURIComponent(it.name) + " x " + it.qty + " = ₹" + (it.price * it.qty) + "%0A"; total += it.price * it.qty; });
-  message += "%0ASubtotal: ₹" + total + "%0A%0ACustomer Details:%0A";
-  message += "Name: " + encodeURIComponent(name) + "%0A";
-  message += "Mobile: " + encodeURIComponent(phoneDigits) + "%0A";
-  message += "Address: " + encodeURIComponent(address) + "%0A";
-  if(notes) message += "Notes: " + encodeURIComponent(notes) + "%0A";
-  window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + message, "_blank");
-  cart = [];
-  saveCart();
-  nameEl.value = ''; phoneEl.value = ''; addressEl.value = ''; notesEl.value = '';
-}
-
-function escapeHtml(text){
-  const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
-  return text.replace(/[&<>"']/g, m => map[m]);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderCartCount();
-  renderCartDrawer();
-  refreshCardQuantities();
-  updateSubtotalUI();
-  toggleCheckoutUI();
-});
-
-
-</script>
-
-</body>
-</html>
