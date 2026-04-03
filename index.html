@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kanha's Grand | Authentic Telangana Flavors</title>
+  <meta name="description" content="Kanha's Grand in Mancherial serves authentic Telangana biryanis, curries, tandoori starters and Bagara rice combos. Order on WhatsApp for home delivery.">
+  <meta property="og:title" content="Kanha's Grand | Authentic Telangana Flavors">
+  <meta property="og:description" content="Signature Nalli Gosht Biryani, Telangana-style curries, tandoori starters and more. Order now on WhatsApp.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kanhasgrand.com/">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600&family=Italianno&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --gold: #f1c76d;
+      --gold-light: #f9e0a0;
+      --gold-dim: rgba(241,199,109,0.15);
+      --navy: #0a0e2a;
+      --navy-mid: #0f1428;
+      --card-bg: #12172e;
+      --card-border: rgba(241,199,109,0.12);
+      --text: #f0ece4;
+      --muted: #9a96b0;
+      --green: #25D366;
+      --header-h: 72px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      padding-top: var(--header-h);
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      height: var(--header-h);
+      background: rgba(8, 10, 26, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      z-index: 1000;
+    }
+    header img { height: 44px; }
+    nav { display: flex; gap: 4px; align-items: center; }
+    nav a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      position: relative;
+    }
+    nav a:hover { color: #fff; }
+    nav a.nav-active {
+      color: #fff;
+      font-weight: 600;
+    }
+    nav a.nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 16px; right: 16px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 99px;
+    }
+    nav a.nav-cta {
+      background: var(--gold);
+      color: #0a0e2a;
+      font-weight: 700;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+    nav a.nav-cta:hover { background: var(--gold-light); color: #0a0e2a; }
+    nav a.nav-cta::after { display: none; }
+
+    .menu-toggle { display: none; font-size: 24px; color: rgba(255,255,255,0.8); cursor: pointer; }
+    @media (max-width: 768px) {
+      header { padding: 0 20px; }
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(8,10,26,0.98);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: var(--header-h); right: 0;
+        width: 200px; padding: 12px;
+        border-left: 1px solid rgba(255,255,255,0.07);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        gap: 2px;
+      }
+      nav a { width: 100%; }
+      nav.show { display: flex; }
+      .menu-toggle { display: block; }
+    }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(241,199,109,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(241,100,50,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 70%, rgba(100,50,200,0.04) 0%, transparent 60%),
+        linear-gradient(160deg, #060818 0%, #0a0d1f 40%, #0c0a16 100%);
+    }
+
+    /* grid texture */
+    #home::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(241,199,109,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(241,199,109,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 60px 60px; }
+    }
+
+    /* pulsing centre glow */
+    #home::after {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(241,199,109,0.09) 0%, transparent 65%);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      animation: heroPulse 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes heroPulse {
+      0%,100% { opacity:0.6; transform:translate(-50%,-50%) scale(1);    }
+      50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.18); }
+    }
+
+    /* ── Z-INDEX LAYERS ── */
+    #heroStars       { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+    .hero-bg-spice   { position:absolute; z-index:1; }
+    .hero-particle   { position:absolute; z-index:1; }
+    .hero-spice      { position:absolute; z-index:1; }
+    .hero-scroll     { position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:3; }
+    .hero-content    {
+      position: relative; z-index:2;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      width: 100%;
+    }
+
+    /* ── Background spice layer ── */
+    .hero-bg-spice {
+      position: absolute;
+      font-size: var(--sz, 3rem);
+      opacity: var(--op, 0.06);
+      pointer-events: none;
+      user-select: none;
+      filter: blur(1px) drop-shadow(0 0 12px rgba(241,199,109,0.2));
+      animation: bgSpiceDrift var(--dur, 12s) ease-in-out infinite var(--delay, 0s);
+      transform-origin: center;
+    }
+    @keyframes bgSpiceDrift {
+      0%,100% { transform: rotate(var(--r0,0deg)) scale(1);   opacity: var(--op,0.06); }
+      50%      { transform: rotate(var(--r1,8deg)) scale(1.05); opacity: calc(var(--op,0.06) * 1.5); }
+    }
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── Top badge ── */
+    .hero-welcome-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(241,199,109,0.08);
+      border: 1px solid rgba(241,199,109,0.28);
+      border-radius: 999px;
+      padding: 7px 22px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeDown 0.8s ease forwards 0.2s;
+      backdrop-filter: blur(6px);
+    }
+    .hero-welcome-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--gold); border-radius: 50%;
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity:1; transform:scale(1);   }
+      50%      { opacity:.4; transform:scale(0.5); }
+    }
+
+    /* ── Main heading ── */
+    #home h1 {
+      font-family: 'Italianno', 'Pinyon Script', cursive;
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .h1-line1 {
+      display: block; opacity: 0;
+      animation: slideInLeft 1s cubic-bezier(0.22,1,0.36,1) forwards 0.5s;
+    }
+    .h1-line2 {
+      display: block; opacity: 0;
+      animation: slideInRight 1s cubic-bezier(0.22,1,0.36,1) forwards 0.75s;
+    }
+    .h1-gold {
+      color: var(--gold);
+      position: relative; display: inline-block; overflow: hidden;
+      text-shadow: 0 0 40px rgba(241,199,109,0.45);
+    }
+    .h1-gold::after {
+      content: '';
+      position: absolute; top:0; left:-100%; width:55%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
+      animation: shimmer 1.8s ease forwards 1.6s;
+    }
+    @keyframes shimmer {
+      0%   { left:-100%; opacity:1; }
+      100% { left:160%;  opacity:0; }
+    }
+    .h1-cursor {
+      display: inline-block;
+      width: 3px; height: 0.6em;
+      background: var(--gold);
+      margin-left: 4px;
+      vertical-align: middle;
+      border-radius: 2px;
+      opacity: 0;
+      animation: cursorAppear 0.1s ease forwards 1.5s, cursorBlink 1s step-end infinite 1.6s;
+    }
+    @keyframes cursorAppear { to { opacity: 1; } }
+    @keyframes cursorBlink  { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── Divider ── */
+    .hero-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 32px auto 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.0s;
+    }
+    .hero-divider-line {
+      height: 1px; width: 80px;
+      background: linear-gradient(to right, transparent, rgba(241,199,109,0.45));
+    }
+    .hero-divider-line.right {
+      background: linear-gradient(to left, transparent, rgba(241,199,109,0.45));
+    }
+    .hero-divider-icon { color: var(--gold); font-size: 1rem; }
+
+    /* ── Subtitle ── */
+    #home > p, .hero-content > p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 500px;
+      line-height: 1.8;
+      margin: 0 auto 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.15s;
+    }
+
+    /* ── Feature chips ── */
+    .hero-chips {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.3s;
+    }
+    .hero-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.78rem; font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.25s;
+    }
+    .hero-chip i { color: var(--gold); font-size: 0.75rem; }
+    .hero-chip:hover { border-color: rgba(241,199,109,0.35); color: var(--gold-light); background: rgba(241,199,109,0.06); }
+
+    /* ── CTA buttons ── */
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.45s;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--gold); color: #0a0e2a;
+      font-weight: 700; font-size: 0.92rem;
+      padding: 15px 32px; border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(241,199,109,0.4);
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 14px 36px rgba(241,199,109,0.5); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: rgba(255,255,255,0.05); color: var(--text);
+      font-weight: 500; font-size: 0.92rem;
+      padding: 15px 32px; border-radius: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); background: rgba(241,199,109,0.08); transform: translateY(-3px); }
+
+    /* ── Floating spices ── */
+    .hero-spice {
+      position: absolute;
+      font-size: var(--sz, 1.4rem);
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      animation: floatSpice var(--dur) ease-in-out infinite var(--delay);
+      filter: drop-shadow(0 0 8px rgba(241,199,109,0.25));
+    }
+    @keyframes floatSpice {
+      0%   { opacity:0;    transform:translateY(0)     rotate(0deg)   scale(0.5); }
+      15%  { opacity:0.6;  transform:translateY(-18px)  rotate(12deg)  scale(1);   }
+      50%  { opacity:0.45; transform:translateY(-60px)  rotate(-10deg) scale(1);   }
+      85%  { opacity:0.2;  transform:translateY(-95px)  rotate(18deg)  scale(0.9); }
+      100% { opacity:0;    transform:translateY(-130px) rotate(22deg)  scale(0.4); }
+    }
+
+    /* ── Floating particles ── */
+    .hero-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      pointer-events: none;
+      animation: floatParticle var(--dur) ease-in-out infinite var(--delay);
+    }
+    @keyframes floatParticle {
+      0%   { opacity:0;          transform:translateY(0)    scale(0); }
+      20%  { opacity:var(--op);  transform:translateY(-20px) scale(1); }
+      80%  { opacity:var(--op);  transform:translateY(-80px) scale(1); }
+      100% { opacity:0;          transform:translateY(-120px) scale(0); }
+    }
+
+    /* ── Scroll hint ── */
+    .hero-scroll {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 2.2s;
+    }
+    .hero-scroll span {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(241,199,109,0.35); font-weight: 700;
+    }
+    .hero-scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 2px solid rgba(241,199,109,0.35);
+      border-bottom: 2px solid rgba(241,199,109,0.35);
+      transform: rotate(45deg);
+      animation: scrollBounce 1.4s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform:rotate(45deg) translateY(0);  opacity:.35; }
+      50%      { transform:rotate(45deg) translateY(6px); opacity:1;   }
+    }
+
+    /* ── Shared keyframes ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-18px); }
+      to   { opacity:1; transform:translateY(0);     }
+    }
+    @keyframes slideInLeft {
+      from { opacity:0; transform:translateX(-50px); }
+      to   { opacity:1; transform:translateX(0);     }
+    }
+    @keyframes slideInRight {
+      from { opacity:0; transform:translateX(50px); }
+      to   { opacity:1; transform:translateX(0);    }
+    }
+
+    /* ─── SECTION BASE ─── */
+    section {
+      min-height: 80vh;
+      padding: 100px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    h2 span { color: var(--gold); }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--navy-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    #about::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(241,199,109,0.04) 0%, transparent 70%);
+      right: -150px; top: 50%; transform: translateY(-50%);
+    }
+    .about-content {
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+    }
+    .about-content p {
+      color: rgba(240,236,228,0.75);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+    }
+    .about-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37,211,102,0.08);
+      border: 1px solid rgba(37,211,102,0.25);
+      border-radius: 999px;
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4ade80;
+      margin-top: 10px;
+    }
+    .about-stats {
+      display: flex;
+      gap: 2px;
+      justify-content: center;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      padding: 28px 40px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      flex: 1;
+      min-width: 140px;
+    }
+    .stat:first-child { border-radius: 14px 0 0 14px; }
+    .stat:last-child { border-radius: 0 14px 14px 0; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--navy); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 860px;
+      width: 100%;
+      margin-top: 40px;
+      text-align: left;
+    }
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.25s;
+    }
+    .contact-card:hover { border-color: rgba(241,199,109,0.4); }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: var(--gold-dim);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+    .contact-card h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .contact-card p, .contact-card a {
+      color: var(--text);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-card a:hover { color: var(--gold); }
+
+    .map-wrap {
+      grid-column: 1 / -1;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    .map-wrap iframe { display: block; width: 100%; height: 280px; }
+
+    .btn-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--gold);
+      color: #0a0e2a;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 16px rgba(241,199,109,0.25);
+    }
+    .btn-map:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080c1f;
+      border-top: 1px solid rgba(241,199,109,0.1);
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .footer-socials a {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(241,199,109,0.07);
+      border: 1px solid rgba(241,199,109,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .footer-socials a:hover {
+      background: var(--gold);
+      color: #0a0e2a;
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(154,150,176,0.6);
+    }
+
+    /* ─── TOAST ─── */
+    #toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a2044;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: none;
+      z-index: 4000;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+
+    /* ─── FLOATING CART ─── */
+    .floating-cart {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--gold);
+      color: #0a0e2a;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      z-index: 2000;
+      box-shadow: 0 8px 28px rgba(241,199,109,0.45);
+      transition: all 0.25s;
+    }
+    .floating-cart:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .cart-count {
+      background: #0a0e2a;
+      color: var(--gold);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+    @keyframes cartShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+    .cart-shake { animation: cartShake 0.35s ease; }
+
+    /* ─── CART DRAWER ─── */
+    .cart-drawer {
+      position: fixed; top: 0; right: 0;
+      width: 380px; max-width: 100%; height: 100vh;
+      background: #0d1130;
+      border-left: 1px solid rgba(241,199,109,0.12);
+      padding: 24px;
+      transform: translateX(110%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 3000;
+      overflow-y: auto;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.7);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(241,199,109,0.1);
+      margin-bottom: 16px;
+    }
+    .cart-header strong { font-size: 1.1rem; color: var(--gold); }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 10px;
+    }
+    .cart-item .meta { text-align: left; flex: 1; }
+    .cart-item .meta p { margin: 0; }
+    .cart-item .meta .small { font-size: 0.82rem; color: var(--muted); margin-top: 3px; }
+    .actions { display: flex; align-items: center; gap: 6px; }
+    .qty-btn {
+      background: rgba(255,255,255,0.07);
+      color: #fff; border: none;
+      padding: 6px 10px; border-radius: 6px;
+      cursor: pointer; font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover { background: rgba(255,255,255,0.14); }
+    .btn-clear {
+      background: transparent; color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 6px 12px; border-radius: 8px;
+      cursor: pointer; font-size: 0.82rem;
+      margin-right: 8px; transition: all 0.2s;
+    }
+    .btn-clear:hover { border-color: #ff5555; color: #ff5555; }
+    .btn-close {
+      background: transparent; color: var(--muted);
+      border: none; font-size: 1rem;
+      cursor: pointer; transition: color 0.2s;
+    }
+    .btn-close:hover { color: #fff; }
+    .cart-total {
+      margin-top: 14px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+    .btn-checkout {
+      background: var(--green); color: #fff;
+      border: none; padding: 14px 18px;
+      border-radius: 12px; font-weight: 800;
+      cursor: pointer; width: 100%;
+      margin-top: 14px; font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .btn-checkout:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+    .cart-empty { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
+
+    /* ─── CUSTOMER MODAL ─── */
+    .cust-modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 4500;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .cust-modal-overlay.show { display: flex; }
+    .cust-modal-box {
+      background: #111832;
+      max-width: 420px; width: 100%;
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid rgba(241,199,109,0.18);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .cust-modal-box h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold); font-size: 1.25rem;
+      margin-bottom: 18px; text-align: center;
+    }
+    .cust-modal-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
+    }
+    .cust-modal-close:hover { color: #fff; }
+    .cust-modal-box input,
+    .cust-modal-box textarea {
+      width: 100%; padding: 11px 14px; margin: 6px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #fff; font-family: inherit; font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .cust-modal-box input:focus,
+    .cust-modal-box textarea:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(241,199,109,0.1);
+    }
+    .cust-modal-box textarea { resize: vertical; min-height: 72px; }
+    .cust-modal-submit {
+      width: 100%; margin-top: 12px; padding: 14px;
+      background: var(--green); color: #fff; border: none;
+      border-radius: 12px; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .cust-modal-submit:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+    .cust-field-error { border-color: #ff4d4d !important; }
+    .customer-info {
+      max-width: 700px; width: 100%;
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      text-align: left;
+      margin-top: 24px;
+    }
+    .customer-info h3 {
+      color: var(--gold);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .customer-info label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .customer-info input,
+    .customer-info textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .customer-info textarea { resize: vertical; min-height: 70px; }
+    .customer-info input:focus,
+    .customer-info textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(241,199,109,0.12);
+    }
+    .field-error { border-color: #ff4d4d !important; box-shadow: 0 0 0 3px rgba(255,77,77,0.15) !important; }
+    #mainSubtotal { margin-top: 14px; font-weight: 700; color: var(--gold); font-size: 1.05rem; }
+    .btn-checkout-main {
+      margin-top: 14px; width: 100%;
+      background: var(--green); color: #fff;
+      border: none; padding: 14px 18px;
+      border-radius: 12px; font-weight: 800;
+      cursor: pointer; font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: all 0.25s;
+    }
+    .btn-checkout-main:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+    .btn-checkout-main:not(:disabled):hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+
+    /* ─── ORDER SECTION ─── */
+    #order { min-height: 80vh; padding: 100px 20px 60px; background: var(--navy-mid); }
+    .order-group { width: 100%; max-width: 1100px; margin-top: 10px; }
+    .order-subheading {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 32px auto 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+    }
+    .order-subheading::before,
+    .order-subheading::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      max-width: 80px;
+      background: linear-gradient(to right, transparent, rgba(241,199,109,0.3));
+    }
+    .order-subheading::after { background: linear-gradient(to left, transparent, rgba(241,199,109,0.3)); }
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      width: 100%;
+    }
+    .order-card {
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      display: flex; flex-direction: column; gap: 8px;
+      transition: all 0.25s;
+    }
+    .order-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(241,199,109,0.35);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+    .order-card.signature {
+      border: 1px solid rgba(241,199,109,0.5);
+      box-shadow: 0 0 20px rgba(241,199,109,0.1);
+    }
+    .order-card p { margin: 0; font-size: 0.92rem; }
+    .price { font-weight: 700; color: var(--gold); }
+    .badge {
+      display: inline-block;
+      background: var(--gold); color: #0a0e2a;
+      font-size: 0.7rem; padding: 2px 8px;
+      border-radius: 999px; margin-left: 6px; font-weight: 700;
+    }
+    .order-controls {
+      margin-top: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .veg-symbol {
+      display: inline-block;
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 11px solid #4CAF50;
+      vertical-align: middle; margin-right: 4px;
+    }
+    .nonveg-symbol {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%; background: #e60000;
+      vertical-align: middle; margin-right: 4px;
+    }
+    .qty-display { min-width: 24px; text-align: center; font-weight: 700; }
+
+    @media (max-width: 600px) {
+      #order { padding: 90px 14px 50px; }
+      .order-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+
+<!-- ═══════════════════════════════════════════════════════
+     FIREBASE CONFIG  —  Replace with YOUR project values
+     Firebase Console → Project Settings → Your apps → SDK
+     ═══════════════════════════════════════════════════════ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // 🔧 REPLACE THESE VALUES with your Firebase project config
+  const firebaseConfig = {
+    apiKey: "AIzaSyADNqdaBZTOvNBU0-W_-e9UCPJlm7NbnEQ",
+    authDomain: "kgf-bab99.firebaseapp.com",
+    projectId: "kgf-bab99",
+    storageBucket: "kgf-bab99.firebasestorage.app",
+    messagingSenderId: "934691503975",
+    appId: "1:934691503975:web:a969f5d012bce94c0cf9c2",
+    measurementId: "G-52HFEMREY8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  window._fbDb = db;
+  window._fbCollection = collection;
+  window._fbAddDoc     = addDoc;
+  window._fbServerTs   = serverTimestamp;
+  console.log("Firebase ready ✅");
+</script>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <img src="logo.jpg" alt="Kanha's Grand">
+  <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+  <nav id="nav">
+    <a href="#home" class="nav-active">Home</a>
+    <a href="order.html">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="order.html" class="nav-cta">Order</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home">
+
+  <!-- Twinkling stars -->
+  <canvas id="heroStars"></canvas>
+
+  <!-- Background decorative spices (large, behind everything) -->
+  <div class="hero-bg-spice" style="left:2%;top:8%;--sz:5rem;--op:0.07;--dur:14s;--delay:0s;--r0:-10deg;--r1:5deg;">🌶️</div>
+  <div class="hero-bg-spice" style="left:88%;top:6%;--sz:5.5rem;--op:0.06;--dur:16s;--delay:2s;--r0:8deg;--r1:-6deg;">🧄</div>
+  <div class="hero-bg-spice" style="left:5%;top:40%;--sz:4.5rem;--op:0.05;--dur:18s;--delay:1s;--r0:15deg;--r1:-5deg;">🫙</div>
+  <div class="hero-bg-spice" style="left:91%;top:38%;--sz:4.5rem;--op:0.06;--dur:15s;--delay:3s;--r0:-12deg;--r1:8deg;">🧅</div>
+  <div class="hero-bg-spice" style="left:0%;top:72%;--sz:5rem;--op:0.07;--dur:13s;--delay:0.5s;--r0:5deg;--r1:-10deg;">🌿</div>
+  <div class="hero-bg-spice" style="left:86%;top:70%;--sz:4.8rem;--op:0.06;--dur:17s;--delay:4s;--r0:-8deg;--r1:12deg;">🫚</div>
+  <div class="hero-bg-spice" style="left:30%;top:3%;--sz:4rem;--op:0.05;--dur:20s;--delay:1.5s;--r0:10deg;--r1:-8deg;">🫛</div>
+  <div class="hero-bg-spice" style="left:62%;top:5%;--sz:4.2rem;--op:0.05;--dur:19s;--delay:2.5s;--r0:-6deg;--r1:14deg;">🌶️</div>
+  <div class="hero-bg-spice" style="left:18%;top:82%;--sz:4.5rem;--op:0.06;--dur:16s;--delay:3.5s;--r0:12deg;--r1:-4deg;">🧄</div>
+  <div class="hero-bg-spice" style="left:72%;top:80%;--sz:4.8rem;--op:0.07;--dur:14s;--delay:1s;--r0:-5deg;--r1:10deg;">🌿</div>
+  <div class="hero-bg-spice" style="left:46%;top:88%;--sz:4rem;--op:0.05;--dur:22s;--delay:0.8s;--r0:8deg;--r1:-12deg;">🧅</div>
+  <div class="hero-bg-spice" style="left:80%;top:22%;--sz:3.5rem;--op:0.04;--dur:18s;--delay:5s;--r0:-15deg;--r1:6deg;">🫙</div>
+
+  <!-- Floating particles -->
+  <div class="hero-particle" style="width:4px;height:4px;left:15%;top:70%;--dur:6s;--delay:0s;--op:0.4;"></div>
+  <div class="hero-particle" style="width:3px;height:3px;left:25%;top:80%;--dur:7s;--delay:1s;--op:0.3;"></div>
+  <div class="hero-particle" style="width:5px;height:5px;left:40%;top:75%;--dur:8s;--delay:0.5s;--op:0.35;"></div>
+  <div class="hero-particle" style="width:3px;height:3px;left:60%;top:78%;--dur:6.5s;--delay:2s;--op:0.3;"></div>
+  <div class="hero-particle" style="width:4px;height:4px;left:75%;top:72%;--dur:7.5s;--delay:1.5s;--op:0.38;"></div>
+  <div class="hero-particle" style="width:2px;height:2px;left:85%;top:80%;--dur:5.5s;--delay:3s;--op:0.25;"></div>
+  <div class="hero-particle" style="width:4px;height:4px;left:50%;top:82%;--dur:9s;--delay:0.8s;--op:0.32;"></div>
+
+  <!-- Floating spices -->
+  <div class="hero-spice" style="left:5%;top:72%;--dur:7s;--delay:0.4s;--sz:1.6rem;">🌶️</div>
+  <div class="hero-spice" style="left:11%;top:78%;--dur:9s;--delay:1.8s;--sz:1.3rem;">🫚</div>
+  <div class="hero-spice" style="left:19%;top:74%;--dur:8s;--delay:3.2s;--sz:1.4rem;">🧅</div>
+  <div class="hero-spice" style="left:29%;top:80%;--dur:6.5s;--delay:0.9s;--sz:1.2rem;">🌿</div>
+  <div class="hero-spice" style="left:44%;top:76%;--dur:10s;--delay:2.5s;--sz:1.5rem;">🫙</div>
+  <div class="hero-spice" style="left:57%;top:79%;--dur:7.5s;--delay:1.2s;--sz:1.3rem;">🧄</div>
+  <div class="hero-spice" style="left:67%;top:73%;--dur:8.5s;--delay:3.8s;--sz:1.4rem;">🌶️</div>
+  <div class="hero-spice" style="left:77%;top:77%;--dur:6s;--delay:0.6s;--sz:1.2rem;">🫛</div>
+  <div class="hero-spice" style="left:87%;top:81%;--dur:9.5s;--delay:2.1s;--sz:1.5rem;">🌿</div>
+  <div class="hero-spice" style="left:93%;top:74%;--dur:7s;--delay:4.2s;--sz:1.3rem;">🧅</div>
+
+  <!-- Badge -->
+  <div class="hero-content">
+  <div class="hero-welcome-badge">
+    <span class="dot"></span>
+    Mancherial · Telangana
+    <span class="dot"></span>
+  </div>
+
+  <!-- Heading -->
+  <h1>
+    <span class="h1-line1">Welcome to</span>
+    <span class="h1-line2">Kanha's <span class="h1-gold"><span id="twGrand"></span><span class="h1-cursor"></span></span></span>
+  </h1>
+
+  <!-- Divider -->
+  <div class="hero-divider">
+    <div class="hero-divider-line"></div>
+    <i class="fa-solid fa-pepper-hot hero-divider-icon"></i>
+    <div class="hero-divider-line right"></div>
+  </div>
+
+  <!-- Subtitle -->
+  <p>Authentic Telangana flavors crafted with generations of tradition — biryanis, curries, tandoori & more, delivered to your door.</p>
+
+  <!-- Feature chips -->
+  <div class="hero-chips">
+    <div class="hero-chip"><i class="fa-solid fa-fire"></i> Nalli Gosht Biryani</div>
+    <div class="hero-chip"><i class="fa-solid fa-leaf"></i> Fresh Daily</div>
+    <div class="hero-chip"><i class="fa-brands fa-whatsapp"></i> WhatsApp Orders</div>
+    <div class="hero-chip"><i class="fa-solid fa-motorcycle"></i> Home Delivery</div>
+    <div class="hero-chip"><i class="fa-solid fa-credit-card"></i> All Payments</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="hero-actions">
+    <a href="order.html" class="btn-primary"><i class="fa-solid fa-bag-shopping"></i> Order Now</a>
+    <a href="#about" class="btn-secondary">Our Story <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+  </div><!-- /hero-content -->
+
+  <!-- Scroll hint -->
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-arrow"></div>
+  </div>
+
+</section>
+
+<script>
+// ── Twinkling stars ──
+(function(){
+  const c = document.getElementById('heroStars');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let stars = [];
+  function resize(){
+    c.width = c.offsetWidth;
+    c.height = c.offsetHeight;
+  }
+  function initStars(){
+    stars = [];
+    for(let i=0;i<120;i++){
+      stars.push({
+        x: Math.random()*c.width,
+        y: Math.random()*c.height,
+        r: Math.random()*1.4+0.3,
+        a: Math.random(),
+        speed: Math.random()*0.008+0.003,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+// ── Type "Grand" after line2 slides in ──
+(function(){
+  const el = document.getElementById('twGrand');
+  if(!el) return;
+  const word = 'Grand';
+  let i = 0;
+  // start after the slide-in animation delay (0.75s) + a small buffer
+  setTimeout(function type(){
+    el.textContent = word.slice(0, ++i);
+    if(i < word.length) setTimeout(type, 110);
+  }, 950);
+})();
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.phase += s.speed;
+      const alpha = (Math.sin(s.phase)*0.5+0.5)*0.7+0.1;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(241,199,109,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();
+  initStars();
+  draw();
+  window.addEventListener('resize',()=>{ resize(); initStars(); });
+})();
+
+
+</script>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-content">
+    <div class="section-label">About Us</div>
+    <h2>Passion on <span>Every Plate</span></h2>
+    <p>Kanha's Grand is built on a deep-rooted passion for authentic Telangana flavors. We bring you a dining experience that blends traditional recipes passed down through generations with a modern, caring touch — ensuring every visit (and every delivery) is truly memorable.</p>
+    <div class="about-pill"><i class="fa-solid fa-circle-check"></i> All payment modes accepted — Cash, UPI, Cards & more</div>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Menu Items</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Customer Love</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Fast</div>
+      <div class="stat-label">Delivery</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Authentic</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Find Us</div>
+  <h2>Get in <span>Touch</span></h2>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+      <h4>Phone / WhatsApp</h4>
+      <a href="https://wa.me/917730989898">+91 77309 89898</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+      <h4>Email</h4>
+      <a href="/cdn-cgi/l/email-protection#deb7b0b8b19eb5bfb0b6bfadb9acbfb0baf0bdb1b3"><span class="__cf_email__" data-cfemail="670e090108270c06090f061400150609034904080a">[email&#160;protected]</span></a>
+    </div>
+    <div class="contact-card" style="grid-column: 1 / -1;">
+      <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <h4>Address</h4>
+      <p>Market Rd (old current office road), nearby Kotak Mahindra Bank, Iqbal Ahmed Nagar, Mancherial, Telangana 504208</p>
+    </div>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3775.2283202356684!2d79.44262417497217!3d18.876949582287068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a32cb0011e98787%3A0x6f24cff241255d8b!2sKanha&#39;s%20Grand!5e0!3m2!1sen!2sin!4v1764952966407!5m2!1sen!2sin"
+        width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+  <a href="https://maps.google.com/maps/dir//Kanha's+Grand+Market+Rd+old,+current+office+road,+nearby+kotak+manindra+bank,+Iqbal+Ahmed+Nagar+Mancherial,+Telangana+504208/@18.8769496,79.4451991,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x3a32cb0011e98787:0x6f24cff241255d8b"
+     target="_blank" class="btn-map">
+    <i class="fa-brands fa-google"></i> Open in Google Maps
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Kanha's Grand</div>
+  <div class="footer-tagline">Authentic Telangana Flavors</div>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/kanhasgrand.official/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61580026734705" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="https://wa.me/917730989898" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+  <div class="footer-copy">© <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear())</script> Kanha's Grand. All rights reserved.</div>
+  <div style="margin-top:12px;font-size:0.78rem;color:rgba(154,150,176,0.55);">
+    <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:none;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">Privacy Policy</a>
+    &nbsp;·&nbsp; By ordering, you agree to our <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:underline;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">terms</a>
+  </div>
+</footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div id="privacyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#111832;max-width:540px;width:100%;border-radius:20px;padding:32px;border:1px solid rgba(241,199,109,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.8);max-height:85vh;overflow-y:auto;position:relative;">
+    <button onclick="document.getElementById('privacyModal').style.display='none'" style="position:absolute;top:16px;right:18px;background:none;border:none;color:#9a96b0;font-size:1.3rem;cursor:pointer;line-height:1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9a96b0'">✕</button>
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#f1c76d;margin-bottom:8px;">Legal</div>
+    <h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.4rem;margin-bottom:18px;">Privacy Policy</h2>
+    <div style="color:rgba(240,236,228,0.75);font-size:0.88rem;line-height:1.8;">
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">1. Information We Collect</strong><br>When you place an order via WhatsApp, we collect your name, phone number, and delivery address solely to process and deliver your order.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">2. How We Use Your Information</strong><br>Your details are used exclusively to fulfill your order and contact you if needed. We do not use your information for marketing without your consent.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">3. Data Sharing</strong><br>We do not sell, trade, or share your personal information with any third party.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">4. WhatsApp Orders</strong><br>Orders are processed through WhatsApp. By sending your order, you also agree to WhatsApp's own privacy policy. We retain order details only for delivery purposes.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">5. Payment</strong><br>We operate on a pay-on-delivery basis. No payment information is collected or stored on this website.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">6. Local Storage</strong><br>This website uses browser local storage to remember your cart items during your visit. No tracking cookies are used.</p>
+      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">7. Contact</strong><br>For privacy concerns, contact us at <a href="https://wa.me/917730989898" style="color:#f1c76d;">+91 77309 89898</a>.</p>
+      <p style="color:rgba(154,150,176,0.55);font-size:0.78rem;margin-top:18px;">Last updated: 2025 · Kanha's Grand, Mancherial, Telangana</p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">Item added</div>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" id="floatingCart" onclick="toggleCart()">
+  <i class="fa-solid fa-bag-shopping"></i>
+  <span>Cart</span>
+  <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-header">
+    <strong>Your Order</strong>
+    <div>
+      <button class="btn-clear" onclick="clearCart()">Clear</button>
+      <button class="btn-close" onclick="toggleCart()" aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div id="cartItemsWrap"></div>
+  <div class="cart-total" id="cartTotal">Subtotal: ₹0</div>
+  <button class="btn-checkout" onclick="checkout()" id="drawerCheckoutBtn">
+    <i class="fab fa-whatsapp"></i> Checkout on WhatsApp
+  </button>
+</div>
+
+<!-- CUSTOMER DETAILS MODAL -->
+<div class="cust-modal-overlay" id="custModal" onclick="if(event.target===this)closeCustModal()">
+  <div class="cust-modal-box">
+    <button class="cust-modal-close" onclick="closeCustModal()">✕</button>
+    <h3><i class="fab fa-whatsapp" style="margin-right:8px"></i>Your Details</h3>
+    <input id="custName"    type="text" placeholder="Full Name *">
+    <input id="custPhone"   type="tel"  placeholder="Phone Number *">
+    <textarea id="custAddress" placeholder="Delivery Address *"></textarea>
+    <input id="custNotes"   type="text" placeholder="Special instructions (optional)">
+    <button class="cust-modal-submit" onclick="confirmCheckout()">
+      <i class="fab fa-whatsapp"></i> Send Order on WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById('nav').classList.toggle('show');
+}
+
+const WHATSAPP_NUMBER = '917730989898';
+let cart = JSON.parse(localStorage.getItem('kg_cart') || '[]');
+
+function saveCart(){
+  localStorage.setItem('kg_cart', JSON.stringify(cart));
+  renderCartCount();
+  renderCartDrawer();
+  refreshCardQuantities();
+}
+
+function changeQtyFromCard(name, price, delta){
+  price = Number(price);
+  let item = cart.find(i => i.name === name);
+  let newQty = item ? item.qty + delta : (delta > 0 ? 1 : 0);
+  if(newQty <= 0){ cart = cart.filter(i => i.name !== name); }
+  else { if(item){ item.qty = newQty; } else { cart.push({ name, price, qty: newQty }); } }
+  saveCart();
+  if(delta > 0){ showToast(name + ' added'); shakeCartIcon(); }
+}
+
+function showToast(message){
+  const t = document.getElementById('toast');
+  t.innerText = message;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 1400);
+}
+
+function shakeCartIcon(){
+  const btn = document.getElementById('floatingCart');
+  if(btn){ btn.classList.add('cart-shake'); setTimeout(() => btn.classList.remove('cart-shake'), 400); }
+}
+
+function renderCartCount(){
+  const total = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+}
+
+function renderCartDrawer(){
+  const wrap = document.getElementById('cartItemsWrap');
+  wrap.innerHTML = '';
+  if(cart.length === 0){
+    wrap.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+    document.getElementById('cartTotal').textContent = 'Subtotal: ₹0';
+    return;
+  }
+  let subtotal = 0;
+  cart.forEach((it, index) => {
+    subtotal += it.price * it.qty;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="meta">
+        <p><strong>${escapeHtml(it.name)}</strong></p>
+        <p class="small">₹${it.price} × ${it.qty} = ₹${it.price * it.qty}</p>
+      </div>
+      <div class="actions">
+        <button class="qty-btn" onclick="decreaseQty(${index})">−</button>
+        <span style="min-width:24px;text-align:center">${it.qty}</span>
+        <button class="qty-btn" onclick="increaseQty(${index})">+</button>
+        <button class="qty-btn" onclick="removeItem(${index})" style="color:#ff6b6b">🗑</button>
+      </div>`;
+    wrap.appendChild(div);
+  });
+  document.getElementById('cartTotal').textContent = 'Subtotal: ₹' + subtotal;
+}
+
+function refreshCardQuantities(){
+  document.querySelectorAll('.order-card').forEach(card => {
+    const name = card.dataset.name;
+    const span = card.querySelector('.qty-display');
+    if(!span) return;
+    const item = cart.find(i => i.name === name);
+    span.textContent = item ? item.qty : 0;
+  });
+}
+
+function increaseQty(i){ cart[i].qty++; saveCart(); }
+function decreaseQty(i){ if(cart[i].qty > 1) cart[i].qty--; else cart.splice(i,1); saveCart(); }
+function removeItem(i){ cart.splice(i,1); saveCart(); }
+function clearCart(){ if(!confirm('Clear cart?')) return; cart = []; saveCart(); }
+
+function toggleCart(){
+  const drawer = document.getElementById('cartDrawer');
+  drawer.classList.toggle('open');
+  drawer.setAttribute('aria-hidden', !drawer.classList.contains('open'));
+  renderCartDrawer();
+}
+
+// ── Open customer modal from cart drawer ──
+function checkout(){
+  if(cart.length === 0){ alert('Your cart is empty!'); return; }
+  // close drawer first, then open modal
+  document.getElementById('cartDrawer').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('custModal').classList.add('show');
+  }, 200);
+}
+
+function closeCustModal(){
+  document.getElementById('custModal').classList.remove('show');
+}
+
+
+// ── Also save to Firestore for real-time cross-device sync ──
+async function saveOrderToFirestore(order) {
+  try {
+    if (!window._fbDb) return; // Firebase not loaded yet
+    await window._fbAddDoc(
+      window._fbCollection(window._fbDb, "orders"),
+      { ...order, createdAt: window._fbServerTs() }
+    );
+    console.log("Order saved to Firestore ✅");
+  } catch(e) {
+    console.warn("Firestore save failed (order still sent via WhatsApp):", e);
+  }
+}
+
+// ── Generate order ID (same style as order.html) ──
+function generateOrderId(){
+  const now = new Date();
+  const key = `${String(now.getFullYear()).slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  let savedDate = localStorage.getItem('kgf_order_date');
+  let counter = parseInt(localStorage.getItem('kgf_order_count') || '0');
+  if(savedDate !== key){ counter = 0; localStorage.setItem('kgf_order_date', key); }
+  counter++;
+  localStorage.setItem('kgf_order_count', counter);
+  return `KGH-${key}-${String(counter).padStart(3,'0')}`;
+}
+
+// ── Save order to Admin panel (localStorage) ──
+function saveOrderToAdmin(orderId, name, phone, address, notes, cartArr, total){
+  try{
+    const ORDERS_KEY = 'kg_admin_orders';
+    const existing = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+    const items = cartArr.map(it => ({ name: it.name, qty: it.qty, price: it.price }));
+    const newOrder = {
+      id: orderId,
+      customer: name,
+      phone: phone,
+      address: address,
+      notes: notes || '',
+      items: items,
+      total: total,
+      status: 'new',
+      ts: Date.now(),
+      source: 'online'
+    };
+    existing.unshift(newOrder);
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(existing));
+    let adminCounter = parseInt(localStorage.getItem('kg_adm_count') || '0') + 1;
+    localStorage.setItem('kg_adm_count', adminCounter);
+    // Firestore sync
+    saveOrderToFirestore(newOrder);
+  } catch(e){ console.error('Admin order save failed', e); }
+}
+
+function confirmCheckout(){
+  const name    = document.getElementById('custName').value.trim();
+  const phone   = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const notes   = document.getElementById('custNotes').value.trim();
+  const phoneDigits = phone.replace(/\D/g,'');
+
+  // clear errors
+  ['custName','custPhone','custAddress'].forEach(id =>
+    document.getElementById(id).classList.remove('cust-field-error'));
+
+  if(!name || !phone || !address){
+    if(!name)    document.getElementById('custName').classList.add('cust-field-error');
+    if(!phone)   document.getElementById('custPhone').classList.add('cust-field-error');
+    if(!address) document.getElementById('custAddress').classList.add('cust-field-error');
+    alert('Please fill your Name, Phone Number and Address.');
+    return;
+  }
+  if(phoneDigits.length !== 10){
+    document.getElementById('custPhone').classList.add('cust-field-error');
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+
+  const orderId = generateOrderId();
+  let msg = `🧾 *Kanha's Grand Order*%0A*Order No:* ${orderId}%0A%0A`;
+  let total = 0;
+  cart.forEach(it => {
+    msg += `${encodeURIComponent(it.name)} × ${it.qty} = ₹${it.price * it.qty}%0A`;
+    total += it.price * it.qty;
+  });
+  msg += `%0A*Subtotal: ₹${total}*%0A%0A`;
+  msg += `👤 ${encodeURIComponent(name)}%0A`;
+  msg += `📞 ${encodeURIComponent(phoneDigits)}%0A`;
+  msg += `📍 ${encodeURIComponent(address)}%0A`;
+  if(notes) msg += `📝 ${encodeURIComponent(notes)}%0A`;
+
+  // ── Auto-create order in Admin panel ──
+  saveOrderToAdmin(orderId, name, phoneDigits, address, notes, cart, total);
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+
+  cart = [];
+  saveCart();
+  closeCustModal();
+  ['custName','custPhone','custAddress','custNotes'].forEach(id =>
+    document.getElementById(id).value = '');
+}
+
+function escapeHtml(text){
+  const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCartCount();
+  renderCartDrawer();
+  refreshCardQuantities();
+});
+</script>
+
+</body>
+</html>

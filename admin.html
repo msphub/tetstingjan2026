@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanha's Grand — Order Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --gold: #f1c76d;
+      --gold-dim: rgba(241,199,109,0.12);
+      --gold-light: #f9e0a0;
+      --navy: #070b1e;
+      --navy2: #0c1128;
+      --navy3: #111830;
+      --card: #131a35;
+      --border: rgba(241,199,109,0.1);
+      --text: #edeaf4;
+      --muted: #7a778f;
+      --green: #25D366;
+      --red: #ff5757;
+      --orange: #ff9f43;
+      --blue: #54a0ff;
+      --purple: #a29bfe;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--navy);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    #loginScreen{
+      position:fixed;inset:0;
+      background:var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      z-index:9999;
+      flex-direction:column;
+      gap:0;
+    }
+    .login-box{
+      background:var(--card);
+      border:1px solid rgba(241,199,109,0.2);
+      border-radius:20px;
+      padding:44px 40px;
+      width:100%;max-width:380px;
+      box-shadow:0 40px 80px rgba(0,0,0,0.6);
+      position:relative;overflow:hidden;
+    }
+    .login-box::before{
+      content:'';position:absolute;top:-60px;right:-60px;
+      width:200px;height:200px;
+      background:radial-gradient(circle,rgba(241,199,109,0.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .login-logo{
+      text-align:center;margin-bottom:28px;
+    }
+    .login-logo h1{
+      font-family:'Playfair Display',serif;
+      font-size:1.7rem;color:var(--gold);font-weight:700;
+    }
+    .login-logo p{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+    .login-label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;}
+    .login-input{
+      width:100%;padding:11px 14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;color:var(--text);
+      font-family:inherit;font-size:0.9rem;
+      transition:border-color 0.2s,box-shadow 0.2s;
+      margin-bottom:16px;
+    }
+    .login-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(241,199,109,0.1);}
+    .login-btn{
+      width:100%;padding:13px;
+      background:var(--gold);color:#070b1e;
+      border:none;border-radius:12px;
+      font-weight:700;font-size:0.95rem;
+      cursor:pointer;font-family:inherit;
+      transition:all 0.25s;
+      box-shadow:0 6px 20px rgba(241,199,109,0.3);
+    }
+    .login-btn:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .login-error{color:var(--red);font-size:0.8rem;text-align:center;margin-top:10px;display:none;}
+
+    /* ── SIDEBAR ── */
+    .sidebar{
+      width:240px;flex-shrink:0;
+      background:var(--navy2);
+      border-right:1px solid var(--border);
+      display:flex;flex-direction:column;
+      position:fixed;left:0;top:0;height:100vh;
+      z-index:100;
+      transition:transform 0.3s;
+    }
+    .sidebar-logo{
+      padding:24px 20px 20px;
+      border-bottom:1px solid var(--border);
+    }
+    .sidebar-logo h2{
+      font-family:'Playfair Display',serif;
+      font-size:1.15rem;color:var(--gold);font-weight:700;
+    }
+    .sidebar-logo span{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+    .sidebar-nav{flex:1;padding:16px 0;overflow-y:auto;}
+    .nav-group-label{
+      font-size:0.62rem;font-weight:700;
+      color:var(--muted);text-transform:uppercase;
+      letter-spacing:0.12em;padding:12px 20px 6px;
+    }
+    .nav-item{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 20px;font-size:0.85rem;font-weight:500;
+      color:var(--muted);cursor:pointer;
+      border-left:3px solid transparent;
+      transition:all 0.2s;
+      user-select:none;
+    }
+    .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+    .nav-item.active{color:var(--gold);border-left-color:var(--gold);background:var(--gold-dim);}
+    .nav-item i{width:18px;text-align:center;font-size:0.9rem;}
+    .nav-badge{
+      margin-left:auto;background:var(--red);color:#fff;
+      font-size:0.65rem;font-weight:700;
+      padding:2px 7px;border-radius:999px;
+    }
+    .sidebar-bottom{
+      padding:16px 20px;border-top:1px solid var(--border);
+    }
+    .sidebar-user{display:flex;align-items:center;gap:10px;}
+    .sidebar-avatar{
+      width:34px;height:34px;border-radius:50%;
+      background:var(--gold-dim);border:1px solid rgba(241,199,109,0.3);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--gold);font-size:0.85rem;
+    }
+    .sidebar-user-info{flex:1;}
+    .sidebar-user-name{font-size:0.82rem;font-weight:600;}
+    .sidebar-user-role{font-size:0.68rem;color:var(--muted);}
+
+    /* ── MAIN ── */
+    .main{
+      margin-left:240px;flex:1;
+      display:flex;flex-direction:column;
+      min-height:100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar{
+      height:64px;
+      background:rgba(7,11,30,0.85);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 28px;
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:50;
+    }
+    .topbar-left{display:flex;align-items:center;gap:16px;}
+    .topbar-title{font-size:1rem;font-weight:600;}
+    .topbar-right{display:flex;align-items:center;gap:14px;}
+    .topbar-time{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--muted);}
+    .topbar-btn{
+      background:var(--gold-dim);border:1px solid rgba(241,199,109,0.2);
+      color:var(--gold);padding:7px 16px;border-radius:8px;
+      font-size:0.8rem;font-weight:600;cursor:pointer;
+      font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:6px;
+    }
+    .topbar-btn:hover{background:rgba(241,199,109,0.2);}
+    .status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);
+      box-shadow:0 0 8px rgba(37,211,102,0.6);animation:statusPulse 2s infinite;}
+    @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+    /* ── PAGE CONTENT ── */
+    .page{display:none;flex:1;padding:28px;flex-direction:column;gap:24px;}
+    .page.active{display:flex;}
+
+    /* ── STAT CARDS ── */
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:16px;
+    }
+    .stat-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;padding:20px 22px;
+      position:relative;overflow:hidden;
+      transition:border-color 0.25s,transform 0.25s;
+    }
+    .stat-card:hover{border-color:rgba(241,199,109,0.3);transform:translateY(-2px);}
+    .stat-card::after{
+      content:'';position:absolute;top:-30px;right:-30px;
+      width:100px;height:100px;
+      background:radial-gradient(circle,var(--accent,rgba(241,199,109,0.06)) 0%,transparent 70%);
+    }
+    .stat-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+    .stat-value{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--val-color,var(--gold));line-height:1;}
+    .stat-sub{font-size:0.75rem;color:var(--muted);margin-top:6px;}
+    .stat-icon{position:absolute;bottom:16px;right:16px;font-size:1.4rem;opacity:0.15;}
+
+    /* ── ORDERS TABLE ── */
+    .section-header{
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:12px;
+    }
+    .section-title{font-size:1rem;font-weight:700;}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .filter-select,.search-input{
+      background:var(--card);border:1px solid var(--border);
+      color:var(--text);padding:8px 14px;border-radius:8px;
+      font-family:inherit;font-size:0.82rem;
+      transition:border-color 0.2s;cursor:pointer;
+    }
+    .search-input{min-width:200px;}
+    .filter-select:focus,.search-input:focus{outline:none;border-color:rgba(241,199,109,0.4);}
+    .btn-add{
+      background:var(--gold);color:#070b1e;
+      border:none;padding:8px 18px;border-radius:8px;
+      font-weight:700;font-size:0.82rem;cursor:pointer;
+      font-family:inherit;display:flex;align-items:center;gap:7px;
+      transition:all 0.2s;
+    }
+    .btn-add:hover{background:var(--gold-light);}
+
+    .table-wrap{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;overflow:hidden;
+    }
+    .orders-table{width:100%;border-collapse:collapse;}
+    .orders-table th{
+      padding:12px 16px;text-align:left;
+      font-size:0.68rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:0.1em;color:var(--muted);
+      background:rgba(255,255,255,0.02);
+      border-bottom:1px solid var(--border);
+      white-space:nowrap;
+    }
+    .orders-table td{
+      padding:13px 16px;font-size:0.84rem;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      vertical-align:middle;
+    }
+    .orders-table tr:last-child td{border-bottom:none;}
+    .orders-table tr:hover td{background:rgba(255,255,255,0.02);}
+
+    .order-id{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--gold);}
+    .order-customer{font-weight:600;}
+    .order-phone{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+    .order-items-preview{font-size:0.78rem;color:var(--muted);max-width:200px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .order-total{font-weight:700;color:var(--gold);}
+    .order-time{font-size:0.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+
+    /* Status badges */
+    .status{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:4px 10px;border-radius:999px;
+      font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+      white-space:nowrap;
+    }
+    .status-dot-sm{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+    .status.new{background:rgba(84,160,255,0.12);color:var(--blue);}
+    .status.new .status-dot-sm{background:var(--blue);animation:statusPulse 1.5s infinite;}
+    .status.preparing{background:rgba(255,159,67,0.12);color:var(--orange);}
+    .status.preparing .status-dot-sm{background:var(--orange);}
+    .status.ready{background:rgba(162,155,254,0.12);color:var(--purple);}
+    .status.ready .status-dot-sm{background:var(--purple);}
+    .status.delivered{background:rgba(37,211,102,0.12);color:var(--green);}
+    .status.delivered .status-dot-sm{background:var(--green);}
+    .status.cancelled{background:rgba(255,87,87,0.12);color:var(--red);}
+    .status.cancelled .status-dot-sm{background:var(--red);}
+
+    /* Action buttons */
+    .actions{display:flex;gap:6px;align-items:center;}
+    .act-btn{
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);width:30px;height:30px;border-radius:7px;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:0.8rem;transition:all 0.2s;
+    }
+    .act-btn:hover{background:var(--gold-dim);color:var(--gold);border-color:rgba(241,199,109,0.3);}
+    .act-btn.danger:hover{background:rgba(255,87,87,0.12);color:var(--red);border-color:rgba(255,87,87,0.3);}
+    .act-btn.success:hover{background:rgba(37,211,102,0.12);color:var(--green);border-color:rgba(37,211,102,0.3);}
+
+    /* ── ORDER DETAIL MODAL ── */
+    .modal-overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);
+      z-index:5000;align-items:center;justify-content:center;padding:20px;
+    }
+    .modal-overlay.open{display:flex;}
+    .modal{
+      background:var(--navy3);
+      border:1px solid rgba(241,199,109,0.15);
+      border-radius:20px;width:100%;max-width:520px;
+      max-height:85vh;overflow-y:auto;
+      box-shadow:0 40px 80px rgba(0,0,0,0.8);
+    }
+    .modal-header{
+      padding:20px 24px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;background:var(--navy3);z-index:1;
+    }
+    .modal-header h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;}
+    .modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:color 0.2s;}
+    .modal-close:hover{color:var(--text);}
+    .modal-body{padding:20px 24px;}
+    .modal-section{margin-bottom:20px;}
+    .modal-section-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+    .info-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.85rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-row .label{color:var(--muted);}
+    .info-row .val{font-weight:600;text-align:right;}
+    .order-item-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .order-item-row:last-child{border-bottom:none;}
+    .order-item-name{font-size:0.85rem;font-weight:500;}
+    .order-item-meta{font-size:0.75rem;color:var(--muted);}
+    .order-item-total{font-weight:700;color:var(--gold);font-size:0.85rem;}
+    .modal-total{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:1px solid rgba(241,199,109,0.15);margin-top:8px;}
+    .modal-total-label{font-weight:600;}
+    .modal-total-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);}
+
+    /* Status changer */
+    .status-changer{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+    .status-opt{
+      padding:6px 14px;border-radius:8px;
+      font-size:0.75rem;font-weight:600;cursor:pointer;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.04);color:var(--muted);
+      transition:all 0.2s;font-family:inherit;
+    }
+    .status-opt:hover,.status-opt.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+
+    /* ── ADD ORDER MODAL ── */
+    .form-group{margin-bottom:14px;}
+    .form-label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;}
+    .form-input,.form-textarea,.form-select{
+      width:100%;padding:10px 14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;color:var(--text);
+      font-family:inherit;font-size:0.88rem;
+      transition:border-color 0.2s;
+    }
+    .form-textarea{resize:vertical;min-height:70px;}
+    .form-input:focus,.form-textarea:focus,.form-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(241,199,109,0.08);}
+    .form-select option{background:var(--navy3);}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:var(--navy3);}
+    .btn-cancel{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:10px 20px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.85rem;transition:all 0.2s;}
+    .btn-cancel:hover{color:var(--text);}
+    .btn-save{background:var(--gold);color:#070b1e;border:none;padding:10px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.85rem;transition:all 0.2s;}
+    .btn-save:hover{background:var(--gold-light);}
+
+    /* ── MENU MANAGER PAGE ── */
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:14px;
+    }
+    .menu-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:16px;
+      display:flex;flex-direction:column;gap:10px;
+      transition:border-color 0.25s;
+    }
+    .menu-card:hover{border-color:rgba(241,199,109,0.25);}
+    .menu-card-header{display:flex;align-items:center;justify-content:space-between;}
+    .menu-card-name{font-weight:600;font-size:0.9rem;}
+    .menu-card-price{color:var(--gold);font-weight:700;}
+    .menu-card-cat{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+    .menu-card-actions{display:flex;gap:6px;}
+    .menu-toggle-btn{
+      background:rgba(37,211,102,0.1);color:var(--green);
+      border:1px solid rgba(37,211,102,0.2);
+      padding:4px 10px;border-radius:6px;
+      font-size:0.72rem;font-weight:600;cursor:pointer;font-family:inherit;
+      transition:all 0.2s;
+    }
+    .menu-toggle-btn.off{background:rgba(255,87,87,0.1);color:var(--red);border-color:rgba(255,87,87,0.2);}
+
+    /* ── ANALYTICS PAGE ── */
+    .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    @media(max-width:800px){.analytics-grid{grid-template-columns:1fr;}}
+    .chart-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+    .chart-title{font-size:0.85rem;font-weight:700;margin-bottom:16px;color:var(--text);}
+    .bar-chart{display:flex;flex-direction:column;gap:10px;}
+    .bar-row{display:flex;align-items:center;gap:10px;}
+    .bar-label{font-size:0.75rem;color:var(--muted);width:110px;flex-shrink:0;text-align:right;}
+    .bar-track{flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:4px;background:var(--gold);transition:width 1s cubic-bezier(0.22,1,0.36,1);}
+    .bar-val{font-size:0.72rem;color:var(--muted);width:50px;font-family:'JetBrains Mono',monospace;}
+    .donut-wrap{display:flex;align-items:center;gap:20px;justify-content:center;}
+    .donut-legend{display:flex;flex-direction:column;gap:8px;}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;}
+    .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+    /* ── SETTINGS PAGE ── */
+    .settings-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
+    .settings-section h3{font-size:0.9rem;font-weight:700;margin-bottom:16px;color:var(--text);}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .setting-row:last-child{border-bottom:none;}
+    .setting-info{}
+    .setting-name{font-size:0.85rem;font-weight:500;}
+    .setting-desc{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+    .toggle{position:relative;width:42px;height:24px;}
+    .toggle input{opacity:0;width:0;height:0;}
+    .toggle-slider{
+      position:absolute;inset:0;
+      background:rgba(255,255,255,0.1);border-radius:999px;
+      cursor:pointer;transition:background 0.25s;
+    }
+    .toggle-slider::before{
+      content:'';position:absolute;
+      width:18px;height:18px;
+      background:#fff;border-radius:50%;
+      left:3px;top:3px;
+      transition:transform 0.25s;
+    }
+    .toggle input:checked + .toggle-slider{background:var(--gold);}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(18px);}
+
+    /* ── EMPTY STATE ── */
+    .empty-state{
+      text-align:center;padding:60px 20px;
+      color:var(--muted);
+    }
+    .empty-state i{font-size:2.5rem;margin-bottom:14px;display:block;opacity:0.3;}
+    .empty-state p{font-size:0.88rem;}
+
+    /* ── TOAST ── */
+    .toast{
+      position:fixed;bottom:24px;right:24px;
+      background:var(--card);border:1px solid var(--border);
+      color:var(--text);padding:12px 20px;border-radius:12px;
+      font-size:0.85rem;font-weight:500;
+      box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      transform:translateY(20px);opacity:0;
+      transition:all 0.3s;z-index:9999;
+      display:flex;align-items:center;gap:10px;
+    }
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast i{color:var(--green);}
+    .toast.warn i{color:var(--orange);}
+    .toast.error i{color:var(--red);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .sidebar{transform:translateX(-100%);}
+      .sidebar.open{transform:translateX(0);}
+      .main{margin-left:0;}
+      .sidebar-overlay{display:block;}
+    }
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+    .hamburger{display:none;background:none;border:none;color:var(--gold);font-size:1.3rem;cursor:pointer;}
+    @media(max-width:900px){.hamburger{display:block;}}
+    @media(max-width:600px){
+      .page{padding:16px;}
+      .stats-grid{grid-template-columns:1fr 1fr;}
+      .form-row{grid-template-columns:1fr;}
+    }
+  </style>
+
+<!-- ═══════════════════════════════════════════════════════
+     FIREBASE CONFIG  —  Same values as index/order pages
+     ═══════════════════════════════════════════════════════ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // 🔧 REPLACE THESE VALUES with your Firebase project config
+  const firebaseConfig = {
+    apiKey: "AIzaSyADNqdaBZTOvNBU0-W_-e9UCPJlm7NbnEQ",
+    authDomain: "kgf-bab99.firebaseapp.com",
+    projectId: "kgf-bab99",
+    storageBucket: "kgf-bab99.firebasestorage.app",
+    messagingSenderId: "934691503975",
+    appId: "1:934691503975:web:a969f5d012bce94c0cf9c2",
+    measurementId: "G-52HFEMREY8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  // ── Real-time listener: syncs Firestore orders into localStorage + re-renders ──
+  const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+  onSnapshot(q, (snapshot) => {
+    // Map Firestore docs to our order shape
+    const fsOrders = snapshot.docs.map(d => {
+      const data = d.data();
+      return {
+        _docId:   d.id,
+        id:       data.id       || d.id,
+        customer: data.customer || data.name || "—",
+        phone:    data.phone    || "",
+        address:  data.address  || "",
+        notes:    data.notes    || "",
+        items:    data.items    || [],
+        total:    data.total    || 0,
+        status:   data.status   || "new",
+        ts:       data.ts       || (data.createdAt?.seconds * 1000) || Date.now(),
+        source:   data.source   || "online"
+      };
+    });
+
+    // Merge: Firestore is source-of-truth for online orders;
+    // keep any manually-added local-only orders that aren't in Firestore
+    const localRaw = JSON.parse(localStorage.getItem("kg_admin_orders") || "[]");
+    const localOnly = localRaw.filter(lo => !fsOrders.find(fo => fo.id === lo.id));
+    const merged = [...fsOrders, ...localOnly].sort((a,b) => b.ts - a.ts);
+
+    localStorage.setItem("kg_admin_orders", JSON.stringify(merged));
+    if (window._adminReady) {
+      window._loadOrdersFromStorage();
+      window._renderDashboard();
+      if (snapshot.docChanges().some(c => c.type === "added")) {
+        window._showAdminToast("🔔 New online order received!");
+      }
+    }
+  });
+
+  // Expose Firestore helpers for status updates / deletes from admin
+  window._fbDb         = db;
+  window._fbDoc        = doc;
+  window._fbUpdateDoc  = updateDoc;
+  window._fbDeleteDoc  = deleteDoc;
+  window._fbCollection = collection;
+  console.log("Firebase Admin listener active ✅");
+</script>
+
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Kanha's Grand</h1>
+      <p>Back Office · Order Management</p>
+    </div>
+    <label class="login-label">Username</label>
+    <input class="login-input" id="loginUser" type="text" placeholder="admin" autocomplete="username">
+    <label class="login-label">Password</label>
+    <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Sign In</button>
+    <div class="login-error" id="loginErr">Invalid username or password</div>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h2>Kanha's Grand</h2>
+    <span>Back Office</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Main</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <i class="fa-solid fa-gauge-high"></i> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('orders',this)">
+      <i class="fa-solid fa-receipt"></i> Orders
+      <span class="nav-badge" id="newOrderBadge">0</span>
+    </div>
+    <div class="nav-group-label">Manage</div>
+    <div class="nav-item" onclick="showPage('menu',this)">
+      <i class="fa-solid fa-utensils"></i> Menu Items
+    </div>
+    <div class="nav-item" onclick="showPage('analytics',this)">
+      <i class="fa-solid fa-chart-bar"></i> Analytics
+    </div>
+    <div class="nav-group-label">System</div>
+    <div class="nav-item" onclick="showPage('settings',this)">
+      <i class="fa-solid fa-gear"></i> Settings
+    </div>
+    <div class="nav-item" onclick="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fa-solid fa-user"></i></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Admin</div>
+        <div class="sidebar-user-role">Owner</div>
+      </div>
+      <div class="status-dot" title="Online"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main" id="mainArea">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div class="topbar-title" id="pageTitle">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-time" id="topbarTime"></div>
+      <button class="topbar-btn" onclick="showAddOrder()">
+        <i class="fa-solid fa-plus"></i> New Order
+      </button>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD PAGE ── -->
+  <div class="page active" id="page-dashboard">
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Today's Orders</div>
+        <div class="stat-value" id="statToday">0</div>
+        <div class="stat-sub">All orders today</div>
+        <i class="fa-solid fa-receipt stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(37,211,102,0.08);--val-color:#25D366">
+        <div class="stat-label">Today's Revenue</div>
+        <div class="stat-value">₹<span id="statRevenue">0</span></div>
+        <div class="stat-sub">Delivered orders</div>
+        <i class="fa-solid fa-indian-rupee-sign stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(84,160,255,0.08);--val-color:#54a0ff">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="statPending">0</div>
+        <div class="stat-sub">Awaiting action</div>
+        <i class="fa-solid fa-clock stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(162,155,254,0.08);--val-color:#a29bfe">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-sub">All time</div>
+        <i class="fa-solid fa-database stat-icon"></i>
+      </div>
+    </div>
+
+    <!-- Recent orders -->
+    <div>
+      <div class="section-header" style="margin-bottom:14px;">
+        <div class="section-title">Recent Orders</div>
+        <button class="topbar-btn" onclick="showPage('orders',document.querySelector('[onclick*=orders]'))">View All</button>
+      </div>
+      <div class="table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDERS PAGE ── -->
+  <div class="page" id="page-orders">
+    <div class="section-header">
+      <div class="section-title">All Orders</div>
+      <div class="filter-row">
+        <input class="search-input" id="orderSearch" type="text" placeholder="🔍 Search name, ID, phone..." oninput="renderOrdersTable()">
+        <select class="filter-select" id="statusFilter" onchange="renderOrdersTable()">
+          <option value="">All Status</option>
+          <option value="new">New</option>
+          <option value="preparing">Preparing</option>
+          <option value="ready">Ready</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button class="btn-add" onclick="showAddOrder()"><i class="fa-solid fa-plus"></i> Add Order</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="allOrdersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── MENU PAGE ── -->
+  <div class="page" id="page-menu">
+    <div class="section-header">
+      <div class="section-title">Menu Items</div>
+      <div class="filter-row">
+        <input class="search-input" id="menuSearch" type="text" placeholder="🔍 Search items..." oninput="renderMenu()">
+        <select class="filter-select" id="menuCatFilter" onchange="renderMenu()">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+
+  <!-- ── ANALYTICS PAGE ── -->
+  <div class="page" id="page-analytics">
+    <div class="analytics-grid">
+      <div class="chart-card">
+        <div class="chart-title">Top Selling Items</div>
+        <div class="bar-chart" id="topItemsChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Orders by Status</div>
+        <div style="display:flex;flex-direction:column;gap:10px;" id="statusChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Category Revenue</div>
+        <div class="bar-chart" id="catRevenueChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Summary</div>
+        <div id="summaryStats" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS PAGE ── -->
+  <div class="page" id="page-settings">
+    <div class="settings-section">
+      <h3>Restaurant Info</h3>
+      <div class="form-group">
+        <label class="form-label">Restaurant Name</label>
+        <input class="form-input" value="Kanha's Grand" readonly>
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp Number</label>
+        <input class="form-input" id="waNumber" value="917730989898">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <textarea class="form-textarea" readonly>Market Rd, nearby Kotak Mahindra Bank, Iqbal Ahmed Nagar, Mancherial, Telangana 504208</textarea>
+      </div>
+      <button class="btn-save" onclick="showToast('Settings saved!','success')">Save Settings</button>
+    </div>
+    <div class="settings-section">
+      <h3>Notifications</h3>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">New Order Alert</div>
+          <div class="setting-desc">Play sound when new order arrives</div>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Browser Notifications</div>
+          <div class="setting-desc">Show desktop notifications</div>
+        </div>
+        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>Data Management</h3>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Export Orders</div>
+          <div class="setting-desc">Download all orders as JSON</div>
+        </div>
+        <button class="topbar-btn" onclick="exportOrders()"><i class="fa-solid fa-download"></i> Export</button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Clear All Orders</div>
+          <div class="setting-desc">Delete all order data permanently</div>
+        </div>
+        <button class="act-btn danger" onclick="clearAllOrders()" style="width:auto;padding:0 14px;height:32px;font-size:0.8rem;color:var(--red);">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal" onclick="if(event.target===this)closeOrderModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Order Details</h3>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ADD ORDER MODAL -->
+<div class="modal-overlay" id="addOrderModal" onclick="if(event.target===this)closeAddOrder()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Order</h3>
+      <button class="modal-close" onclick="closeAddOrder()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Customer Name *</label>
+          <input class="form-input" id="newName" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input class="form-input" id="newPhone" placeholder="10-digit number" type="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Address *</label>
+        <textarea class="form-textarea" id="newAddress" placeholder="Full delivery address"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Order Items (one per line: Item Name × Qty)</label>
+        <textarea class="form-textarea" id="newItems" placeholder="Chicken Biryani × 2&#10;Butter Naan × 3&#10;Butter Chicken × 1" style="min-height:100px;"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Total Amount (₹)</label>
+          <input class="form-input" id="newTotal" placeholder="0" type="number">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="newStatus">
+            <option value="new">New</option>
+            <option value="preparing">Preparing</option>
+            <option value="ready">Ready</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes (optional)</label>
+        <input class="form-input" id="newNotes" placeholder="Special instructions">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeAddOrder()">Cancel</button>
+      <button class="btn-save" onclick="saveNewOrder()"><i class="fa-solid fa-check"></i> Save Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fa-solid fa-check-circle"></i><span id="toastMsg"></span></div>
+
+<script>
+// ─── AUTH ───────────────────────────────────────────
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'kanha2024';
+const AUTH_KEY   = 'kg_admin_auth';
+
+function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('loginScreen').style.display='none';
+    initApp();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('loginPass').value='';
+  }
+}
+document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+document.getElementById('loginUser').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+
+function doLogout(){
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+
+// auto-login if session active
+if(sessionStorage.getItem(AUTH_KEY)){
+  document.getElementById('loginScreen').style.display='none';
+  initApp();
+}
+
+// ─── DATA ────────────────────────────────────────────
+const ORDERS_KEY = 'kg_admin_orders';
+let orders = [];
+
+function loadOrders(){
+  try{ orders = JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]'); }
+  catch(e){ orders=[]; }
+}
+function saveOrders(){
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  // Also update Firestore status when changed from admin
+}
+// Expose for Firebase module
+window._loadOrdersFromStorage = loadOrders;
+window._renderDashboard = function(){ renderDashboard(); };
+window._showAdminToast = showAdminToast;
+
+function orderNo(){
+  const now = new Date();
+  const key = `${String(now.getFullYear()).slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  let counter = parseInt(localStorage.getItem('kg_adm_count')||'0') + 1;
+  localStorage.setItem('kg_adm_count', counter);
+  return `KGF-${key}-${String(counter).padStart(3,'0')}`;
+}
+
+// ─── MENU DATA ───────────────────────────────────────
+const menuItems = [
+  // Veg Starters
+  {name:'Chilli Paneer',price:239,cat:'Veg Starters',veg:true,active:true},
+  {name:'Paneer Manchurian',price:239,cat:'Veg Starters',veg:true,active:true},
+  {name:'Paneer Tikka (8 pcs)',price:249,cat:'Veg Starters',veg:true,active:true},
+  {name:'Mushroom 65',price:219,cat:'Veg Starters',veg:true,active:true},
+  {name:'Chilli Babycorn',price:219,cat:'Veg Starters',veg:true,active:true},
+  // Non-Veg Starters
+  {name:'Egg Ginger Dry',price:209,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Ginger Chicken Dry',price:249,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken 65',price:249,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Tandoori Chicken Tikka',price:239,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken Majestic',price:259,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken 555',price:259,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Kaju Chicken Dry',price:289,cat:'Non-Veg Starters',veg:false,active:true},
+  // Biryanis
+  {name:'Paneer Biryani',price:219,cat:'Biryanis',veg:true,active:true},
+  {name:'Veg Biryani',price:209,cat:'Biryanis',veg:true,active:true},
+  {name:'Chicken Biryani (1 pc)',price:169,cat:'Biryanis',veg:false,active:true},
+  {name:'Chicken Biryani',price:239,cat:'Biryanis',veg:false,active:true},
+  {name:'Mutton Biryani',price:299,cat:'Biryanis',veg:false,active:true},
+  {name:'Nalli Gosht Biryani',price:369,cat:'Biryanis',veg:false,active:true},
+  // Family Packs
+  {name:'Chicken Biryani Family Pack',price:649,cat:'Family Packs',veg:false,active:true},
+  {name:'Mutton Biryani Family Pack',price:779,cat:'Family Packs',veg:false,active:true},
+  // Veg Curries
+  {name:'Paneer Butter Masala',price:189,cat:'Veg Curries',veg:true,active:true},
+  {name:'Paneer Shahi Korma',price:199,cat:'Veg Curries',veg:true,active:true},
+  {name:'Kadhai Paneer',price:189,cat:'Veg Curries',veg:true,active:true},
+  {name:'Kadhai Mushroom',price:179,cat:'Veg Curries',veg:true,active:true},
+  {name:'Palak Paneer',price:179,cat:'Veg Curries',veg:true,active:true},
+  {name:'Dal Tadka',price:149,cat:'Veg Curries',veg:true,active:true},
+  {name:'Plain Palak',price:129,cat:'Veg Curries',veg:true,active:true},
+  {name:'Veg Kolhapuri',price:169,cat:'Veg Curries',veg:true,active:true},
+  // Non-Veg Curries
+  {name:'Butter Chicken',price:219,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Telangana Chicken Curry',price:219,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Kadhai Chicken',price:229,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Telangana Mutton Curry',price:269,cat:'Non-Veg Curries',veg:false,active:true},
+  // Meals
+  {name:'Bagara Rice with Paneer',price:189,cat:'Meals',veg:true,active:true},
+  {name:'Bagara Rice with Chicken',price:219,cat:'Meals',veg:false,active:true},
+  {name:'Bagara Rice with Mutton',price:249,cat:'Meals',veg:false,active:true},
+  // Breads
+  {name:'Butter Naan',price:39,cat:'Breads',veg:true,active:true},
+  {name:'Plain Naan',price:29,cat:'Breads',veg:true,active:true},
+  {name:'Garlic Naan',price:49,cat:'Breads',veg:true,active:true},
+  {name:'Tandoori Roti',price:29,cat:'Breads',veg:true,active:true},
+  {name:'Tandoori Butter Roti',price:34,cat:'Breads',veg:true,active:true},
+  {name:'Butter Kulcha',price:49,cat:'Breads',veg:true,active:true},
+  // Rice
+  {name:'Jeera Fried Rice',price:149,cat:'Rice',veg:true,active:true},
+  {name:'Veg Fried Rice',price:169,cat:'Rice',veg:true,active:true},
+  {name:'Curd Rice',price:119,cat:'Rice',veg:true,active:true},
+  {name:'Special Curd Rice',price:149,cat:'Rice',veg:true,active:true},
+  // Beverages
+  {name:'Mineral Water (1 Ltr)',price:20,cat:'Beverages',veg:true,active:true},
+  {name:'Mineral Water (500 ml)',price:10,cat:'Beverages',veg:true,active:true},
+  {name:'Soft Drinks',price:20,cat:'Beverages',veg:true,active:true},
+  {name:'Ginger Beer',price:109,cat:'Beverages',veg:true,active:true},
+];
+
+// ─── NAVIGATION ──────────────────────────────────────
+function showPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent = el ? el.textContent.trim() : id;
+  if(id==='orders') renderOrdersTable();
+  if(id==='menu') renderMenu();
+  if(id==='analytics') renderAnalytics();
+  if(id==='dashboard') renderDashboard();
+  if(window.innerWidth<=900) closeSidebar();
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').style.display =
+    document.getElementById('sidebar').classList.contains('open') ? 'block' : 'none';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').style.display='none';
+}
+
+// ─── CLOCK ───────────────────────────────────────────
+function updateClock(){
+  const now = new Date();
+  document.getElementById('topbarTime').textContent =
+    now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+// ─── RENDER HELPERS ──────────────────────────────────
+function statusBadge(s){
+  const map={new:'New',preparing:'Preparing',ready:'Ready',delivered:'Delivered',cancelled:'Cancelled'};
+  return `<span class="status ${s}"><span class="status-dot-sm"></span>${map[s]||s}</span>`;
+}
+
+function timeAgo(ts){
+  const diff = Math.floor((Date.now()-ts)/1000);
+  if(diff<60) return diff+'s ago';
+  if(diff<3600) return Math.floor(diff/60)+'m ago';
+  if(diff<86400) return Math.floor(diff/3600)+'h ago';
+  return new Date(ts).toLocaleDateString('en-IN');
+}
+
+function itemsPreview(items){
+  if(!items||!items.length) return '—';
+  return items.map(i=>i.name+(i.qty>1?' ×'+i.qty:'')).join(', ');
+}
+
+function renderRow(o, tbody){
+  const tr = document.createElement('tr');
+  tr.innerHTML=`
+    <td><span class="order-id">${o.id}</span></td>
+    <td>
+      <div class="order-customer">${esc(o.name)}</div>
+      <div class="order-phone">${esc(o.phone)}</div>
+    </td>
+    <td><div class="order-items-preview" title="${esc(itemsPreview(o.items))}">${esc(itemsPreview(o.items))}</div></td>
+    <td><span class="order-total">₹${o.total}</span></td>
+    <td>${statusBadge(o.status)}</td>
+    <td><span class="order-time">${timeAgo(o.ts)}</span></td>
+    <td>
+      <div class="actions">
+        <button class="act-btn" onclick="viewOrder('${o.id}')" title="View"><i class="fa-solid fa-eye"></i></button>
+        <button class="act-btn success" onclick="cycleStatus('${o.id}')" title="Next Status"><i class="fa-solid fa-arrow-right"></i></button>
+        <button class="act-btn" onclick="whatsappOrder('${o.id}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+        <button class="act-btn danger" onclick="deleteOrder('${o.id}')" title="Delete"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </td>`;
+  tbody.appendChild(tr);
+}
+
+// ─── DASHBOARD ───────────────────────────────────────
+function renderDashboard(){
+  const today = new Date().toDateString();
+  const todayOrders = orders.filter(o=>new Date(o.ts).toDateString()===today);
+  const revenue = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+(+o.total),0);
+  const pending = orders.filter(o=>['new','preparing','ready'].includes(o.status)).length;
+  document.getElementById('statToday').textContent = todayOrders.length;
+  document.getElementById('statRevenue').textContent = revenue.toLocaleString('en-IN');
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statTotal').textContent = orders.length;
+
+  const badge = pending;
+  document.getElementById('newOrderBadge').textContent = badge;
+  document.getElementById('newOrderBadge').style.display = badge ? 'inline' : 'none';
+
+  const tbody = document.getElementById('recentOrdersBody');
+  tbody.innerHTML='';
+  const recent = [...orders].sort((a,b)=>b.ts-a.ts).slice(0,8);
+  if(!recent.length){
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-receipt"></i><p>No orders yet. Add your first order!</p></div></td></tr>`;
+  } else {
+    recent.forEach(o=>renderRow(o,tbody));
+  }
+}
+
+// ─── ORDERS TABLE ─────────────────────────────────────
+function renderOrdersTable(){
+  const search = (document.getElementById('orderSearch')?.value||'').toLowerCase();
+  const status = document.getElementById('statusFilter')?.value||'';
+  let filtered = [...orders].sort((a,b)=>b.ts-a.ts);
+  if(search) filtered = filtered.filter(o=>
+    o.name.toLowerCase().includes(search)||
+    o.id.toLowerCase().includes(search)||
+    o.phone.includes(search)
+  );
+  if(status) filtered = filtered.filter(o=>o.status===status);
+
+  const tbody = document.getElementById('allOrdersBody');
+  tbody.innerHTML='';
+  if(!filtered.length){
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><p>No orders found.</p></div></td></tr>`;
+  } else {
+    filtered.forEach(o=>renderRow(o,tbody));
+  }
+}
+
+// ─── ORDER DETAIL ─────────────────────────────────────
+function viewOrder(id){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  const statusOpts = ['new','preparing','ready','delivered','cancelled'];
+  document.getElementById('modalTitle').textContent = o.id;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-section">
+      <div class="modal-section-title">Customer</div>
+      <div class="info-row"><span class="label">Name</span><span class="val">${esc(o.name)}</span></div>
+      <div class="info-row"><span class="label">Phone</span><span class="val">${esc(o.phone)}</span></div>
+      <div class="info-row"><span class="label">Address</span><span class="val" style="max-width:250px;text-align:right;">${esc(o.address)}</span></div>
+      ${o.notes?`<div class="info-row"><span class="label">Notes</span><span class="val">${esc(o.notes)}</span></div>`:''}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Order Items</div>
+      ${(o.items||[]).map(it=>`
+        <div class="order-item-row">
+          <div>
+            <div class="order-item-name">${esc(it.name)}</div>
+            <div class="order-item-meta">₹${it.price} × ${it.qty}</div>
+          </div>
+          <div class="order-item-total">₹${it.price*it.qty}</div>
+        </div>`).join('')}
+      <div class="modal-total">
+        <span class="modal-total-label">Total</span>
+        <span class="modal-total-val">₹${o.total}</span>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Update Status</div>
+      <div class="status-changer">
+        ${statusOpts.map(s=>`<button class="status-opt ${o.status===s?'active':''}" onclick="updateStatus('${id}','${s}',this)">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:8px;">
+      <button class="btn-save" style="flex:1" onclick="whatsappOrder('${id}')"><i class="fab fa-whatsapp"></i> Open in WhatsApp</button>
+    </div>`;
+  document.getElementById('orderModal').classList.add('open');
+}
+
+function closeOrderModal(){
+  document.getElementById('orderModal').classList.remove('open');
+}
+
+function updateStatus(id, status, btn){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  o.status = status;
+  saveOrders();
+  btn.closest('.status-changer').querySelectorAll('.status-opt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashboard();
+  renderOrdersTable();
+  showToast(`Status updated to ${status}`,'success');
+}
+
+function cycleStatus(id){
+  const flow = ['new','preparing','ready','delivered'];
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  const idx = flow.indexOf(o.status);
+  if(idx < flow.length-1){
+    o.status = flow[idx+1];
+    saveOrders(); renderDashboard(); renderOrdersTable(); showToast('Status: '+o.status,'success');
+    // Sync status to Firestore
+    if(window._fbDb && o._docId){
+      window._fbUpdateDoc(window._fbDoc(window._fbDb,'orders',o._docId),{status:o.status}).catch(console.warn);
+    }
+  }
+}
+
+function deleteOrder(id){
+  if(!confirm('Delete this order?')) return;
+  orders = orders.filter(o=>o.id!==id);
+  saveOrders(); renderDashboard(); renderOrdersTable();
+  showToast('Order deleted','warn');
+}
+
+function whatsappOrder(id){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  let msg = `🧾 *Order:* ${o.id}%0A👤 ${o.name}%0A📞 ${o.phone}%0A📍 ${o.address}%0A%0A`;
+  (o.items||[]).forEach(it=>{ msg+=`${it.name} × ${it.qty} = ₹${it.price*it.qty}%0A`; });
+  msg+=`%0A*Total: ₹${o.total}*%0AStatus: ${o.status}`;
+  window.open(`https://wa.me/917730989898?text=${msg}`,'_blank');
+}
+
+// ─── ADD ORDER ────────────────────────────────────────
+function showAddOrder(){ document.getElementById('addOrderModal').classList.add('open'); }
+function closeAddOrder(){ document.getElementById('addOrderModal').classList.remove('open'); }
+
+function saveNewOrder(){
+  const name = document.getElementById('newName').value.trim();
+  const phone = document.getElementById('newPhone').value.trim();
+  const address = document.getElementById('newAddress').value.trim();
+  const itemsRaw = document.getElementById('newItems').value.trim();
+  const total = document.getElementById('newTotal').value;
+  const status = document.getElementById('newStatus').value;
+  const notes = document.getElementById('newNotes').value.trim();
+  if(!name||!phone||!address){ showToast('Fill Name, Phone & Address','error'); return; }
+
+  // parse items
+  const items = itemsRaw.split('\n').filter(l=>l.trim()).map(line=>{
+    const m = line.match(/^(.+?)\s*[×x×]\s*(\d+)$/i);
+    if(m){
+      const menuItem = menuItems.find(mi=>mi.name.toLowerCase()===m[1].trim().toLowerCase());
+      return {name:m[1].trim(), qty:parseInt(m[2]), price: menuItem?menuItem.price:0};
+    }
+    return {name:line.trim(), qty:1, price:0};
+  });
+
+  const autoTotal = items.reduce((s,i)=>s+(i.price*i.qty),0);
+
+  const order = {
+    id: orderNo(),
+    name, phone, address, notes,
+    items,
+    total: total || autoTotal || 0,
+    status,
+    ts: Date.now()
+  };
+  orders.unshift(order);
+  saveOrders();
+  closeAddOrder();
+  renderDashboard();
+  renderOrdersTable();
+  // clear form
+  ['newName','newPhone','newAddress','newItems','newTotal','newNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('newStatus').value='new';
+  showToast('Order added! '+order.id,'success');
+}
+
+// ─── MENU ─────────────────────────────────────────────
+let menuState = {};
+function renderMenu(){
+  const search = (document.getElementById('menuSearch')?.value||'').toLowerCase();
+  const cat = document.getElementById('menuCatFilter')?.value||'';
+
+  // populate category filter
+  const cats = [...new Set(menuItems.map(m=>m.cat))];
+  const catSel = document.getElementById('menuCatFilter');
+  if(catSel.children.length===1){
+    cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o); });
+  }
+
+  let filtered = menuItems;
+  if(search) filtered = filtered.filter(m=>m.name.toLowerCase().includes(search)||m.cat.toLowerCase().includes(search));
+  if(cat) filtered = filtered.filter(m=>m.cat===cat);
+
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML='';
+  filtered.forEach((item,i)=>{
+    const active = menuState[item.name]!==false;
+    const div = document.createElement('div');
+    div.className='menu-card';
+    div.innerHTML=`
+      <div class="menu-card-header">
+        <div>
+          <div class="menu-card-name">${esc(item.name)}</div>
+          <div class="menu-card-cat">${item.cat}</div>
+        </div>
+        <div class="menu-card-price">₹${item.price}</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:0.75rem;color:${item.veg?'#25D366':'#ff5757'}">
+          ${item.veg?'🟢 Veg':'🔴 Non-Veg'}
+        </span>
+        <div class="menu-card-actions">
+          <button class="menu-toggle-btn ${active?'':'off'}" onclick="toggleMenuItem('${esc(item.name)}',this)">
+            ${active?'Available':'Unavailable'}
+          </button>
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+function toggleMenuItem(name, btn){
+  menuState[name] = !menuState[name]!==false ? false : true;
+  menuState[name] = btn.classList.contains('off');
+  btn.classList.toggle('off');
+  btn.textContent = btn.classList.contains('off') ? 'Unavailable' : 'Available';
+  showToast(`${name}: ${btn.classList.contains('off')?'Marked unavailable':'Now available'}`,'success');
+}
+
+// ─── ANALYTICS ────────────────────────────────────────
+function renderAnalytics(){
+  // top selling items
+  const itemCount = {};
+  orders.forEach(o=>(o.items||[]).forEach(it=>{
+    itemCount[it.name] = (itemCount[it.name]||0)+it.qty;
+  }));
+  const topItems = Object.entries(itemCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxItem = topItems[0]?.[1]||1;
+  document.getElementById('topItemsChart').innerHTML = topItems.length ?
+    topItems.map(([name,qty])=>`
+      <div class="bar-row">
+        <div class="bar-label">${esc(name.slice(0,16)+(name.length>16?'…':''))}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(qty/maxItem*100).toFixed(1)}%"></div></div>
+        <div class="bar-val">${qty}</div>
+      </div>`).join('') :
+    '<div class="empty-state"><i class="fa-solid fa-chart-bar"></i><p>No data yet</p></div>';
+
+  // orders by status
+  const statusCount = {new:0,preparing:0,ready:0,delivered:0,cancelled:0};
+  orders.forEach(o=>{ if(statusCount[o.status]!==undefined) statusCount[o.status]++; });
+  const maxStatus = Math.max(...Object.values(statusCount),1);
+  const statusColors = {new:'var(--blue)',preparing:'var(--orange)',ready:'var(--purple)',delivered:'var(--green)',cancelled:'var(--red)'};
+  document.getElementById('statusChart').innerHTML = Object.entries(statusCount).map(([s,n])=>`
+    <div class="bar-row">
+      <div class="bar-label" style="text-transform:capitalize">${s}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/maxStatus*100).toFixed(1)}%;background:${statusColors[s]}"></div></div>
+      <div class="bar-val">${n}</div>
+    </div>`).join('');
+
+  // category revenue
+  const catRev = {};
+  orders.filter(o=>o.status==='delivered').forEach(o=>{
+    (o.items||[]).forEach(it=>{
+      const mi = menuItems.find(m=>m.name===it.name);
+      const cat = mi?.cat||'Other';
+      catRev[cat] = (catRev[cat]||0)+(it.price*it.qty);
+    });
+  });
+  const topCats = Object.entries(catRev).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const maxCat = topCats[0]?.[1]||1;
+  document.getElementById('catRevenueChart').innerHTML = topCats.length ?
+    topCats.map(([c,rev])=>`
+      <div class="bar-row">
+        <div class="bar-label">${esc(c)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(rev/maxCat*100).toFixed(1)}%;background:var(--green)"></div></div>
+        <div class="bar-val">₹${rev}</div>
+      </div>`).join('') :
+    '<div class="empty-state"><i class="fa-solid fa-chart-pie"></i><p>No delivered orders yet</p></div>';
+
+  // summary
+  const totalRev = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+(+o.total),0);
+  const avgOrder = orders.length ? Math.round(orders.reduce((s,o)=>s+(+o.total),0)/orders.length) : 0;
+  document.getElementById('summaryStats').innerHTML = [
+    ['Total Orders', orders.length],
+    ['Delivered', orders.filter(o=>o.status==='delivered').length],
+    ['Cancelled', orders.filter(o=>o.status==='cancelled').length],
+    ['Total Revenue', '₹'+totalRev.toLocaleString('en-IN')],
+    ['Avg Order Value', '₹'+avgOrder],
+    ['Pending', orders.filter(o=>['new','preparing','ready'].includes(o.status)).length],
+  ].map(([l,v])=>`
+    <div class="info-row" style="padding:10px 0;">
+      <span class="label">${l}</span>
+      <span class="val" style="color:var(--gold)">${v}</span>
+    </div>`).join('');
+}
+
+// ─── EXPORT ───────────────────────────────────────────
+function exportOrders(){
+  const blob = new Blob([JSON.stringify(orders,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kanhas_orders_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  showToast('Orders exported!','success');
+}
+
+function clearAllOrders(){
+  if(!confirm('Delete ALL orders? This cannot be undone!')) return;
+  if(!confirm('Are you absolutely sure?')) return;
+  orders=[];saveOrders();renderDashboard();renderOrdersTable();
+  showToast('All orders cleared','warn');
+}
+
+// ─── TOAST ────────────────────────────────────────────
+function showToast(msg, type='success'){
+  const t = document.getElementById('toast');
+  const icons = {success:'fa-check-circle',warn:'fa-triangle-exclamation',error:'fa-circle-xmark'};
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fa-solid ${icons[type]||icons.success}"></i><span>${msg}</span>`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+function esc(t){
+  if(!t) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────
+// ── Auto-refresh when order placed from index/order page ──
+window.addEventListener("storage", function(e){
+  if(e.key === "kg_admin_orders" || e.key === "kg_adm_count"){
+    loadOrders();
+    renderDashboard();
+    showAdminToast("🔔 New online order received!");
+  }
+});
+function showAdminToast(msg){
+  let t = document.getElementById("adminToast");
+  if(!t){
+    t = document.createElement("div");
+    t.id = "adminToast";
+    t.style.cssText = "position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#131a35;border:1px solid #f1c76d;color:#f1c76d;padding:13px 26px;border-radius:12px;font-weight:700;font-size:0.9rem;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.7);display:none;";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.style.display="none"; }, 3500);
+}
+function initApp(){
+  loadOrders();
+  renderDashboard();
+  updateClock();
+  setInterval(updateClock,1000);
+  // seed some demo data if empty
+  window._adminReady = true;
+  if(!orders.length){
+    const demo = [
+      {id:'KGF-250403-001',name:'Ravi Kumar',phone:'9876543210',address:'123 Main St, Mancherial',notes:'Extra spicy',items:[{name:'Nalli Gosht Biryani',price:369,qty:2},{name:'Butter Naan',price:39,qty:4}],total:898,status:'new',ts:Date.now()-300000},
+      {id:'KGF-250403-002',name:'Priya Sharma',phone:'9123456780',address:'45 Gandhi Nagar, Mancherial',notes:'',items:[{name:'Chicken Biryani',price:239,qty:1},{name:'Butter Chicken',price:219,qty:1},{name:'Garlic Naan',price:49,qty:2}],total:556,status:'preparing',ts:Date.now()-900000},
+      {id:'KGF-250403-003',name:'Suresh Reddy',phone:'9000112233',address:'78 MG Road, Mancherial',notes:'No onion',items:[{name:'Paneer Butter Masala',price:189,qty:1},{name:'Dal Tadka',price:149,qty:1},{name:'Tandoori Roti',price:29,qty:4}],total:454,status:'delivered',ts:Date.now()-3600000},
+      {id:'KGF-250403-004',name:'Anita Singh',phone:'9988776655',address:'12 Station Road, Mancherial',notes:'',items:[{name:'Mutton Biryani',price:299,qty:2},{name:'Soft Drinks',price:20,qty:2}],total:638,status:'ready',ts:Date.now()-600000},
+    ];
+    orders = demo;
+    saveOrders();
+    renderDashboard();
+  }
+}
+</script>
+</body>
+</html>
