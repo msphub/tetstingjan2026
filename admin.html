@@ -1191,7 +1191,9 @@ function whatsappOrder(id){
   let msg = `🧾 *Order:* ${o.id}%0A👤 ${o.name}%0A📞 ${o.phone}%0A📍 ${o.address}%0A%0A`;
   (o.items||[]).forEach(it=>{ msg+=`${it.name} × ${it.qty} = ₹${it.price*it.qty}%0A`; });
   msg+=`%0A*Total: ₹${o.total}*%0AStatus: ${o.status}`;
-  window.open(`https://wa.me/917730989898?text=${msg}`,'_blank');
+  const phone = o.phone.replace(/\D/g,'');
+  const phoneWithCode = phone.startsWith('91') ? phone : '91' + phone;
+  window.open(`https://wa.me/${phoneWithCode}?text=${msg}`,'_blank');
 }
 
 // ─── ADD ORDER ────────────────────────────────────────
