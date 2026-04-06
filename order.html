@@ -3,521 +3,478 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanha's Grand | Order Online</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-
+  <title>Kanha's Grand — Order Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --gold: #f1c76d;
-      --gold-light: #f9e0a0;
       --gold-dim: rgba(241,199,109,0.12);
-      --navy: #0a0e2a;
-      --navy-mid: #0f1428;
-      --card-bg: #12172e;
-      --card-border: rgba(241,199,109,0.12);
-      --text: #f0ece4;
-      --muted: #9a96b0;
+      --gold-light: #f9e0a0;
+      --navy: #070b1e;
+      --navy2: #0c1128;
+      --navy3: #111830;
+      --card: #131a35;
+      --border: rgba(241,199,109,0.1);
+      --text: #edeaf4;
+      --muted: #7a778f;
       --green: #25D366;
-      --header-h: 72px;
+      --red: #ff5757;
+      --orange: #ff9f43;
+      --blue: #54a0ff;
+      --purple: #a29bfe;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--navy);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    /* ── LOGIN SCREEN ── */
+    #loginScreen{
+      position:fixed;inset:0;
+      background:var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      z-index:9999;
+      flex-direction:column;
+      gap:0;
+    }
+    .login-box{
+      background:var(--card);
+      border:1px solid rgba(241,199,109,0.2);
+      border-radius:20px;
+      padding:44px 40px;
+      width:100%;max-width:380px;
+      box-shadow:0 40px 80px rgba(0,0,0,0.6);
+      position:relative;overflow:hidden;
+    }
+    .login-box::before{
+      content:'';position:absolute;top:-60px;right:-60px;
+      width:200px;height:200px;
+      background:radial-gradient(circle,rgba(241,199,109,0.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .login-logo{
+      text-align:center;margin-bottom:28px;
+    }
+    .login-logo h1{
+      font-family:'Playfair Display',serif;
+      font-size:1.7rem;color:var(--gold);font-weight:700;
+    }
+    .login-logo p{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+    .login-label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;}
+    .login-input{
+      width:100%;padding:11px 14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;color:var(--text);
+      font-family:inherit;font-size:0.9rem;
+      transition:border-color 0.2s,box-shadow 0.2s;
+      margin-bottom:16px;
+    }
+    .login-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(241,199,109,0.1);}
+    .login-btn{
+      width:100%;padding:13px;
+      background:var(--gold);color:#070b1e;
+      border:none;border-radius:12px;
+      font-weight:700;font-size:0.95rem;
+      cursor:pointer;font-family:inherit;
+      transition:all 0.25s;
+      box-shadow:0 6px 20px rgba(241,199,109,0.3);
+    }
+    .login-btn:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .login-error{color:var(--red);font-size:0.8rem;text-align:center;margin-top:10px;display:none;}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--navy);
-      color: var(--text);
-      padding-top: var(--header-h);
-      padding-bottom: 80px;
+    /* ── SIDEBAR ── */
+    .sidebar{
+      width:240px;flex-shrink:0;
+      background:var(--navy2);
+      border-right:1px solid var(--border);
+      display:flex;flex-direction:column;
+      position:fixed;left:0;top:0;height:100vh;
+      z-index:100;
+      transition:transform 0.3s;
     }
+    .sidebar-logo{
+      padding:24px 20px 20px;
+      border-bottom:1px solid var(--border);
+    }
+    .sidebar-logo h2{
+      font-family:'Playfair Display',serif;
+      font-size:1.15rem;color:var(--gold);font-weight:700;
+    }
+    .sidebar-logo span{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+    .sidebar-nav{flex:1;padding:16px 0;overflow-y:auto;}
+    .nav-group-label{
+      font-size:0.62rem;font-weight:700;
+      color:var(--muted);text-transform:uppercase;
+      letter-spacing:0.12em;padding:12px 20px 6px;
+    }
+    .nav-item{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 20px;font-size:0.85rem;font-weight:500;
+      color:var(--muted);cursor:pointer;
+      border-left:3px solid transparent;
+      transition:all 0.2s;
+      user-select:none;
+    }
+    .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+    .nav-item.active{color:var(--gold);border-left-color:var(--gold);background:var(--gold-dim);}
+    .nav-item i{width:18px;text-align:center;font-size:0.9rem;}
+    .nav-badge{
+      margin-left:auto;background:var(--red);color:#fff;
+      font-size:0.65rem;font-weight:700;
+      padding:2px 7px;border-radius:999px;
+    }
+    .sidebar-bottom{
+      padding:16px 20px;border-top:1px solid var(--border);
+    }
+    .sidebar-user{display:flex;align-items:center;gap:10px;}
+    .sidebar-avatar{
+      width:34px;height:34px;border-radius:50%;
+      background:var(--gold-dim);border:1px solid rgba(241,199,109,0.3);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--gold);font-size:0.85rem;
+    }
+    .sidebar-user-info{flex:1;}
+    .sidebar-user-name{font-size:0.82rem;font-weight:600;}
+    .sidebar-user-role{font-size:0.68rem;color:var(--muted);}
 
-    /* ─── HEADER ─── */
-    header {
-      position: fixed; top: 0; left: 0; width: 100%;
-      height: var(--header-h);
-      background: rgba(10, 14, 42, 0.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(241,199,109,0.1);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 36px;
-      z-index: 1000;
-    }
-    header img { height: 46px; }
-    nav { display: flex; gap: 8px; align-items: center; }
-    nav a {
-      text-decoration: none;
-      color: var(--muted);
-      font-weight: 500;
-      font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 7px 14px;
-      border-radius: 8px;
-      transition: all 0.25s;
-    }
-    nav a:hover { color: var(--gold); background: var(--gold-dim); }
-    nav a.active, nav a.nav-cta {
-      background: var(--gold);
-      color: #0a0e2a;
-      font-weight: 700;
-    }
-    nav a.active:hover, nav a.nav-cta:hover { background: var(--gold-light); }
-    .menu-toggle { display: none; font-size: 26px; color: var(--gold); cursor: pointer; }
-
-    @media (max-width: 768px) {
-      header { padding: 0 20px; }
-      nav {
-        display: none; flex-direction: column; align-items: flex-start;
-        background: rgba(9,13,36,0.98); backdrop-filter: blur(20px);
-        position: absolute; top: var(--header-h); right: 0;
-        width: 220px; padding: 16px;
-        border-left: 1px solid rgba(241,199,109,0.12);
-        border-bottom: 1px solid rgba(241,199,109,0.12);
-        gap: 4px;
-      }
-      nav a { width: 100%; }
-      nav.show { display: flex; }
-      .menu-toggle { display: block; }
-    }
-
-    /* ─── PAGE TITLE ─── */
-    .page-title {
-      text-align: center;
-      padding: 44px 24px 28px;
-      position: relative;
-    }
-    .page-title .section-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-    .page-title h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
-    }
-    .page-title h1 em { font-style: italic; color: var(--gold); }
-
-    /* ─── CATEGORY FILTER ─── */
-    .filter-bar {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 0 20px 28px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .filter-btn {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .filter-btn:hover {
-      border-color: rgba(241,199,109,0.4);
-      color: var(--gold);
-      background: var(--gold-dim);
-    }
-    .filter-btn.active {
-      background: var(--gold);
-      color: #0a0e2a;
-      border-color: var(--gold);
-      font-weight: 700;
+    /* ── MAIN ── */
+    .main{
+      margin-left:240px;flex:1;
+      display:flex;flex-direction:column;
+      min-height:100vh;
     }
 
-    /* ─── CATEGORY CONTAINER ─── */
-    .category-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+    /* ── TOPBAR ── */
+    .topbar{
+      height:64px;
+      background:rgba(7,11,30,0.85);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 28px;
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:50;
     }
-    @media (max-width: 900px) { .category-container { grid-template-columns: 1fr; } }
-    .category-container.single-center {
-      grid-template-columns: 1fr;
-      justify-items: center;
+    .topbar-left{display:flex;align-items:center;gap:16px;}
+    .topbar-title{font-size:1rem;font-weight:600;}
+    .topbar-right{display:flex;align-items:center;gap:14px;}
+    .topbar-time{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--muted);}
+    .topbar-btn{
+      background:var(--gold-dim);border:1px solid rgba(241,199,109,0.2);
+      color:var(--gold);padding:7px 16px;border-radius:8px;
+      font-size:0.8rem;font-weight:600;cursor:pointer;
+      font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:6px;
     }
-    .category-container.single-center .order-group {
-      max-width: 700px; width: 100%;
-    }
+    .topbar-btn:hover{background:rgba(241,199,109,0.2);}
+    .status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);
+      box-shadow:0 0 8px rgba(37,211,102,0.6);animation:statusPulse 2s infinite;}
+    @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:0.4}}
 
-    /* ─── ORDER GROUP ─── */
-    .order-group {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      transition: border-color 0.25s;
-    }
-    .order-group:hover { border-color: rgba(241,199,109,0.22); }
+    /* ── PAGE CONTENT ── */
+    .page{display:none;flex:1;padding:28px;flex-direction:column;gap:24px;}
+    .page.active{display:flex;}
 
-    .order-subheading {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding-bottom: 12px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid rgba(241,199,109,0.1);
+    /* ── STAT CARDS ── */
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:16px;
     }
-    .order-subheading::before {
-      content: '';
-      width: 3px; height: 14px;
-      background: var(--gold);
-      border-radius: 99px;
+    .stat-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;padding:20px 22px;
+      position:relative;overflow:hidden;
+      transition:border-color 0.25s,transform 0.25s;
     }
+    .stat-card:hover{border-color:rgba(241,199,109,0.3);transform:translateY(-2px);}
+    .stat-card::after{
+      content:'';position:absolute;top:-30px;right:-30px;
+      width:100px;height:100px;
+      background:radial-gradient(circle,var(--accent,rgba(241,199,109,0.06)) 0%,transparent 70%);
+    }
+    .stat-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+    .stat-value{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--val-color,var(--gold));line-height:1;}
+    .stat-sub{font-size:0.75rem;color:var(--muted);margin-top:6px;}
+    .stat-icon{position:absolute;bottom:16px;right:16px;font-size:1.4rem;opacity:0.15;}
 
-    /* ─── ORDER CARD ─── */
-    .order-card {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 14px;
-      align-items: center;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.2s;
-      border-radius: 6px;
+    /* ── ORDERS TABLE ── */
+    .section-header{
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:12px;
     }
-    .order-card:last-child { border-bottom: none; }
-    .order-card strong { font-size: 0.9rem; font-weight: 500; }
+    .section-title{font-size:1rem;font-weight:700;}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .filter-select,.search-input{
+      background:var(--card);border:1px solid var(--border);
+      color:var(--text);padding:8px 14px;border-radius:8px;
+      font-family:inherit;font-size:0.82rem;
+      transition:border-color 0.2s;cursor:pointer;
+    }
+    .search-input{min-width:200px;}
+    .filter-select:focus,.search-input:focus{outline:none;border-color:rgba(241,199,109,0.4);}
+    .btn-add{
+      background:var(--gold);color:#070b1e;
+      border:none;padding:8px 18px;border-radius:8px;
+      font-weight:700;font-size:0.82rem;cursor:pointer;
+      font-family:inherit;display:flex;align-items:center;gap:7px;
+      transition:all 0.2s;
+    }
+    .btn-add:hover{background:var(--gold-light);}
 
-    .price { color: var(--gold); font-weight: 700; font-size: 0.92rem; white-space: nowrap; }
+    .table-wrap{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;overflow:hidden;
+    }
+    .orders-table{width:100%;border-collapse:collapse;}
+    .orders-table th{
+      padding:12px 16px;text-align:left;
+      font-size:0.68rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:0.1em;color:var(--muted);
+      background:rgba(255,255,255,0.02);
+      border-bottom:1px solid var(--border);
+      white-space:nowrap;
+    }
+    .orders-table td{
+      padding:13px 16px;font-size:0.84rem;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      vertical-align:middle;
+    }
+    .orders-table tr:last-child td{border-bottom:none;}
+    .orders-table tr:hover td{background:rgba(255,255,255,0.02);}
 
-    .order-controls { display: flex; gap: 6px; align-items: center; }
-    .qty-btn {
-      background: rgba(255,255,255,0.07);
-      color: #fff; border: none;
-      width: 30px; height: 30px;
-      border-radius: 8px;
-      cursor: pointer; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-    .qty-btn:hover { background: rgba(241,199,109,0.18); color: var(--gold); }
-    .qty-display {
-      min-width: 22px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--gold);
-    }
+    .order-id{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--gold);}
+    .order-customer{font-weight:600;}
+    .order-phone{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+    .order-items-preview{font-size:0.78rem;color:var(--muted);max-width:200px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .order-total{font-weight:700;color:var(--gold);}
+    .order-time{font-size:0.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
 
-    /* Veg / Non-veg indicators */
-    .veg-icon, .nonveg-icon {
-      display: inline-block;
-      width: 12px; height: 12px;
-      border: 2px solid; border-radius: 2px;
-      margin-right: 6px; flex-shrink: 0;
-      position: relative; top: 1px;
+    /* Status badges */
+    .status{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:4px 10px;border-radius:999px;
+      font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+      white-space:nowrap;
     }
-    .veg-icon { border-color: #0f9d58; }
-    .veg-icon::after { content: ''; width: 6px; height: 6px; background: #0f9d58; border-radius: 50%; display: block; margin: 1px auto; }
-    .nonveg-icon { border-color: #d32f2f; }
-    .nonveg-icon::after { content: ''; width: 6px; height: 6px; background: #d32f2f; border-radius: 50%; display: block; margin: 1px auto; }
+    .status-dot-sm{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+    .status.new{background:rgba(84,160,255,0.12);color:var(--blue);}
+    .status.new .status-dot-sm{background:var(--blue);animation:statusPulse 1.5s infinite;}
+    .status.preparing{background:rgba(255,159,67,0.12);color:var(--orange);}
+    .status.preparing .status-dot-sm{background:var(--orange);}
+    .status.ready{background:rgba(162,155,254,0.12);color:var(--purple);}
+    .status.ready .status-dot-sm{background:var(--purple);}
+    .status.delivered{background:rgba(37,211,102,0.12);color:var(--green);}
+    .status.delivered .status-dot-sm{background:var(--green);}
+    .status.cancelled{background:rgba(255,87,87,0.12);color:var(--red);}
+    .status.cancelled .status-dot-sm{background:var(--red);}
 
-    /* ─── CATEGORY MODAL ─── */
-    .modal {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
-      z-index: 2000;
-      align-items: center; justify-content: center;
+    /* Action buttons */
+    .actions{display:flex;gap:6px;align-items:center;}
+    .act-btn{
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);width:30px;height:30px;border-radius:7px;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:0.8rem;transition:all 0.2s;
     }
-    .modal.show { display: flex; }
-    .modal-content {
-      background: #111832;
-      max-width: 400px; width: 90%;
-      border-radius: 20px;
-      padding: 28px;
-      border: 1px solid rgba(241,199,109,0.15);
-      text-align: center;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
-    }
-    .modal-content h3 {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold); margin-bottom: 18px;
-      font-size: 1.3rem;
-    }
-    .modal-cat-btn {
-      display: block; width: 100%;
-      margin: 7px 0; padding: 11px 16px;
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      cursor: pointer; font-family: inherit;
-      font-size: 0.9rem; font-weight: 500;
-      text-align: left;
-      transition: all 0.2s;
-    }
-    .modal-cat-btn:hover { background: var(--gold-dim); border-color: rgba(241,199,109,0.3); color: var(--gold); }
-    .modal-cat-btn.highlight { background: var(--gold); color: #0a0e2a; border-color: var(--gold); font-weight: 700; }
-    .modal-cat-btn.highlight:hover { background: var(--gold-light); }
-    .modal-close {
-      float: right; font-size: 1.2rem; cursor: pointer;
-      color: var(--muted); background: none; border: none;
-      transition: color 0.2s; padding: 4px;
-    }
-    .modal-close:hover { color: #fff; }
+    .act-btn:hover{background:var(--gold-dim);color:var(--gold);border-color:rgba(241,199,109,0.3);}
+    .act-btn.danger:hover{background:rgba(255,87,87,0.12);color:var(--red);border-color:rgba(255,87,87,0.3);}
+    .act-btn.success:hover{background:rgba(37,211,102,0.12);color:var(--green);border-color:rgba(37,211,102,0.3);}
 
-    /* ─── CUSTOMER MODAL ─── */
-    .modal-content input,
-    .modal-content textarea {
-      width: 100%; padding: 11px 14px;
-      margin: 7px 0; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      color: #fff; font-family: inherit;
-      font-size: 0.9rem;
-      transition: border-color 0.2s;
+    /* ── ORDER DETAIL MODAL ── */
+    .modal-overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);
+      z-index:5000;align-items:center;justify-content:center;padding:20px;
     }
-    .modal-content input:focus,
-    .modal-content textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(241,199,109,0.1);
+    .modal-overlay.open{display:flex;}
+    .modal{
+      background:var(--navy3);
+      border:1px solid rgba(241,199,109,0.15);
+      border-radius:20px;width:100%;max-width:520px;
+      max-height:85vh;overflow-y:auto;
+      box-shadow:0 40px 80px rgba(0,0,0,0.8);
     }
-    .modal-content textarea { resize: vertical; min-height: 80px; }
-    .modal-submit-btn {
-      width: 100%; margin-top: 10px; padding: 14px;
-      background: var(--green); color: #fff;
-      border: none; border-radius: 12px;
-      font-weight: 800; font-size: 0.95rem;
-      cursor: pointer; font-family: inherit;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
-      transition: all 0.25s;
+    .modal-header{
+      padding:20px 24px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;background:var(--navy3);z-index:1;
     }
-    .modal-submit-btn:hover { box-shadow: 0 10px 28px rgba(37,211,102,0.45); transform: translateY(-1px); }
+    .modal-header h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;}
+    .modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:color 0.2s;}
+    .modal-close:hover{color:var(--text);}
+    .modal-body{padding:20px 24px;}
+    .modal-section{margin-bottom:20px;}
+    .modal-section-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+    .info-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.85rem;}
+    .info-row:last-child{border-bottom:none;}
+    .info-row .label{color:var(--muted);}
+    .info-row .val{font-weight:600;text-align:right;}
+    .order-item-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .order-item-row:last-child{border-bottom:none;}
+    .order-item-name{font-size:0.85rem;font-weight:500;}
+    .order-item-meta{font-size:0.75rem;color:var(--muted);}
+    .order-item-total{font-weight:700;color:var(--gold);font-size:0.85rem;}
+    .modal-total{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:1px solid rgba(241,199,109,0.15);margin-top:8px;}
+    .modal-total-label{font-weight:600;}
+    .modal-total-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);}
 
-    /* ─── CART BAR (sticky bottom) ─── */
-    .cart-bar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: 68px;
-      background: rgba(12,16,38,0.97);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(241,199,109,0.15);
-      padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 1500;
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    /* Status changer */
+    .status-changer{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+    .status-opt{
+      padding:6px 14px;border-radius:8px;
+      font-size:0.75rem;font-weight:600;cursor:pointer;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.04);color:var(--muted);
+      transition:all 0.2s;font-family:inherit;
     }
-    .cart-info {
-      display: flex; align-items: center; gap: 14px;
-    }
-    .cart-badge {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 0.9rem; font-weight: 600;
-    }
-    .cart-badge .count-chip {
-      background: var(--gold); color: #0a0e2a;
-      border-radius: 999px; padding: 3px 10px;
-      font-size: 0.8rem; font-weight: 800;
-    }
-    .cart-total-text {
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    .cart-bar-actions { display: flex; gap: 10px; align-items: center; }
-    .btn-view-cart {
-      background: transparent;
-      color: var(--gold);
-      border: 1.5px solid rgba(241,199,109,0.5);
-      padding: 9px 18px;
-      border-radius: 12px; font-weight: 700;
-      cursor: pointer; font-family: inherit;
-      font-size: 0.88rem;
-      display: flex; align-items: center; gap: 7px;
-      transition: all 0.25s;
-    }
-    .btn-view-cart:hover { background: var(--gold-dim); border-color: var(--gold); }
-    .cart-btn {
-      background: var(--green); color: #fff;
-      border: none; padding: 11px 22px;
-      border-radius: 12px; font-weight: 800;
-      cursor: pointer; font-family: inherit;
-      font-size: 0.9rem;
-      display: flex; align-items: center; gap: 8px;
-      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
-      transition: all 0.25s;
-    }
-    .cart-btn:hover { box-shadow: 0 8px 24px rgba(37,211,102,0.45); transform: translateY(-1px); }
+    .status-opt:hover,.status-opt.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
 
-    /* ─── VIEW CART DRAWER ─── */
-    .cart-drawer-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px);
-      z-index: 3000;
+    /* ── ADD ORDER MODAL ── */
+    .form-group{margin-bottom:14px;}
+    .form-label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;}
+    .form-input,.form-textarea,.form-select{
+      width:100%;padding:10px 14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px;color:var(--text);
+      font-family:inherit;font-size:0.88rem;
+      transition:border-color 0.2s;
     }
-    .cart-drawer-overlay.open { display: block; }
-    .cart-drawer {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #111832;
-      border-top: 1px solid rgba(241,199,109,0.2);
-      border-radius: 20px 20px 0 0;
-      max-height: 75vh;
-      display: flex; flex-direction: column;
-      z-index: 3100;
-      transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 0 -20px 60px rgba(0,0,0,0.7);
-    }
-    .cart-drawer.open { transform: translateY(0); }
-    .cart-drawer-handle {
-      width: 36px; height: 4px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 99px;
-      margin: 12px auto 0; flex-shrink: 0;
-    }
-    .cart-drawer-header {
-      flex-shrink: 0;
-      border-bottom: 1px solid rgba(241,199,109,0.1);
-      padding: 14px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .cart-drawer-header h3 {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold); font-size: 1.1rem; margin: 0;
-    }
-    .cart-drawer-close {
-      background: none; border: none; color: var(--muted);
-      font-size: 1.2rem; cursor: pointer; padding: 4px 8px;
-      border-radius: 8px; transition: all 0.2s;
-    }
-    .cart-drawer-close:hover { color: #fff; background: rgba(255,255,255,0.08); }
-    .cart-drawer-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 4px 0;
-    }
-    .cart-drawer-item {
-      display: flex; align-items: center;
-      padding: 12px 20px; gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.15s;
-    }
-    .cart-drawer-item:hover { background: rgba(255,255,255,0.02); }
-    .cart-drawer-item-name { flex: 1; font-size: 0.9rem; font-weight: 500; }
-    .cart-drawer-item-price { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-    .cart-drawer-qty {
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px; padding: 2px 4px;
-    }
-    .dwr-qty-btn {
-      background: none; border: none; color: var(--text);
-      width: 26px; height: 26px; border-radius: 6px;
-      cursor: pointer; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
-    }
-    .dwr-qty-btn:hover { background: rgba(255,255,255,0.1); }
-    .dwr-qty-num { min-width: 20px; text-align: center; font-weight: 700; font-size: 0.88rem; color: var(--gold); }
-    .cart-drawer-remove {
-      background: none; border: none; color: rgba(255,80,80,0.45);
-      cursor: pointer; font-size: 0.85rem; padding: 4px 6px;
-      border-radius: 6px; transition: all 0.15s;
-    }
-    .cart-drawer-remove:hover { color: #ff6b6b; background: rgba(255,107,107,0.1); }
-    .cart-drawer-footer {
-      flex-shrink: 0;
-      border-top: 1px solid rgba(241,199,109,0.1);
-      padding: 14px 20px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      background: #111832;
-    }
-    .cart-drawer-subtotal {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; font-weight: 700; color: var(--gold);
-    }
-    .cart-drawer-subtotal span {
-      display: block; font-family: 'Poppins', sans-serif;
-      font-size: 0.75rem; color: var(--muted); font-weight: 500; margin-bottom: 2px;
-    }
-    .cart-drawer-empty {
-      text-align: center; color: var(--muted);
-      padding: 40px 20px; font-size: 0.9rem;
-    }
-    @media (max-width: 600px) {
-      .btn-view-cart span { display: none; }
-      .btn-view-cart { padding: 9px 12px; }
-    }
+    .form-textarea{resize:vertical;min-height:70px;}
+    .form-input:focus,.form-textarea:focus,.form-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(241,199,109,0.08);}
+    .form-select option{background:var(--navy3);}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:var(--navy3);}
+    .btn-cancel{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:10px 20px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:0.85rem;transition:all 0.2s;}
+    .btn-cancel:hover{color:var(--text);}
+    .btn-save{background:var(--gold);color:#070b1e;border:none;padding:10px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.85rem;transition:all 0.2s;}
+    .btn-save:hover{background:var(--gold-light);}
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: #080c1f;
-      border-top: 1px solid rgba(241,199,109,0.1);
-      text-align: center;
-      padding: 40px 24px;
-      margin-top: 40px;
+    /* ── MENU MANAGER PAGE ── */
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:14px;
     }
-    .footer-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; font-weight: 700;
-      color: var(--gold); margin-bottom: 6px;
+    .menu-card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:14px;padding:16px;
+      display:flex;flex-direction:column;gap:10px;
+      transition:border-color 0.25s;
     }
-    .footer-tagline {
-      font-size: 0.78rem; color: var(--muted);
-      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 22px;
+    .menu-card:hover{border-color:rgba(241,199,109,0.25);}
+    .menu-card-header{display:flex;align-items:center;justify-content:space-between;}
+    .menu-card-name{font-weight:600;font-size:0.9rem;}
+    .menu-card-price{color:var(--gold);font-weight:700;}
+    .menu-card-cat{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+    .menu-card-actions{display:flex;gap:6px;}
+    .menu-toggle-btn{
+      background:rgba(37,211,102,0.1);color:var(--green);
+      border:1px solid rgba(37,211,102,0.2);
+      padding:4px 10px;border-radius:6px;
+      font-size:0.72rem;font-weight:600;cursor:pointer;font-family:inherit;
+      transition:all 0.2s;
     }
-    .footer-socials {
-      display: flex; justify-content: center; gap: 12px; margin-bottom: 22px;
-    }
-    .footer-socials a {
-      width: 42px; height: 42px; border-radius: 10px;
-      background: rgba(241,199,109,0.07);
-      border: 1px solid rgba(241,199,109,0.15);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); font-size: 1rem;
-      text-decoration: none; transition: all 0.25s;
-    }
-    .footer-socials a:hover {
-      background: var(--gold); color: #0a0e2a;
-      border-color: var(--gold); transform: translateY(-2px);
-    }
-    .footer-copy { font-size: 0.78rem; color: rgba(154,150,176,0.55); }
+    .menu-toggle-btn.off{background:rgba(255,87,87,0.1);color:var(--red);border-color:rgba(255,87,87,0.2);}
 
-    @media (max-width: 600px) {
-      .category-container { padding: 0 14px; }
-      .cart-bar { padding: 0 16px; }
-      .cart-info { gap: 8px; }
-      .cart-badge .count-chip { display: none; }
+    /* ── ANALYTICS PAGE ── */
+    .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    @media(max-width:800px){.analytics-grid{grid-template-columns:1fr;}}
+    .chart-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+    .chart-title{font-size:0.85rem;font-weight:700;margin-bottom:16px;color:var(--text);}
+    .bar-chart{display:flex;flex-direction:column;gap:10px;}
+    .bar-row{display:flex;align-items:center;gap:10px;}
+    .bar-label{font-size:0.75rem;color:var(--muted);width:110px;flex-shrink:0;text-align:right;}
+    .bar-track{flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:4px;background:var(--gold);transition:width 1s cubic-bezier(0.22,1,0.36,1);}
+    .bar-val{font-size:0.72rem;color:var(--muted);width:50px;font-family:'JetBrains Mono',monospace;}
+    .donut-wrap{display:flex;align-items:center;gap:20px;justify-content:center;}
+    .donut-legend{display:flex;flex-direction:column;gap:8px;}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;}
+    .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+    /* ── SETTINGS PAGE ── */
+    .settings-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
+    .settings-section h3{font-size:0.9rem;font-weight:700;margin-bottom:16px;color:var(--text);}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .setting-row:last-child{border-bottom:none;}
+    .setting-info{}
+    .setting-name{font-size:0.85rem;font-weight:500;}
+    .setting-desc{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+    .toggle{position:relative;width:42px;height:24px;}
+    .toggle input{opacity:0;width:0;height:0;}
+    .toggle-slider{
+      position:absolute;inset:0;
+      background:rgba(255,255,255,0.1);border-radius:999px;
+      cursor:pointer;transition:background 0.25s;
+    }
+    .toggle-slider::before{
+      content:'';position:absolute;
+      width:18px;height:18px;
+      background:#fff;border-radius:50%;
+      left:3px;top:3px;
+      transition:transform 0.25s;
+    }
+    .toggle input:checked + .toggle-slider{background:var(--gold);}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(18px);}
+
+    /* ── EMPTY STATE ── */
+    .empty-state{
+      text-align:center;padding:60px 20px;
+      color:var(--muted);
+    }
+    .empty-state i{font-size:2.5rem;margin-bottom:14px;display:block;opacity:0.3;}
+    .empty-state p{font-size:0.88rem;}
+
+    /* ── TOAST ── */
+    .toast{
+      position:fixed;bottom:24px;right:24px;
+      background:var(--card);border:1px solid var(--border);
+      color:var(--text);padding:12px 20px;border-radius:12px;
+      font-size:0.85rem;font-weight:500;
+      box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      transform:translateY(20px);opacity:0;
+      transition:all 0.3s;z-index:9999;
+      display:flex;align-items:center;gap:10px;
+    }
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast i{color:var(--green);}
+    .toast.warn i{color:var(--orange);}
+    .toast.error i{color:var(--red);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .sidebar{transform:translateX(-100%);}
+      .sidebar.open{transform:translateX(0);}
+      .main{margin-left:0;}
+      .sidebar-overlay{display:block;}
+    }
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+    .hamburger{display:none;background:none;border:none;color:var(--gold);font-size:1.3rem;cursor:pointer;}
+    @media(max-width:900px){.hamburger{display:block;}}
+    @media(max-width:600px){
+      .page{padding:16px;}
+      .stats-grid{grid-template-columns:1fr 1fr;}
+      .form-row{grid-template-columns:1fr;}
     }
   </style>
 
 <!-- ═══════════════════════════════════════════════════════
-     FIREBASE CONFIG  —  Replace with YOUR project values
-     Firebase Console → Project Settings → Your apps → SDK
+     FIREBASE CONFIG  —  Same values as index/order pages
      ═══════════════════════════════════════════════════════ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp }
+  import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   // 🔧 REPLACE THESE VALUES with your Firebase project config
@@ -533,489 +490,950 @@
 
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
-  window._fbDb = db;
+
+  // ── Real-time listener: syncs Firestore orders into localStorage + re-renders ──
+  const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+  onSnapshot(q, (snapshot) => {
+    // Map Firestore docs to our order shape
+    const fsOrders = snapshot.docs.map(d => {
+      const data = d.data();
+      return {
+        _docId:   d.id,
+        id:       data.id       || d.id,
+        customer: data.customer || data.name || "—",
+        phone:    data.phone    || "",
+        address:  data.address  || "",
+        notes:    data.notes    || "",
+        items:    data.items    || [],
+        total:    data.total    || 0,
+        status:   data.status   || "new",
+        ts:       data.ts       || (data.createdAt?.seconds * 1000) || Date.now(),
+        source:   data.source   || "online"
+      };
+    });
+
+    // Merge: Firestore is source-of-truth for online orders;
+    // keep any manually-added local-only orders that aren't in Firestore
+    const localRaw = JSON.parse(localStorage.getItem("kg_admin_orders") || "[]");
+    const localOnly = localRaw.filter(lo => !fsOrders.find(fo => fo.id === lo.id));
+    const merged = [...fsOrders, ...localOnly].sort((a,b) => b.ts - a.ts);
+
+    localStorage.setItem("kg_admin_orders", JSON.stringify(merged));
+    if (window._adminReady) {
+      window._loadOrdersFromStorage();
+      window._renderDashboard();
+      if (snapshot.docChanges().some(c => c.type === "added")) {
+        window._showAdminToast("🔔 New online order received!");
+      }
+    }
+  });
+
+  // Expose Firestore helpers for status updates / deletes from admin
+  window._fbDb         = db;
+  window._fbDoc        = doc;
+  window._fbUpdateDoc  = updateDoc;
+  window._fbDeleteDoc  = deleteDoc;
   window._fbCollection = collection;
-  window._fbAddDoc     = addDoc;
-  window._fbServerTs   = serverTimestamp;
-  console.log("Firebase ready ✅");
+  console.log("Firebase Admin listener active ✅");
 </script>
 
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <img src="logo.jpg" alt="Kanha's Grand">
-  <span class="menu-toggle" onclick="toggleMenu()">☰</span>
-  <nav id="nav">
-    <a href="index.html#home">Home</a>
-    <a href="order.html" class="active">Menu</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#contact">Contact</a>
-    <a href="order.html" class="nav-cta">Order Now</a>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Kanha's Grand</h1>
+      <p>Back Office · Order Management</p>
+    </div>
+    <label class="login-label">Username</label>
+    <input class="login-input" id="loginUser" type="text" placeholder="admin" autocomplete="username">
+    <label class="login-label">Password</label>
+    <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Sign In</button>
+    <div class="login-error" id="loginErr">Invalid username or password</div>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h2>Kanha's Grand</h2>
+    <span>Back Office</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Main</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <i class="fa-solid fa-gauge-high"></i> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('orders',this)">
+      <i class="fa-solid fa-receipt"></i> Orders
+      <span class="nav-badge" id="newOrderBadge">0</span>
+    </div>
+    <div class="nav-group-label">Manage</div>
+    <div class="nav-item" onclick="showPage('menu',this)">
+      <i class="fa-solid fa-utensils"></i> Menu Items
+    </div>
+    <div class="nav-item" onclick="showPage('analytics',this)">
+      <i class="fa-solid fa-chart-bar"></i> Analytics
+    </div>
+    <div class="nav-group-label">System</div>
+    <div class="nav-item" onclick="showPage('settings',this)">
+      <i class="fa-solid fa-gear"></i> Settings
+    </div>
+    <div class="nav-item" onclick="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </div>
   </nav>
-</header>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fa-solid fa-user"></i></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Admin</div>
+        <div class="sidebar-user-role">Owner</div>
+      </div>
+      <div class="status-dot" title="Online"></div>
+    </div>
+  </div>
+</aside>
 
-<!-- PAGE TITLE -->
-<div class="page-title">
-  <div class="section-label">Mancherial's Finest</div>
-  <h1>Kanha's Grand — <em>Order Now</em></h1>
+<!-- MAIN -->
+<div class="main" id="mainArea">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div class="topbar-title" id="pageTitle">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-time" id="topbarTime"></div>
+      <button class="topbar-btn" onclick="showAddOrder()">
+        <i class="fa-solid fa-plus"></i> New Order
+      </button>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD PAGE ── -->
+  <div class="page active" id="page-dashboard">
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Today's Orders</div>
+        <div class="stat-value" id="statToday">0</div>
+        <div class="stat-sub">All orders today</div>
+        <i class="fa-solid fa-receipt stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(37,211,102,0.08);--val-color:#25D366">
+        <div class="stat-label">Today's Revenue</div>
+        <div class="stat-value">₹<span id="statRevenue">0</span></div>
+        <div class="stat-sub">Delivered orders</div>
+        <i class="fa-solid fa-indian-rupee-sign stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(84,160,255,0.08);--val-color:#54a0ff">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="statPending">0</div>
+        <div class="stat-sub">Awaiting action</div>
+        <i class="fa-solid fa-clock stat-icon"></i>
+      </div>
+      <div class="stat-card" style="--accent:rgba(162,155,254,0.08);--val-color:#a29bfe">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-sub">All time</div>
+        <i class="fa-solid fa-database stat-icon"></i>
+      </div>
+    </div>
+
+    <!-- Recent orders -->
+    <div>
+      <div class="section-header" style="margin-bottom:14px;">
+        <div class="section-title">Recent Orders</div>
+        <button class="topbar-btn" onclick="showPage('orders',document.querySelector('[onclick*=orders]'))">View All</button>
+      </div>
+      <div class="table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDERS PAGE ── -->
+  <div class="page" id="page-orders">
+    <div class="section-header">
+      <div class="section-title">All Orders</div>
+      <div class="filter-row">
+        <input class="search-input" id="orderSearch" type="text" placeholder="🔍 Search name, ID, phone..." oninput="renderOrdersTable()">
+        <select class="filter-select" id="statusFilter" onchange="renderOrdersTable()">
+          <option value="">All Status</option>
+          <option value="new">New</option>
+          <option value="preparing">Preparing</option>
+          <option value="ready">Ready</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button class="btn-add" onclick="showAddOrder()"><i class="fa-solid fa-plus"></i> Add Order</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="allOrdersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── MENU PAGE ── -->
+  <div class="page" id="page-menu">
+    <div class="section-header">
+      <div class="section-title">Menu Items</div>
+      <div class="filter-row">
+        <input class="search-input" id="menuSearch" type="text" placeholder="🔍 Search items..." oninput="renderMenu()">
+        <select class="filter-select" id="menuCatFilter" onchange="renderMenu()">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+
+  <!-- ── ANALYTICS PAGE ── -->
+  <div class="page" id="page-analytics">
+    <div class="analytics-grid">
+      <div class="chart-card">
+        <div class="chart-title">Top Selling Items</div>
+        <div class="bar-chart" id="topItemsChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Orders by Status</div>
+        <div style="display:flex;flex-direction:column;gap:10px;" id="statusChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Category Revenue</div>
+        <div class="bar-chart" id="catRevenueChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Summary</div>
+        <div id="summaryStats" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS PAGE ── -->
+  <div class="page" id="page-settings">
+    <div class="settings-section">
+      <h3>Restaurant Info</h3>
+      <div class="form-group">
+        <label class="form-label">Restaurant Name</label>
+        <input class="form-input" value="Kanha's Grand" readonly>
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp Number</label>
+        <input class="form-input" id="waNumber" value="917730989898">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <textarea class="form-textarea" readonly>Market Rd, nearby Kotak Mahindra Bank, Iqbal Ahmed Nagar, Mancherial, Telangana 504208</textarea>
+      </div>
+      <button class="btn-save" onclick="showToast('Settings saved!','success')">Save Settings</button>
+    </div>
+    <div class="settings-section">
+      <h3>Notifications</h3>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">New Order Alert</div>
+          <div class="setting-desc">Play sound when new order arrives</div>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Browser Notifications</div>
+          <div class="setting-desc">Show desktop notifications</div>
+        </div>
+        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h3>Data Management</h3>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Export Orders</div>
+          <div class="setting-desc">Download all orders as JSON</div>
+        </div>
+        <button class="topbar-btn" onclick="exportOrders()"><i class="fa-solid fa-download"></i> Export</button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Clear All Orders</div>
+          <div class="setting-desc">Delete all order data permanently</div>
+        </div>
+        <button class="act-btn danger" onclick="clearAllOrders()" style="width:auto;padding:0 14px;height:32px;font-size:0.8rem;color:var(--red);">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal" onclick="if(event.target===this)closeOrderModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Order Details</h3>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
 </div>
 
-<!-- CATEGORY FILTER -->
-<div class="filter-bar">
-  <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
-  <button class="filter-btn" onclick="filterCategory('veg-starters', this)">Veg Starters</button>
-  <button class="filter-btn" onclick="filterCategory('nonveg-starters', this)">Non-Veg Starters</button>
-  <button class="filter-btn" onclick="filterCategory('biryanis', this)">Biryanis</button>
-  <button class="filter-btn" onclick="filterCategory('family-packs', this)">Family Packs</button>
-  <button class="filter-btn" onclick="filterCategory('veg-curries', this)">Veg Curries</button>
-  <button class="filter-btn" onclick="filterCategory('nonveg-curries', this)">Non-Veg Curries</button>
-  <button class="filter-btn" onclick="filterCategory('meals', this)">Meals</button>
-  <button class="filter-btn" onclick="filterCategory('breads', this)">Breads</button>
-  <button class="filter-btn" onclick="filterCategory('rice', this)">Rice</button>
-  <button class="filter-btn" onclick="filterCategory('beverages', this)">Beverages</button>
-</div>
-
-<!-- MENU GRID -->
-<div class="category-container" id="menuContainer">
-
-  <!-- VEG STARTERS -->
-  <div class="order-group" data-category="veg-starters">
-    <div class="order-subheading">Veg Starters</div>
-    <div class="order-card" data-name="Chilli Paneer" data-price="239"><strong><span class="veg-icon"></span>Chilli Paneer</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Paneer Manchurian" data-price="239"><strong><span class="veg-icon"></span>Paneer Manchurian</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Paneer Tikka (8 pcs)" data-price="249"><strong><span class="veg-icon"></span>Paneer Tikka (8 pcs)</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mushroom 65" data-price="219"><strong><span class="veg-icon"></span>Mushroom 65</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chilli Babycorn" data-price="219"><strong><span class="veg-icon"></span>Chilli Babycorn</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- NON-VEG STARTERS -->
-  <div class="order-group" data-category="nonveg-starters">
-    <div class="order-subheading">Non-Veg Starters</div>
-    <div class="order-card" data-name="Egg Ginger Dry" data-price="209"><strong><span class="nonveg-icon"></span>Egg Ginger Dry</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Ginger Chicken Dry" data-price="249"><strong><span class="nonveg-icon"></span>Ginger Chicken Dry</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken 65" data-price="249"><strong><span class="nonveg-icon"></span>Chicken 65</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Chicken Tikka" data-price="239"><strong><span class="nonveg-icon"></span>Tandoori Chicken Tikka</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Majestic" data-price="259"><strong><span class="nonveg-icon"></span>Chicken Majestic</strong><div class="price">₹259</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken 555" data-price="259"><strong><span class="nonveg-icon"></span>Chicken 555</strong><div class="price">₹259</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Kaju Chicken Dry" data-price="289"><strong><span class="nonveg-icon"></span>Kaju Chicken Dry</strong><div class="price">₹289</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- BIRYANIS -->
-  <div class="order-group" data-category="biryanis">
-    <div class="order-subheading">Biryani</div>
-    <div class="order-card" data-name="Paneer Biryani" data-price="219"><strong><span class="veg-icon"></span>Paneer Biryani</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Veg Biryani" data-price="209"><strong><span class="veg-icon"></span>Veg Biryani</strong><div class="price">₹209</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Biryani (1 pc)" data-price="169"><strong><span class="nonveg-icon"></span>Chicken Biryani (1 pc)</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Chicken Biryani" data-price="239"><strong><span class="nonveg-icon"></span>Chicken Biryani</strong><div class="price">₹239</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mutton Biryani" data-price="299"><strong><span class="nonveg-icon"></span>Mutton Biryani</strong><div class="price">₹299</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Nalli Gosht Biryani" data-price="369"><strong><span class="nonveg-icon"></span>Nalli Gosht Biryani</strong><div class="price">₹369</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- FAMILY PACKS -->
-  <div class="order-group" data-category="family-packs">
-    <div class="order-subheading">Family Packs</div>
-    <div class="order-card" data-name="Chicken Biryani Family Pack" data-price="649"><strong><span class="nonveg-icon"></span>Chicken Biryani Family Pack</strong><div class="price">₹649</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mutton Biryani Family Pack" data-price="779"><strong><span class="nonveg-icon"></span>Mutton Biryani Family Pack</strong><div class="price">₹779</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- VEG CURRIES -->
-  <div class="order-group" data-category="veg-curries">
-    <div class="order-subheading">Veg Curries</div>
-    <div class="order-card" data-name="Paneer Butter Masala" data-price="189"><strong><span class="veg-icon"></span>Paneer Butter Masala</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Paneer Shahi Korma" data-price="199"><strong><span class="veg-icon"></span>Paneer Shahi Korma</strong><div class="price">₹199</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Kadhai Paneer" data-price="189"><strong><span class="veg-icon"></span>Kadhai Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Kadhai Mushroom" data-price="179"><strong><span class="veg-icon"></span>Kadhai Mushroom</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Palak Paneer" data-price="179"><strong><span class="veg-icon"></span>Palak Paneer</strong><div class="price">₹179</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Dal Tadka" data-price="149"><strong><span class="veg-icon"></span>Dal Tadka</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Plain Palak" data-price="129"><strong><span class="veg-icon"></span>Plain Palak</strong><div class="price">₹129</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Veg Kolhapuri" data-price="169"><strong><span class="veg-icon"></span>Veg Kolhapuri</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- NON-VEG CURRIES -->
-  <div class="order-group" data-category="nonveg-curries">
-    <div class="order-subheading">Non-Veg Curries</div>
-    <div class="order-card" data-name="Butter Chicken" data-price="219"><strong><span class="nonveg-icon"></span>Butter Chicken</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Telangana Chicken Curry" data-price="219"><strong><span class="nonveg-icon"></span>Telangana Chicken Curry</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Kadhai Chicken" data-price="229"><strong><span class="nonveg-icon"></span>Kadhai Chicken</strong><div class="price">₹229</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Telangana Mutton Curry" data-price="269"><strong><span class="nonveg-icon"></span>Telangana Mutton Curry</strong><div class="price">₹269</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- MEALS -->
-  <div class="order-group" data-category="meals">
-    <div class="order-subheading">Meals (Bagara Rice Combos)</div>
-    <div class="order-card" data-name="Bagara Rice with Paneer" data-price="189"><strong><span class="veg-icon"></span>Bagara Rice with Paneer</strong><div class="price">₹189</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Bagara Rice with Chicken" data-price="219"><strong><span class="nonveg-icon"></span>Bagara Rice with Chicken</strong><div class="price">₹219</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Bagara Rice with Mutton" data-price="249"><strong><span class="nonveg-icon"></span>Bagara Rice with Mutton</strong><div class="price">₹249</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- BREADS -->
-  <div class="order-group" data-category="breads">
-    <div class="order-subheading">Breads</div>
-    <div class="order-card" data-name="Butter Naan" data-price="39"><strong><span class="veg-icon"></span>Butter Naan</strong><div class="price">₹39</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Plain Naan" data-price="29"><strong><span class="veg-icon"></span>Plain Naan</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Garlic Naan" data-price="49"><strong><span class="veg-icon"></span>Garlic Naan</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Roti" data-price="29"><strong><span class="veg-icon"></span>Tandoori Roti</strong><div class="price">₹29</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Tandoori Butter Roti" data-price="34"><strong><span class="veg-icon"></span>Tandoori Butter Roti</strong><div class="price">₹34</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Butter Kulcha" data-price="49"><strong><span class="veg-icon"></span>Butter Kulcha</strong><div class="price">₹49</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- RICE -->
-  <div class="order-group" data-category="rice">
-    <div class="order-subheading">Rice</div>
-    <div class="order-card" data-name="Jeera Fried Rice" data-price="149"><strong><span class="veg-icon"></span>Jeera Fried Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Veg Fried Rice" data-price="169"><strong><span class="veg-icon"></span>Veg Fried Rice</strong><div class="price">₹169</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Curd Rice" data-price="119"><strong><span class="veg-icon"></span>Curd Rice</strong><div class="price">₹119</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Special Curd Rice" data-price="149"><strong><span class="veg-icon"></span>Special Curd Rice</strong><div class="price">₹149</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-  <!-- BEVERAGES -->
-  <div class="order-group" data-category="beverages">
-    <div class="order-subheading">Beverages</div>
-    <div class="order-card" data-name="Mineral Water (1 Ltr)" data-price="20"><strong>Mineral Water (1 Ltr)</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Mineral Water (500 ml)" data-price="10"><strong>Mineral Water (500 ml)</strong><div class="price">₹10</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Soft Drinks" data-price="20"><strong>Soft Drinks</strong><div class="price">₹20</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-    <div class="order-card" data-name="Ginger Beer" data-price="109"><strong>Ginger Beer</strong><div class="price">₹109</div><div class="order-controls"><button class="qty-btn">−</button><span class="qty-display">0</span><button class="qty-btn">+</button></div></div>
-  </div>
-
-</div><!-- /category-container -->
-
-<!-- CUSTOMER MODAL -->
-<div id="customerModal" class="modal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="document.getElementById('customerModal').classList.remove('show')">✕</button>
-    <h3>Your Details</h3>
-    <input id="custName" placeholder="Full Name *" type="text">
-    <input id="custPhone" placeholder="Phone Number *" type="tel">
-    <textarea id="custAddress" placeholder="Delivery Address *"></textarea>
-    <input id="custNotes" placeholder="Special instructions (optional)" type="text">
-    <button class="modal-submit-btn" onclick="confirmOrder()">
-      <i class="fab fa-whatsapp"></i> Send Order on WhatsApp
-    </button>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">Kanha's Grand</div>
-  <div class="footer-tagline">Authentic Telangana Flavors</div>
-  <div class="footer-socials">
-    <a href="https://www.instagram.com/kanhasgrand.official/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.facebook.com/profile.php?id=61580026734705" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-    <a href="https://wa.me/917730989898" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-  </div>
-  <div class="footer-copy">© <script>document.write(new Date().getFullYear())</script> Kanha's Grand. All rights reserved.</div>
-  <div style="margin-top:12px;font-size:0.78rem;color:rgba(154,150,176,0.55);">
-    <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:none;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">Privacy Policy</a>
-    &nbsp;·&nbsp; By ordering, you agree to our <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:rgba(241,199,109,0.6);text-decoration:underline;" onmouseover="this.style.color='#f1c76d'" onmouseout="this.style.color='rgba(241,199,109,0.6)'">terms</a>
-  </div>
-</footer>
-
-<!-- PRIVACY POLICY MODAL -->
-<div id="privacyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="background:#111832;max-width:540px;width:100%;border-radius:20px;padding:32px;border:1px solid rgba(241,199,109,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.8);max-height:85vh;overflow-y:auto;position:relative;">
-    <button onclick="document.getElementById('privacyModal').style.display='none'" style="position:absolute;top:16px;right:18px;background:none;border:none;color:#9a96b0;font-size:1.3rem;cursor:pointer;line-height:1;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9a96b0'">✕</button>
-    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#f1c76d;margin-bottom:8px;">Legal</div>
-    <h2 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.4rem;margin-bottom:18px;">Privacy Policy</h2>
-    <div style="color:rgba(240,236,228,0.75);font-size:0.88rem;line-height:1.8;">
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">1. Information We Collect</strong><br>When you place an order via WhatsApp, we collect your name, phone number, and delivery address solely to process and deliver your order.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">2. How We Use Your Information</strong><br>Your details are used exclusively to fulfill your order and contact you if needed. We do not use your information for marketing without your consent.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">3. Data Sharing</strong><br>We do not sell, trade, or share your personal information with any third party.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">4. WhatsApp Orders</strong><br>Orders are processed through WhatsApp. By sending your order, you also agree to WhatsApp's own privacy policy. We retain order details only for delivery purposes.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">5. Payment</strong><br>We operate on a pay-on-delivery basis. No payment information is collected or stored on this website.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">6. Local Storage</strong><br>This website uses browser local storage to remember your cart items during your visit. No tracking cookies are used.</p>
-      <p style="margin-bottom:12px;"><strong style="color:#f1c76d;">7. Contact</strong><br>For privacy concerns, contact us at <a href="https://wa.me/917730989898" style="color:#f1c76d;">+91 77309 89898</a>.</p>
-      <p style="color:rgba(154,150,176,0.55);font-size:0.78rem;margin-top:18px;">Last updated: 2025 · Kanha's Grand, Mancherial, Telangana</p>
+<!-- ADD ORDER MODAL -->
+<div class="modal-overlay" id="addOrderModal" onclick="if(event.target===this)closeAddOrder()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Order</h3>
+      <button class="modal-close" onclick="closeAddOrder()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Customer Name *</label>
+          <input class="form-input" id="newName" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input class="form-input" id="newPhone" placeholder="10-digit number" type="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Address *</label>
+        <textarea class="form-textarea" id="newAddress" placeholder="Full delivery address"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Order Items (one per line: Item Name × Qty)</label>
+        <textarea class="form-textarea" id="newItems" placeholder="Chicken Biryani × 2&#10;Butter Naan × 3&#10;Butter Chicken × 1" style="min-height:100px;"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Total Amount (₹)</label>
+          <input class="form-input" id="newTotal" placeholder="0" type="number">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="newStatus">
+            <option value="new">New</option>
+            <option value="preparing">Preparing</option>
+            <option value="ready">Ready</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes (optional)</label>
+        <input class="form-input" id="newNotes" placeholder="Special instructions">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeAddOrder()">Cancel</button>
+      <button class="btn-save" onclick="saveNewOrder()"><i class="fa-solid fa-check"></i> Save Order</button>
     </div>
   </div>
 </div>
 
-<!-- CART DRAWER OVERLAY -->
-<div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
-
-<!-- CART DRAWER -->
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-drawer-handle"></div>
-  <div class="cart-drawer-header">
-    <h3><i class="fa-solid fa-bag-shopping" style="font-size:0.95rem;margin-right:8px"></i>Your Cart</h3>
-    <button class="cart-drawer-close" onclick="closeCartDrawer()">✕</button>
-  </div>
-  <div class="cart-drawer-items" id="drawerItems"></div>
-  <div class="cart-drawer-footer">
-    <div class="cart-drawer-subtotal">
-      <span>Subtotal</span>
-      ₹<span id="drawerTotal">0</span>
-    </div>
-    <button class="cart-btn" onclick="closeCartDrawer(); openCustomer();" style="padding:11px 20px;">
-      <i class="fab fa-whatsapp"></i> Order on WhatsApp
-    </button>
-  </div>
-</div>
-
-<!-- CART BAR -->
-<div class="cart-bar">
-  <div class="cart-info">
-    <div class="cart-badge">
-      <i class="fa-solid fa-bag-shopping" style="color:var(--gold)"></i>
-      <span id="cartCount">0</span> items
-      <span class="count-chip" id="cartCountChip">0</span>
-    </div>
-    <div class="cart-total-text">₹<span id="cartTotal">0</span></div>
-  </div>
-  <div class="cart-bar-actions">
-    <button class="btn-view-cart" id="viewCartBtn" onclick="openCartDrawer()">
-      <i class="fa-solid fa-cart-shopping"></i><span>View Cart</span>
-    </button>
-    <button class="cart-btn" id="cartOrderBtn" onclick="openCustomer()">
-      <i class="fab fa-whatsapp"></i> Order on WhatsApp
-    </button>
-  </div>
-</div>
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fa-solid fa-check-circle"></i><span id="toastMsg"></span></div>
 
 <script>
-// ── Menu toggle ──
-function toggleMenu(){
-  document.getElementById('nav').classList.toggle('show');
-}
+// ─── AUTH ───────────────────────────────────────────
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'kanha2024';
+const AUTH_KEY   = 'kg_admin_auth';
 
-// ── Cart state ──
-const CART_KEY = 'kg_cart';
-let cart = {};
-
-try {
-  const saved = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  saved.forEach(it => { cart[it.name] = { price: it.price, qty: it.qty }; });
-} catch(e) {}
-
-function saveCart() {
-  localStorage.setItem(CART_KEY, JSON.stringify(
-    Object.entries(cart).map(([name, v]) => ({ name, price: v.price, qty: v.qty }))
-  ));
-  refreshBar();
-  renderDrawer();
-}
-
-function refreshBar() {
-  let total = 0, count = 0;
-  Object.values(cart).forEach(i => { total += i.price * i.qty; count += i.qty; });
-  document.getElementById('cartTotal').textContent = total;
-  document.getElementById('cartCount').textContent = count;
-  document.getElementById('cartCountChip').textContent = count;
-  const btn = document.getElementById('cartOrderBtn');
-  const vBtn = document.getElementById('viewCartBtn');
-  btn.disabled = count === 0;
-  btn.style.opacity = count === 0 ? '0.5' : '1';
-  if(vBtn) { vBtn.disabled = count === 0; vBtn.style.opacity = count === 0 ? '0.5' : '1'; }
-}
-
-function renderDrawer() {
-  const wrap = document.getElementById('drawerItems');
-  const totalEl = document.getElementById('drawerTotal');
-  if(!wrap) return;
-  const entries = Object.entries(cart);
-  if(entries.length === 0) {
-    wrap.innerHTML = '<div class="cart-drawer-empty"><i class="fa-solid fa-bag-shopping" style="font-size:2rem;opacity:0.3;display:block;margin-bottom:10px"></i>Your cart is empty</div>';
-    if(totalEl) totalEl.textContent = '0';
-    return;
-  }
-  let total = 0;
-  wrap.innerHTML = '';
-  entries.forEach(([name, v]) => {
-    total += v.price * v.qty;
-    const div = document.createElement('div');
-    div.className = 'cart-drawer-item';
-    div.innerHTML = `
-      <div style="flex:1">
-        <div class="cart-drawer-item-name">${name}</div>
-        <div class="cart-drawer-item-price">₹${v.price} × ${v.qty} = ₹${v.price * v.qty}</div>
-      </div>
-      <div class="cart-drawer-qty">
-        <button class="dwr-qty-btn" onclick="drawerMinus('${name.replace(/'/g,"\\'")}')">−</button>
-        <span class="dwr-qty-num">${v.qty}</span>
-        <button class="dwr-qty-btn" onclick="drawerPlus('${name.replace(/'/g,"\\'")}')">+</button>
-      </div>
-      <button class="cart-drawer-remove" onclick="drawerRemove('${name.replace(/'/g,"\\'")}')"><i class="fa-solid fa-xmark"></i></button>`;
-    wrap.appendChild(div);
-  });
-  if(totalEl) totalEl.textContent = total;
-}
-
-function drawerPlus(name) {
-  if(cart[name]) { cart[name].qty++; saveCart(); }
-  // also sync card display
-  document.querySelectorAll('.order-card').forEach(c => {
-    if(c.dataset.name === name) c.querySelector('.qty-display').textContent = cart[name].qty;
-  });
-}
-function drawerMinus(name) {
-  if(!cart[name]) return;
-  cart[name].qty--;
-  if(cart[name].qty <= 0) delete cart[name];
-  saveCart();
-  document.querySelectorAll('.order-card').forEach(c => {
-    if(c.dataset.name === name) c.querySelector('.qty-display').textContent = cart[name] ? cart[name].qty : 0;
-  });
-}
-function drawerRemove(name) {
-  delete cart[name];
-  saveCart();
-  document.querySelectorAll('.order-card').forEach(c => {
-    if(c.dataset.name === name) c.querySelector('.qty-display').textContent = 0;
-  });
-}
-
-function openCartDrawer() {
-  if(!Object.keys(cart).length) { alert('Add items to your cart first!'); return; }
-  renderDrawer();
-  document.getElementById('cartDrawer').classList.add('open');
-  document.getElementById('cartOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeCartDrawer() {
-  document.getElementById('cartDrawer').classList.remove('open');
-  document.getElementById('cartOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ── Category filter ──
-const groups = document.querySelectorAll('.order-group');
-const container = document.getElementById('menuContainer');
-
-function filterCategory(cat, btnEl) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  if(btnEl) btnEl.classList.add('active');
-  container.classList.remove('single-center');
-  let target = null;
-  groups.forEach(g => {
-    if(cat === 'all') { g.style.display = 'block'; }
-    else if(g.dataset.category === cat) { g.style.display = 'block'; target = g; }
-    else { g.style.display = 'none'; }
-  });
-  if(target) {
-    container.classList.add('single-center');
-    target.scrollIntoView({ behavior:'smooth', block:'center' });
+function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('loginScreen').style.display='none';
+    initApp();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('loginPass').value='';
   }
 }
+document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+document.getElementById('loginUser').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
 
-// ── Qty buttons ──
-document.querySelectorAll('.order-card').forEach(card => {
-  const name = card.dataset.name;
-  const price = +card.dataset.price;
-  const display = card.querySelector('.qty-display');
-  const [minus, plus] = card.querySelectorAll('.qty-btn');
-
-  display.textContent = cart[name] ? cart[name].qty : 0;
-
-  plus.onclick = () => {
-    if(!cart[name]) cart[name] = { price, qty: 0 };
-    cart[name].qty++;
-    display.textContent = cart[name].qty;
-    saveCart();
-  };
-  minus.onclick = () => {
-    if(!cart[name] || cart[name].qty === 0) return;
-    cart[name].qty--;
-    if(cart[name].qty === 0) delete cart[name];
-    display.textContent = cart[name] ? cart[name].qty : 0;
-    saveCart();
-  };
-});
-
-// ── Init ──
-refreshBar();
-renderDrawer();
-
-// ── Customer modal ──
-function openCustomer() {
-  if(!Object.keys(cart).length) { alert('Add items to your cart first!'); return; }
-  document.getElementById('customerModal').classList.add('show');
+function doLogout(){
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
 }
-document.getElementById('customerModal').addEventListener('click', function(e) {
-  if(e.target === this) this.classList.remove('show');
-});
 
-// ── Order number ──
-function orderNo() {
+// auto-login if session active
+if(sessionStorage.getItem(AUTH_KEY)){
+  document.getElementById('loginScreen').style.display='none';
+  initApp();
+}
+
+// ─── DATA ────────────────────────────────────────────
+const ORDERS_KEY = 'kg_admin_orders';
+let orders = [];
+
+function loadOrders(){
+  try{ orders = JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]'); }
+  catch(e){ orders=[]; }
+}
+function saveOrders(){
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  // Also update Firestore status when changed from admin
+}
+// Expose for Firebase module
+window._loadOrdersFromStorage = loadOrders;
+window._renderDashboard = function(){ renderDashboard(); };
+window._showAdminToast = showAdminToast;
+
+function orderNo(){
   const now = new Date();
   const key = `${String(now.getFullYear()).slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  let savedDate = localStorage.getItem('kgf_order_date');
-  let counter = parseInt(localStorage.getItem('kgf_order_count') || '0');
-  if(savedDate !== key) { counter = 0; localStorage.setItem('kgf_order_date', key); }
-  counter++;
-  localStorage.setItem('kgf_order_count', counter);
+  let counter = parseInt(localStorage.getItem('kg_adm_count')||'0') + 1;
+  localStorage.setItem('kg_adm_count', counter);
   return `KGF-${key}-${String(counter).padStart(3,'0')}`;
 }
 
+// ─── MENU DATA ───────────────────────────────────────
+const menuItems = [
+  // Veg Starters
+  {name:'Chilli Paneer',price:239,cat:'Veg Starters',veg:true,active:true},
+  {name:'Paneer Manchurian',price:239,cat:'Veg Starters',veg:true,active:true},
+  {name:'Paneer Tikka (8 pcs)',price:249,cat:'Veg Starters',veg:true,active:true},
+  {name:'Mushroom 65',price:219,cat:'Veg Starters',veg:true,active:true},
+  {name:'Chilli Babycorn',price:219,cat:'Veg Starters',veg:true,active:true},
+  // Non-Veg Starters
+  {name:'Egg Ginger Dry',price:209,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Ginger Chicken Dry',price:249,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken 65',price:249,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Tandoori Chicken Tikka',price:239,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken Majestic',price:259,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Chicken 555',price:259,cat:'Non-Veg Starters',veg:false,active:true},
+  {name:'Kaju Chicken Dry',price:289,cat:'Non-Veg Starters',veg:false,active:true},
+  // Biryanis
+  {name:'Paneer Biryani',price:219,cat:'Biryanis',veg:true,active:true},
+  {name:'Veg Biryani',price:209,cat:'Biryanis',veg:true,active:true},
+  {name:'Chicken Biryani (1 pc)',price:169,cat:'Biryanis',veg:false,active:true},
+  {name:'Chicken Biryani',price:239,cat:'Biryanis',veg:false,active:true},
+  {name:'Mutton Biryani',price:299,cat:'Biryanis',veg:false,active:true},
+  {name:'Nalli Gosht Biryani',price:369,cat:'Biryanis',veg:false,active:true},
+  // Family Packs
+  {name:'Chicken Biryani Family Pack',price:649,cat:'Family Packs',veg:false,active:true},
+  {name:'Mutton Biryani Family Pack',price:779,cat:'Family Packs',veg:false,active:true},
+  // Veg Curries
+  {name:'Paneer Butter Masala',price:189,cat:'Veg Curries',veg:true,active:true},
+  {name:'Paneer Shahi Korma',price:199,cat:'Veg Curries',veg:true,active:true},
+  {name:'Kadhai Paneer',price:189,cat:'Veg Curries',veg:true,active:true},
+  {name:'Kadhai Mushroom',price:179,cat:'Veg Curries',veg:true,active:true},
+  {name:'Palak Paneer',price:179,cat:'Veg Curries',veg:true,active:true},
+  {name:'Dal Tadka',price:149,cat:'Veg Curries',veg:true,active:true},
+  {name:'Plain Palak',price:129,cat:'Veg Curries',veg:true,active:true},
+  {name:'Veg Kolhapuri',price:169,cat:'Veg Curries',veg:true,active:true},
+  // Non-Veg Curries
+  {name:'Butter Chicken',price:219,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Telangana Chicken Curry',price:219,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Kadhai Chicken',price:229,cat:'Non-Veg Curries',veg:false,active:true},
+  {name:'Telangana Mutton Curry',price:269,cat:'Non-Veg Curries',veg:false,active:true},
+  // Meals
+  {name:'Bagara Rice with Paneer',price:189,cat:'Meals',veg:true,active:true},
+  {name:'Bagara Rice with Chicken',price:219,cat:'Meals',veg:false,active:true},
+  {name:'Bagara Rice with Mutton',price:249,cat:'Meals',veg:false,active:true},
+  // Breads
+  {name:'Butter Naan',price:39,cat:'Breads',veg:true,active:true},
+  {name:'Plain Naan',price:29,cat:'Breads',veg:true,active:true},
+  {name:'Garlic Naan',price:49,cat:'Breads',veg:true,active:true},
+  {name:'Tandoori Roti',price:29,cat:'Breads',veg:true,active:true},
+  {name:'Tandoori Butter Roti',price:34,cat:'Breads',veg:true,active:true},
+  {name:'Butter Kulcha',price:49,cat:'Breads',veg:true,active:true},
+  // Rice
+  {name:'Jeera Fried Rice',price:149,cat:'Rice',veg:true,active:true},
+  {name:'Veg Fried Rice',price:169,cat:'Rice',veg:true,active:true},
+  {name:'Curd Rice',price:119,cat:'Rice',veg:true,active:true},
+  {name:'Special Curd Rice',price:149,cat:'Rice',veg:true,active:true},
+  // Beverages
+  {name:'Mineral Water (1 Ltr)',price:20,cat:'Beverages',veg:true,active:true},
+  {name:'Mineral Water (500 ml)',price:10,cat:'Beverages',veg:true,active:true},
+  {name:'Soft Drinks',price:20,cat:'Beverages',veg:true,active:true},
+  {name:'Ginger Beer',price:109,cat:'Beverages',veg:true,active:true},
+];
 
-// ── Also save to Firestore for real-time cross-device sync ──
-async function saveOrderToFirestore(order) {
-  try {
-    if (!window._fbDb) return; // Firebase not loaded yet
-    await window._fbAddDoc(
-      window._fbCollection(window._fbDb, "orders"),
-      { ...order, createdAt: window._fbServerTs() }
-    );
-    console.log("Order saved to Firestore ✅");
-  } catch(e) {
-    console.warn("Firestore save failed (order still sent via WhatsApp):", e);
+// ─── NAVIGATION ──────────────────────────────────────
+function showPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent = el ? el.textContent.trim() : id;
+  if(id==='orders') renderOrdersTable();
+  if(id==='menu') renderMenu();
+  if(id==='analytics') renderAnalytics();
+  if(id==='dashboard') renderDashboard();
+  if(window.innerWidth<=900) closeSidebar();
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').style.display =
+    document.getElementById('sidebar').classList.contains('open') ? 'block' : 'none';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').style.display='none';
+}
+
+// ─── CLOCK ───────────────────────────────────────────
+function updateClock(){
+  const now = new Date();
+  document.getElementById('topbarTime').textContent =
+    now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+// ─── RENDER HELPERS ──────────────────────────────────
+function statusBadge(s){
+  const map={new:'New',preparing:'Preparing',ready:'Ready',delivered:'Delivered',cancelled:'Cancelled'};
+  return `<span class="status ${s}"><span class="status-dot-sm"></span>${map[s]||s}</span>`;
+}
+
+function timeAgo(ts){
+  const diff = Math.floor((Date.now()-ts)/1000);
+  if(diff<60) return diff+'s ago';
+  if(diff<3600) return Math.floor(diff/60)+'m ago';
+  if(diff<86400) return Math.floor(diff/3600)+'h ago';
+  return new Date(ts).toLocaleDateString('en-IN');
+}
+
+function itemsPreview(items){
+  if(!items||!items.length) return '—';
+  return items.map(i=>i.name+(i.qty>1?' ×'+i.qty:'')).join(', ');
+}
+
+function renderRow(o, tbody){
+  const tr = document.createElement('tr');
+  tr.innerHTML=`
+    <td><span class="order-id">${o.id}</span></td>
+    <td>
+      <div class="order-customer">${esc(o.name)}</div>
+      <div class="order-phone">${esc(o.phone)}</div>
+    </td>
+    <td><div class="order-items-preview" title="${esc(itemsPreview(o.items))}">${esc(itemsPreview(o.items))}</div></td>
+    <td><span class="order-total">₹${o.total}</span></td>
+    <td>${statusBadge(o.status)}</td>
+    <td><span class="order-time">${timeAgo(o.ts)}</span></td>
+    <td>
+      <div class="actions">
+        <button class="act-btn" onclick="viewOrder('${o.id}')" title="View"><i class="fa-solid fa-eye"></i></button>
+        <button class="act-btn success" onclick="cycleStatus('${o.id}')" title="Next Status"><i class="fa-solid fa-arrow-right"></i></button>
+        <button class="act-btn" onclick="whatsappOrder('${o.id}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+        <button class="act-btn danger" onclick="deleteOrder('${o.id}')" title="Delete"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </td>`;
+  tbody.appendChild(tr);
+}
+
+// ─── DASHBOARD ───────────────────────────────────────
+function renderDashboard(){
+  const today = new Date().toDateString();
+  const todayOrders = orders.filter(o=>new Date(o.ts).toDateString()===today);
+  const revenue = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+(+o.total),0);
+  const pending = orders.filter(o=>['new','preparing','ready'].includes(o.status)).length;
+  document.getElementById('statToday').textContent = todayOrders.length;
+  document.getElementById('statRevenue').textContent = revenue.toLocaleString('en-IN');
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statTotal').textContent = orders.length;
+
+  const badge = pending;
+  document.getElementById('newOrderBadge').textContent = badge;
+  document.getElementById('newOrderBadge').style.display = badge ? 'inline' : 'none';
+
+  const tbody = document.getElementById('recentOrdersBody');
+  tbody.innerHTML='';
+  const recent = [...orders].sort((a,b)=>b.ts-a.ts).slice(0,8);
+  if(!recent.length){
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-receipt"></i><p>No orders yet. Add your first order!</p></div></td></tr>`;
+  } else {
+    recent.forEach(o=>renderRow(o,tbody));
   }
 }
 
-// ── Save order to Admin panel (localStorage) ──
-function saveOrderToAdmin(orderId, name, phone, address, notes, cartObj, total) {
-  try {
-    const ORDERS_KEY = 'kg_admin_orders';
-    const existing = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
-    const items = Object.entries(cartObj).map(([n, v]) => ({ name: n, qty: v.qty, price: v.price }));
-    const newOrder = {
-      id: orderId,
-      customer: name,
-      phone: phone,
-      address: address,
-      notes: notes || '',
-      items: items,
-      total: total,
-      status: 'new',
-      ts: Date.now(),
-      source: 'online'
-    };
-    existing.unshift(newOrder);
-    localStorage.setItem(ORDERS_KEY, JSON.stringify(existing));
-    // Increment admin counter so badge updates
-    let counter = parseInt(localStorage.getItem('kg_adm_count') || '0') + 1;
-    localStorage.setItem('kg_adm_count', counter);
-    // Firestore sync
-    saveOrderToFirestore(newOrder);
-  } catch(e) { console.error('Admin order save failed', e); }
+// ─── ORDERS TABLE ─────────────────────────────────────
+function renderOrdersTable(){
+  const search = (document.getElementById('orderSearch')?.value||'').toLowerCase();
+  const status = document.getElementById('statusFilter')?.value||'';
+  let filtered = [...orders].sort((a,b)=>b.ts-a.ts);
+  if(search) filtered = filtered.filter(o=>
+    o.name.toLowerCase().includes(search)||
+    o.id.toLowerCase().includes(search)||
+    o.phone.includes(search)
+  );
+  if(status) filtered = filtered.filter(o=>o.status===status);
+
+  const tbody = document.getElementById('allOrdersBody');
+  tbody.innerHTML='';
+  if(!filtered.length){
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><p>No orders found.</p></div></td></tr>`;
+  } else {
+    filtered.forEach(o=>renderRow(o,tbody));
+  }
 }
 
-// ── Confirm order ──
-function confirmOrder() {
-  const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
-  const address = document.getElementById('custAddress').value.trim();
-  const notes = document.getElementById('custNotes').value.trim();
-  if(!name || !phone || !address) { alert('Please fill in Name, Phone and Address.'); return; }
-  const oid = orderNo();
-  let msg = `🧾 *Order No:* ${oid}%0A%0A👤 ${name}%0A📞 ${phone}%0A📍 ${address}%0A`;
-  if(notes) msg += `📝 ${notes}%0A`;
-  msg += `%0A`;
-  let total = 0;
-  for(const item in cart) {
-    msg += `${item} × ${cart[item].qty} = ₹${cart[item].price * cart[item].qty}%0A`;
-    total += cart[item].price * cart[item].qty;
+// ─── ORDER DETAIL ─────────────────────────────────────
+function viewOrder(id){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  const statusOpts = ['new','preparing','ready','delivered','cancelled'];
+  document.getElementById('modalTitle').textContent = o.id;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-section">
+      <div class="modal-section-title">Customer</div>
+      <div class="info-row"><span class="label">Name</span><span class="val">${esc(o.name)}</span></div>
+      <div class="info-row"><span class="label">Phone</span><span class="val">${esc(o.phone)}</span></div>
+      <div class="info-row"><span class="label">Address</span><span class="val" style="max-width:250px;text-align:right;">${esc(o.address)}</span></div>
+      ${o.notes?`<div class="info-row"><span class="label">Notes</span><span class="val">${esc(o.notes)}</span></div>`:''}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Order Items</div>
+      ${(o.items||[]).map(it=>`
+        <div class="order-item-row">
+          <div>
+            <div class="order-item-name">${esc(it.name)}</div>
+            <div class="order-item-meta">₹${it.price} × ${it.qty}</div>
+          </div>
+          <div class="order-item-total">₹${it.price*it.qty}</div>
+        </div>`).join('')}
+      <div class="modal-total">
+        <span class="modal-total-label">Total</span>
+        <span class="modal-total-val">₹${o.total}</span>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Update Status</div>
+      <div class="status-changer">
+        ${statusOpts.map(s=>`<button class="status-opt ${o.status===s?'active':''}" onclick="updateStatus('${id}','${s}',this)">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:8px;">
+      <button class="btn-save" style="flex:1" onclick="whatsappOrder('${id}')"><i class="fab fa-whatsapp"></i> Open in WhatsApp</button>
+    </div>`;
+  document.getElementById('orderModal').classList.add('open');
+}
+
+function closeOrderModal(){
+  document.getElementById('orderModal').classList.remove('open');
+}
+
+function updateStatus(id, status, btn){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  o.status = status;
+  saveOrders();
+  btn.closest('.status-changer').querySelectorAll('.status-opt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashboard();
+  renderOrdersTable();
+  showToast(`Status updated to ${status}`,'success');
+}
+
+function cycleStatus(id){
+  const flow = ['new','preparing','ready','delivered'];
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  const idx = flow.indexOf(o.status);
+  if(idx < flow.length-1){
+    o.status = flow[idx+1];
+    saveOrders(); renderDashboard(); renderOrdersTable(); showToast('Status: '+o.status,'success');
+    // Sync status to Firestore
+    if(window._fbDb && o._docId){
+      window._fbUpdateDoc(window._fbDoc(window._fbDb,'orders',o._docId),{status:o.status}).catch(console.warn);
+    }
   }
-  msg += `%0A*Total: ₹${total}*`;
-  // ── Auto-create order in Admin panel ──
-  saveOrderToAdmin(oid, name, phone, address, notes, cart, total);
-  window.open(`https://wa.me/917730989898?text=${msg}`, '_blank');
-  cart = {};
-  saveCart();
-  document.querySelectorAll('.qty-display').forEach(el => el.textContent = '0');
-  document.getElementById('customerModal').classList.remove('show');
+}
+
+function deleteOrder(id){
+  if(!confirm('Delete this order?')) return;
+  orders = orders.filter(o=>o.id!==id);
+  saveOrders(); renderDashboard(); renderOrdersTable();
+  showToast('Order deleted','warn');
+}
+
+function whatsappOrder(id){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  let msg = `🧾 *Order:* ${o.id}%0A👤 ${o.name}%0A📞 ${o.phone}%0A📍 ${o.address}%0A%0A`;
+  (o.items||[]).forEach(it=>{ msg+=`${it.name} × ${it.qty} = ₹${it.price*it.qty}%0A`; });
+  msg+=`%0A*Total: ₹${o.total}*%0AStatus: ${o.status}`;
+  const phone = o.phone.replace(/\D/g,'');
+  const phoneWithCode = phone.startsWith('91') ? phone : '91' + phone;
+  window.open(`https://wa.me/${phoneWithCode}?text=${msg}`,'_blank');
+}
+
+// ─── ADD ORDER ────────────────────────────────────────
+function showAddOrder(){ document.getElementById('addOrderModal').classList.add('open'); }
+function closeAddOrder(){ document.getElementById('addOrderModal').classList.remove('open'); }
+
+function saveNewOrder(){
+  const name = document.getElementById('newName').value.trim();
+  const phone = document.getElementById('newPhone').value.trim();
+  const address = document.getElementById('newAddress').value.trim();
+  const itemsRaw = document.getElementById('newItems').value.trim();
+  const total = document.getElementById('newTotal').value;
+  const status = document.getElementById('newStatus').value;
+  const notes = document.getElementById('newNotes').value.trim();
+  if(!name||!phone||!address){ showToast('Fill Name, Phone & Address','error'); return; }
+
+  // parse items
+  const items = itemsRaw.split('\n').filter(l=>l.trim()).map(line=>{
+    const m = line.match(/^(.+?)\s*[×x×]\s*(\d+)$/i);
+    if(m){
+      const menuItem = menuItems.find(mi=>mi.name.toLowerCase()===m[1].trim().toLowerCase());
+      return {name:m[1].trim(), qty:parseInt(m[2]), price: menuItem?menuItem.price:0};
+    }
+    return {name:line.trim(), qty:1, price:0};
+  });
+
+  const autoTotal = items.reduce((s,i)=>s+(i.price*i.qty),0);
+
+  const order = {
+    id: orderNo(),
+    name, phone, address, notes,
+    items,
+    total: total || autoTotal || 0,
+    status,
+    ts: Date.now()
+  };
+  orders.unshift(order);
+  saveOrders();
+  closeAddOrder();
+  renderDashboard();
+  renderOrdersTable();
+  // clear form
+  ['newName','newPhone','newAddress','newItems','newTotal','newNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('newStatus').value='new';
+  showToast('Order added! '+order.id,'success');
+}
+
+// ─── MENU ─────────────────────────────────────────────
+let menuState = {};
+function renderMenu(){
+  const search = (document.getElementById('menuSearch')?.value||'').toLowerCase();
+  const cat = document.getElementById('menuCatFilter')?.value||'';
+
+  // populate category filter
+  const cats = [...new Set(menuItems.map(m=>m.cat))];
+  const catSel = document.getElementById('menuCatFilter');
+  if(catSel.children.length===1){
+    cats.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o); });
+  }
+
+  let filtered = menuItems;
+  if(search) filtered = filtered.filter(m=>m.name.toLowerCase().includes(search)||m.cat.toLowerCase().includes(search));
+  if(cat) filtered = filtered.filter(m=>m.cat===cat);
+
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML='';
+  filtered.forEach((item,i)=>{
+    const active = menuState[item.name]!==false;
+    const div = document.createElement('div');
+    div.className='menu-card';
+    div.innerHTML=`
+      <div class="menu-card-header">
+        <div>
+          <div class="menu-card-name">${esc(item.name)}</div>
+          <div class="menu-card-cat">${item.cat}</div>
+        </div>
+        <div class="menu-card-price">₹${item.price}</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:0.75rem;color:${item.veg?'#25D366':'#ff5757'}">
+          ${item.veg?'🟢 Veg':'🔴 Non-Veg'}
+        </span>
+        <div class="menu-card-actions">
+          <button class="menu-toggle-btn ${active?'':'off'}" onclick="toggleMenuItem('${esc(item.name)}',this)">
+            ${active?'Available':'Unavailable'}
+          </button>
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+function toggleMenuItem(name, btn){
+  menuState[name] = !menuState[name]!==false ? false : true;
+  menuState[name] = btn.classList.contains('off');
+  btn.classList.toggle('off');
+  btn.textContent = btn.classList.contains('off') ? 'Unavailable' : 'Available';
+  showToast(`${name}: ${btn.classList.contains('off')?'Marked unavailable':'Now available'}`,'success');
+}
+
+// ─── ANALYTICS ────────────────────────────────────────
+function renderAnalytics(){
+  // top selling items
+  const itemCount = {};
+  orders.forEach(o=>(o.items||[]).forEach(it=>{
+    itemCount[it.name] = (itemCount[it.name]||0)+it.qty;
+  }));
+  const topItems = Object.entries(itemCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxItem = topItems[0]?.[1]||1;
+  document.getElementById('topItemsChart').innerHTML = topItems.length ?
+    topItems.map(([name,qty])=>`
+      <div class="bar-row">
+        <div class="bar-label">${esc(name.slice(0,16)+(name.length>16?'…':''))}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(qty/maxItem*100).toFixed(1)}%"></div></div>
+        <div class="bar-val">${qty}</div>
+      </div>`).join('') :
+    '<div class="empty-state"><i class="fa-solid fa-chart-bar"></i><p>No data yet</p></div>';
+
+  // orders by status
+  const statusCount = {new:0,preparing:0,ready:0,delivered:0,cancelled:0};
+  orders.forEach(o=>{ if(statusCount[o.status]!==undefined) statusCount[o.status]++; });
+  const maxStatus = Math.max(...Object.values(statusCount),1);
+  const statusColors = {new:'var(--blue)',preparing:'var(--orange)',ready:'var(--purple)',delivered:'var(--green)',cancelled:'var(--red)'};
+  document.getElementById('statusChart').innerHTML = Object.entries(statusCount).map(([s,n])=>`
+    <div class="bar-row">
+      <div class="bar-label" style="text-transform:capitalize">${s}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/maxStatus*100).toFixed(1)}%;background:${statusColors[s]}"></div></div>
+      <div class="bar-val">${n}</div>
+    </div>`).join('');
+
+  // category revenue
+  const catRev = {};
+  orders.filter(o=>o.status==='delivered').forEach(o=>{
+    (o.items||[]).forEach(it=>{
+      const mi = menuItems.find(m=>m.name===it.name);
+      const cat = mi?.cat||'Other';
+      catRev[cat] = (catRev[cat]||0)+(it.price*it.qty);
+    });
+  });
+  const topCats = Object.entries(catRev).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const maxCat = topCats[0]?.[1]||1;
+  document.getElementById('catRevenueChart').innerHTML = topCats.length ?
+    topCats.map(([c,rev])=>`
+      <div class="bar-row">
+        <div class="bar-label">${esc(c)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(rev/maxCat*100).toFixed(1)}%;background:var(--green)"></div></div>
+        <div class="bar-val">₹${rev}</div>
+      </div>`).join('') :
+    '<div class="empty-state"><i class="fa-solid fa-chart-pie"></i><p>No delivered orders yet</p></div>';
+
+  // summary
+  const totalRev = orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+(+o.total),0);
+  const avgOrder = orders.length ? Math.round(orders.reduce((s,o)=>s+(+o.total),0)/orders.length) : 0;
+  document.getElementById('summaryStats').innerHTML = [
+    ['Total Orders', orders.length],
+    ['Delivered', orders.filter(o=>o.status==='delivered').length],
+    ['Cancelled', orders.filter(o=>o.status==='cancelled').length],
+    ['Total Revenue', '₹'+totalRev.toLocaleString('en-IN')],
+    ['Avg Order Value', '₹'+avgOrder],
+    ['Pending', orders.filter(o=>['new','preparing','ready'].includes(o.status)).length],
+  ].map(([l,v])=>`
+    <div class="info-row" style="padding:10px 0;">
+      <span class="label">${l}</span>
+      <span class="val" style="color:var(--gold)">${v}</span>
+    </div>`).join('');
+}
+
+// ─── EXPORT ───────────────────────────────────────────
+function exportOrders(){
+  const blob = new Blob([JSON.stringify(orders,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kanhas_orders_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  showToast('Orders exported!','success');
+}
+
+function clearAllOrders(){
+  if(!confirm('Delete ALL orders? This cannot be undone!')) return;
+  if(!confirm('Are you absolutely sure?')) return;
+  orders=[];saveOrders();renderDashboard();renderOrdersTable();
+  showToast('All orders cleared','warn');
+}
+
+// ─── TOAST ────────────────────────────────────────────
+function showToast(msg, type='success'){
+  const t = document.getElementById('toast');
+  const icons = {success:'fa-check-circle',warn:'fa-triangle-exclamation',error:'fa-circle-xmark'};
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fa-solid ${icons[type]||icons.success}"></i><span>${msg}</span>`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+function esc(t){
+  if(!t) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────
+// ── Auto-refresh when order placed from index/order page ──
+window.addEventListener("storage", function(e){
+  if(e.key === "kg_admin_orders" || e.key === "kg_adm_count"){
+    loadOrders();
+    renderDashboard();
+    showAdminToast("🔔 New online order received!");
+  }
+});
+function showAdminToast(msg){
+  let t = document.getElementById("adminToast");
+  if(!t){
+    t = document.createElement("div");
+    t.id = "adminToast";
+    t.style.cssText = "position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#131a35;border:1px solid #f1c76d;color:#f1c76d;padding:13px 26px;border-radius:12px;font-weight:700;font-size:0.9rem;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.7);display:none;";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.style.display="none"; }, 3500);
+}
+function initApp(){
+  loadOrders();
+  renderDashboard();
+  updateClock();
+  setInterval(updateClock,1000);
+  // seed some demo data if empty
+  window._adminReady = true;
+  if(!orders.length){
+    const demo = [
+      {id:'KGF-250403-001',name:'Ravi Kumar',phone:'9876543210',address:'123 Main St, Mancherial',notes:'Extra spicy',items:[{name:'Nalli Gosht Biryani',price:369,qty:2},{name:'Butter Naan',price:39,qty:4}],total:898,status:'new',ts:Date.now()-300000},
+      {id:'KGF-250403-002',name:'Priya Sharma',phone:'9123456780',address:'45 Gandhi Nagar, Mancherial',notes:'',items:[{name:'Chicken Biryani',price:239,qty:1},{name:'Butter Chicken',price:219,qty:1},{name:'Garlic Naan',price:49,qty:2}],total:556,status:'preparing',ts:Date.now()-900000},
+      {id:'KGF-250403-003',name:'Suresh Reddy',phone:'9000112233',address:'78 MG Road, Mancherial',notes:'No onion',items:[{name:'Paneer Butter Masala',price:189,qty:1},{name:'Dal Tadka',price:149,qty:1},{name:'Tandoori Roti',price:29,qty:4}],total:454,status:'delivered',ts:Date.now()-3600000},
+      {id:'KGF-250403-004',name:'Anita Singh',phone:'9988776655',address:'12 Station Road, Mancherial',notes:'',items:[{name:'Mutton Biryani',price:299,qty:2},{name:'Soft Drinks',price:20,qty:2}],total:638,status:'ready',ts:Date.now()-600000},
+    ];
+    orders = demo;
+    saveOrders();
+    renderDashboard();
+  }
 }
 </script>
-
 </body>
 </html>
